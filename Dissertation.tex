@@ -1,0 +1,674 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Masters/Doctoral Thesis 
+% LaTeX Template
+% Version 2.5 (27/8/17)
+%
+% This template was downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Version 2.x major modifications by:
+% Vel (vel@latextemplates.com)
+%
+% This template is based on a template by:
+% Steve Gunn (http://users.ecs.soton.ac.uk/srg/softwaretools/document/templates/)
+% Sunil Patel (http://www.sunilpatel.co.uk/thesis-template/)
+%
+% Template license:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+% Modifications made by Drake Asberry to make document compliant with 
+% University of Arizona dissertation formatting Guide 2019-01-29
+% https://grad.arizona.edu/gsas/dissertations-theses/dissertation-and-thesis-formatting-guides
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[
+12pt, % The default document font size, options: 10pt, 11pt, 12pt
+%oneside, % Two side (alternating margins) for binding by default, uncomment to switch to one side
+english, % ngerman for German
+doublespacing, % Single line spacing (singlespacing), alternatives: onehalfspacing or doublespacing
+%draft, % Uncomment to enable draft mode (no pictures, no links, overfull hboxes indicated)
+nolistspacing, % If the document is onehalfspacing or doublespacing, uncomment this to set spacing in lists to single
+liststotoc, % Uncomment to add the list of figures/tables/etc to the table of contents
+%toctotoc, % Uncomment to add the main table of contents to the table of contents
+%parskip, % Uncomment to add space between paragraphs
+%nohyperref, % Uncomment to not load the hyperref package
+headsepline, % Uncomment to get a line under the header
+chapterinoneline, % Uncomment to place the chapter title next to the number on one line
+%consistentlayout, % Uncomment to change the layout of the declaration, abstract and acknowledgements pages to match the default layout
+openany, % eliminates all extra blank pages from entire document
+]{DoctoralThesis} % The class file specifying the document structure
+
+\usepackage[utf8]{inputenc} % Required for inputting international characters
+
+\usepackage[T1]{fontenc} % Output font encoding for international characters
+
+\usepackage{mathpazo} % Use the Palatino font by default
+
+\usepackage[backend=bibtex,style=authoryear,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
+
+\addbibresource{example.bib} % The filename of the bibliography
+
+\usepackage[autostyle=true]{csquotes} % Required to generate language-dependent quotes in the bibliography
+\usepackage{enumerate}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{mathrsfs}
+\usepackage{multirow}
+\usepackage{hhline}
+\usepackage{pbox}
+\usepackage{hyperref}
+\usepackage{amsmath,amssymb,amsthm,esint}
+\usepackage{longtable}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{pgfplots}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{empheq}
+\usepackage{indentfirst}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\usepackage[many]{tcolorbox}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+%\usepackage[english]{babel}
+%\usepackage{bbm}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{booktabs}
+\usepackage{pgfplots}
+\usepackage{tikz-3dplot}
+\usepackage{dsfont}
+\usepackage{mathpazo}
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{calc}
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{subcaption}
+\usepackage{textcase}
+\usepackage{thmtools,thm-restate}
+\usepackage{subcaption}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%newcommands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\wto}{\rightharpoonup}
+\newlength{\arrow}
+\settowidth{\arrow}{\scriptsize argmax}
+\newcommand*{\myrightarrow}[1]{\xrightarrow{\mathmakebox[\arrow]{#1}}}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{acknowledgement}[theorem]{Acknowledgement}
+%\newtheorem{algorithm}[theorem]{Algorithm}
+\newtheorem{axiom}[theorem]{Axiom}
+\newtheorem{case}[theorem]{Case}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{conclusion}[theorem]{Conclusion}
+\newtheorem{condition}[theorem]{Condition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{criterion}[theorem]{Criterion}
+\newtheorem{conditions}[theorem]{Conditions}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}{Exercise}
+\newtheorem{lemma}[theorem]{Lemma}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+
+\newtheorem{proposition}[theorem]{Proposition}
+%\newenvironment{proof}[1][Proof]{\noindent\textbf{#1.} }{\ \rule{0.5em}{0.5em}}
+\newcommand{\e}{\varepsilon}
+\newcommand{\relu}{\text{ReLU}}
+\newcommand{\norm}[1]{\left\vert #1 \right\vert}
+\newcommand{\Norm}[1]{\left\Vert #1 \right\Vert}
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+\newcommand{\green}[1]{\textcolor{green}{#1}}
+
+%%%%%%%%%%%%%%%% My Commands/Shorthand %%%%%%%%%%%%%%%%
+%\newcommand{\qed}{\hfill\ensuremath{\Box}}
+\newcommand{\qedb}{\hfill \blacksquare}
+\newcommand{\wrt}{w.r.t}
+\newcommand{\rml}{\multicolumn{1}{c}{}}
+\newcommand{\tbf}[1]{\textbf{#1}}
+\newcommand{\ib}[1]{\item \textbf{#1}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\re}{\text{Re}}
+%\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\TT}{\mathbb{T}}
+\newcommand{\T}{\mathcal{T}}
+%\newcommand{\S}{\mathcal{S}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\MO}{\mathcal{O}}
+\newcommand{\prob}{\text{Prob}}
+\newcommand{\var}{\text{Var}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\CC}{\mathcal{C}}
+\newcommand{\fl}{\text{fl}}
+\newcommand{\sign}{\text{sign}}
+
+\newcommand{\ip}[1]{\left\langle #1 \right\rangle}
+\def\tesst{https://chrome.google.com/webstore/detail/slack-bot-filter/blephhkggdennbfmdcjmlfimedknghfc}
+\def\lvector#1{\underline{#1}}
+\def\lmatrix#1{\underline{\underline{#1}}}
+\def\ltensor#1{\underline{\underline{\underline{#1}}}}
+\DeclareMathOperator\vol{\text{vol}}
+\def\layersep{2.0cm}
+\newcommand{\vectorproj}[2][]{\textit{proj}_{\vect{#1}}\vect{#2}}
+\newcommand{\vect}{\mathbf}
+
+
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+\newcommand{\nifty}{\textbf{NIFTY}}
+
+
+
+% Define block styles
+\tikzstyle{decision} = [diamond, draw, fill=blue!20,
+    text width=3cm, text badly centered, node distance=3cm, inner sep=0pt]
+\tikzstyle{block} = [rectangle, draw, fill=blue!20,
+    text width=3cm, text centered, rounded corners, minimum height=2em]
+\tikzstyle{line} = [draw, -latex']
+\tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=3cm,
+    minimum height=2em]
+
+\newcommand\setrow[5]{
+  \setcounter{col}{1}
+  \foreach \n in {#1, #2, #3, #4, #5}{%, #6, #7, #8, #9} {
+    \edef\x{\value{col} +.5}
+    \edef\y{.5 + \value{row}}
+    \node[anchor=center] at (\x, \y) {\n};
+    \stepcounter{col}
+  }
+  \stepcounter{row}
+}
+\newcounter{row}
+\newcounter{col}
+\newcommand{\RR}{I\!\!R} %real numbers
+\newcommand{\Nat}{I\!\!N} %natural numbers
+\newlength{\depthofsumsign}
+\setlength{\depthofsumsign}{\depthof{$\sum$}}
+\newlength{\totalheightofsumsign}
+\newlength{\heightanddepthofargument}
+
+\newcommand{\nsum}[1][1.4]{% only for \displaystyle
+    \mathop{%
+        \raisebox
+            {-#1\depthofsumsign+1\depthofsumsign}
+            {\scalebox
+                {#1}
+                {$\displaystyle\sum$}%
+            }
+    }
+}
+\newcommand{\resum}[1]{%
+    \def\s{#1}
+    \mathop{
+        \mathpalette\resumaux{#1}
+    }
+}
+
+\newcommand{\resumaux}[2]{% internally
+    \sbox0{$#1#2$}
+    \sbox1{$#1\sum$}
+    \setlength{\heightanddepthofargument}{\wd0+\dp0}
+    \setlength{\totalheightofsumsign}{\wd1+\dp1}
+    \def\quot{\DivideLengths{\heightanddepthofargument}{\totalheightofsumsign}}
+    \nsum[\quot]%
+}
+
+% http://tex.stackexchange.com/a/6424/16595
+\makeatletter
+\newcommand*{\DivideLengths}[2]{%
+  \strip@pt\dimexpr\number\numexpr\number\dimexpr#1\relax*65536/\number\dimexpr#2\relax\relax sp\relax
+}
+\tdplotsetmaincoords{60}{115}
+\pgfplotsset{compat=newest}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% tikz stuff
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%% TIKZ stuff %%%%%%%%%%%%%%%%
+    \pgfplotsset{compat=newest}
+    \usetikzlibrary{shapes,arrows,matrix,positioning,intersections}
+    \usetikzlibrary{calc}
+%    \usetikzlibrary{decorations.pathreplacing}
+    \usetikzlibrary{decorations} %fancier tikz abilities
+    \pgfdeclarelayer{bg}
+    \pgfsetlayers{bg,main}
+		% Define block styles
+    \tikzstyle{decision} = [diamond, draw, fill=blue!20, 
+        text width=3cm, text badly centered, node distance=3cm, inner sep=0pt]
+    \tikzstyle{block} = [rectangle, draw, fill=blue!20, 
+        text width=3cm, text centered, rounded corners, minimum height=2em]
+    \tikzstyle{line} = [draw, -latex']
+    \tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=3cm,
+        minimum height=2em]
+
+\usetikzlibrary{decorations.text,arrows.meta}
+\usetikzlibrary{decorations.pathmorphing}
+\usetikzlibrary{decorations.markings} %hopefully give arrows
+
+\tikzset{
+  % style to apply some styles to each segment of a path
+  on each segment/.style={
+    decorate,
+    decoration={
+      show path construction,
+      moveto code={},
+      lineto code={
+        \path [#1]
+        (\tikzinputsegmentfirst) -- (\tikzinputsegmentlast);
+      },
+      curveto code={
+        \path [#1] (\tikzinputsegmentfirst)
+        .. controls
+        (\tikzinputsegmentsupporta) and (\tikzinputsegmentsupportb)
+        ..
+        (\tikzinputsegmentlast);
+      },
+      closepath code={
+        \path [#1]
+        (\tikzinputsegmentfirst) -- (\tikzinputsegmentlast);
+      },
+    },
+  },
+  % style to add an arrow in the middle of a path
+  mid arrow/.style={postaction={decorate,decoration={
+        markings,
+        mark=at position .5 with {\arrow[#1]{stealth}}
+      }}},
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%----------------------------------------------------------------------------------------
+%	MARGIN SETTINGS
+%----------------------------------------------------------------------------------------
+
+\geometry{
+	paper = letterpaper, % Change to a4paper for international letter
+	inner = 1in, % Inner margin
+	outer=1in, % Outer margin
+	bindingoffset=.5in, % Binding offset
+	top=1in, % Top margin
+	bottom=1in, % Bottom margin
+	%showframe, % Uncomment to show how the type block is set on the page
+}
+
+%----------------------------------------------------------------------------------------
+%	THESIS INFORMATION
+%----------------------------------------------------------------------------------------
+% Replace content within green curly brackets to reflect your own work and names
+
+\thesistitle{A Geometric Framework for Adversarial Vulnerability in
+  Machine Learning} % Your thesis title, this is used in the title, committee approval and abstract pages, print it elsewhere with \ttitle
+
+\chair{David Glickenstein} % Your dissertation chair's name, this is used in the title, abstract and committee approval pages, print it elsewhere with \chairname
+
+\cochair{} % Your dissertation co-chair's name, this is not currently used anywhere in the template, but would be used in the title and committee approval page, print it elsewhere with \cochairname
+
+\examiner{} % Your examiner's name, this is not currently used anywhere in the template, print it elsewhere with \examname
+
+\degree{Doctor of Philosophy of Applied Mathematics} % Your degree name, this is used in the title page and abstract, print it elsewhere with \degreename
+
+\author{Brian Bell} % Your name, this is used in the title page and abstract, print it elsewhere with \authorname
+
+\addresses{413 E Geronimo Bluff Loop, Tucson AZ, 85705} % Your address, this is not currently used anywhere in the template, print it elsewhere with \addressname
+
+\subject{Applied Mathematics} % Your subject area, this is not currently used anywhere in the template, print it elsewhere with \subjectname
+
+\keywords{Machine Learning, Geometry, Monte Carlo} % Keywords for your thesis, this is not currently used anywhere in the template. However, you may want to use it following your abstract, print it elsewhere with \keywordnames
+
+\university{University of Arizona} % Your university's name and URL, this is used in the title page and abstract, print it elsewhere with \univname
+
+\department{Department of Mathematics math.arizona.edu} % Your department's name and URL, this is used in the title page and abstract, print it elsewhere with \deptname
+
+\group{\href{http://researchgroup.university.com}{Research Group Name}} % Your research group's name and URL, this is not currently used anywhere in the template, print it elsewhere with \groupname
+
+\facultyA{Kevin Lin} % Your first faculty member's name and URL(can be added between green curly brackets before the member's name. Do not use this for your COMMITTEE CHAIR This is used in the committee approval page, print it elsewhere with \facnameA
+
+\facultyB{Marek Rychlik} % Your first faculty member's name and URL(can be added between green curly brackets before the member's name. This is used in the committee approval page, print it elsewhere with \facnameB
+
+\facultyC{Hoshin Gupta} % Your first faculty member's name and URL(can be added between green curly brackets before the member's name. This may optionally be added to the committee approval page when number of committee members requires it, print it elsewhere with \facnameC
+
+\facultyD{Type the name of your committee member here} % Your first faculty member's name and URL(can be added between green curly brackets before the member's name. This may optionally be added to the committee approval page when number of committee members requires it, print it elsewhere with \facnameD
+
+\defense{Type defense date here} % This should have the long date format of your scheduled defense, print it elsewhere with \defensedate
+
+\AtBeginDocument{
+\hypersetup{pdftitle=\ttitle} % Set the PDF's title to your title
+\hypersetup{pdfauthor=\authorname} % Set the PDF's author to your name
+\hypersetup{pdfkeywords=\keywordnames} % Set the PDF's keywords to your keywords
+\hypersetup{hidelinks} % Set all hyperlinks standard color text
+}
+
+%\usepackage{times} % Uncomment to use Times New Roman font
+
+\begin{document}
+
+%\frontmatter % Uncomment to use roman page numbering style (i, ii, iii, iv...) for the pre-content pages
+
+\pagestyle{plain} % Default to the plain heading style until the thesis style is called for the body content
+
+
+%-------------------------------------------------------------------------------------------------------------------------------
+%	Pre-Thesis Content
+%-------------------------------------------------------------------------------------------------------------------------------
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+%
+% All requirements of the graduate college as of 2019-01-30
+% The title page must be the first page of your document (All pages must be numbered and match 
+% the numbers listed in Table of Contents. However, a page number is not required to be printed
+% on the actual title page).
+% The title page must meet the following requirements:
+% Title is set in ALL CAPS
+% Student name matches official name in UAccess
+% Rule line appears
+% Official Department Name is Used
+% Degree is indicated correctly
+% Copyright year matches year of graduation on page
+
+\begin{titlepage}
+\begin{singlespacing} % needed for documents set to 1.5 or 2.0 spacing, Comment out otherwise
+\begin{center}
+
+\vfill
+
+\MakeUppercase{\ttitle}\\ %Thesis Title in ALL CAPS
+\vspace{0.4in}
+by\\ \vspace{0.4in}
+{\authorname}\\ % Places author name as specified in preamble
+\vspace{0.6in}
+\HRule \\[0.1cm] % Horizontal line
+Copyright \textcopyright\space\authorname\space{\the\year}\\ % Copyright Date
+
+\vspace{0.4in}
+
+A Dissertation Submitted to the Faculty of the\\ % University required text
+\vspace{0.4in}
+\MakeUppercase{\deptname} \\  % Department name in Small Caps
+\vspace{0.4in}
+In Partial Fulfillment of the Requirements \\ \medskip % University required text
+For the Degree of \\  % University required text
+\vspace{0.4in}
+\MakeUppercase{\degreename} \\ % Thesis type
+\vspace{0.4in} 
+In the Graduate College \\  % University required text
+\vspace{0.4in}
+\MakeUppercase{The \univname} \\ % University name in Small Caps
+\vspace{0.6in}
+%\normalsize
+{\the\year}\\[4cm] % date
+%\includegraphics{Logo} % University/department logo - uncomment to place it
+
+\vfill
+\end{center}
+\end{singlespacing}% needed for documents set to 1.5 or 2.0 spacing, Comment out otherwise
+\end{titlepage}
+
+%\cleardoublepage %Uncomment to add blank page after Title page.
+
+
+\setcounter{page}{2} % Starts pagination at 2 on the Committee Approval Form with no page number displayed on Title page.
+
+%----------------------------------------------------------------------------------------
+%	COMMITTEE APPROVAL PAGE
+%----------------------------------------------------------------------------------------
+%
+% All requirements of the graduate college as of 2019-01-30
+% The committee approval page must be the second page of your document
+% The committee approval page must meet the following requirements:
+% Title on approval page matches title on page 1 (Title Page)
+% Dissertation chair (or co-chair) is indicated
+% All members and chair (or co-chairs) have signed the approval page
+% Date of defense is listed
+
+%\addchaptertocentry{Committee Approval Page} % Add the committee approval page to the table of contents
+\begin{singlespacing} % needed for documents set to 1.5 or 2.0 spacing, Comment out otherwise
+\begin{center}
+%\large
+
+THE \MakeUppercase{\univname} \\
+GRADUATE COLLEGE
+\end{center}
+
+\vspace*{0.3in}
+
+\noindent As members of the Dissertation Committee, we certify that we have read the dissertation prepared by \authorname \space entitled "\ttitle "\space and recommend that it be accepted as fulfilling the dissertation requirement for the Degree of \degreename.
+
+\vspace*{0.3in}
+
+\noindent\underline{\makebox[4.0in][r]{}} \hspace{0.4in} Date: \defensedate \\
+{\bfseries\chairname}\\
+\emph{(Chair)} %This line can be commented out if necessary
+\vspace*{0.3in}
+
+\noindent\underline{\makebox[4.0in][r]{}} \hspace{0.4in} Date: \defensedate \\
+{\bfseries\facnameA}\\
+\emph{(Member)} %This line can be commented out if necessary
+\vspace*{0.3in}
+
+\noindent\underline{\makebox[4.0in][r]{}} \hspace{0.4in} Date: \defensedate \\
+{\bfseries\facnameB}\\
+\emph{(Member)} %This line can be commented out if necessary
+\vspace*{0.3in}
+
+\noindent\underline{\makebox[4.0in][r]{}} \hspace{0.4in} Date: \defensedate \\
+{\bfseries\facnameC}\\
+\emph{(Member)} %This line can be commented out if necessary
+\vspace*{0.5in}
+
+% If 4th committee member is needed, copy the preceding 4 lines, change to facnameD in copied lines
+% You will then need to adjust vertical spacing to keep committee approval page to 1 page length
+
+\noindent Final approval and acceptance of this dissertation is contingent upon the candidate's submission of the final copies of the dissertation to the Graduate College.
+
+\vspace*{0.2in}
+
+\noindent I hereby certify that I have read this dissertation prepared under my direction and recommend that it be accepted as fulfilling the dissertation requirement.
+\vspace*{0.5in}
+
+\noindent\underline{\makebox[4.0in][r]{}} \hspace{0.4in} Date: \defensedate \\
+Dissertation Director: \chairname \\
+%{\bfseries \emph{Instructor \\ Hispanic Linguistics}} % Update hard-coded to job title and department
+\vfill
+\end{singlespacing}% needed for documents set to 1.5 or 2.0 spacing, Comment out otherwise
+
+
+
+%----------------------------------------------------------------------------------------
+%	STATEMENT BY AUTHOR
+%----------------------------------------------------------------------------------------
+%
+% No longer required for the graduate college as of 2019-01-30
+% Uncomment all lines in this section  with "%%" at the beginning if your document requires it
+
+%%\begin{statement}
+%%\begin{singlespacing} % needed for documents set to 1.5 or 2.0 spacing, Comment out otherwise
+%%\addchaptertocentry{\authorshipname} % Add the declaration to the table of contents
+
+%The following block of text was the required text of the Graduate College (2019-02-01)
+%%This dissertation has been submitted in partial fulfillment of the requirements for an advanced degree at the \univname\space and is deposited in the University Library to be made available to borrowers under rules of the Library. \\ \smallskip 
+
+%%Brief quotations from this dissertation are allowable without special permission, provided that an accurate acknowledgement of the source is made. Requests for permission for extended quotation from or reproduction of this manuscript in whole or in part may be granted by the copyright holder.
+
+%%\vspace*{0.3in}
+%%\begin{center} 
+%%SIGNED: \authorname
+%%\end{center}
+%%\end{singlespacing}% needed for documents set to 1.5 or 2.0 spacing, Comment out otherwise
+%%\end{statement}
+
+
+%----------------------------------------------------------------------------------------
+%	ACKNOWLEDGEMENTS
+%----------------------------------------------------------------------------------------
+%
+% Acknowledgements are not a necessary item. Comment out if not being used 
+\include{FrontBackMatter/Acknowledgements} % This calls the Acknowledgements.tex 
+
+
+%----------------------------------------------------------------------------------------
+%	DEDICATION
+%----------------------------------------------------------------------------------------
+%
+% Dedications are not a necessary item. Comment out to remove from document
+\dedicatory{For my Supportive Friends and Confidants\ldots \\\bigskip Dedicated to my humerous and
+  wonderful late mother Carrie Bell\ldots.} 
+
+
+%----------------------------------------------------------------------------------------
+%	Quotation
+%----------------------------------------------------------------------------------------
+%
+% This page is not really necessary, but if you feel the need to include some quote here is your
+% chance. 
+%
+% Comment out if not being used 
+\include{FrontBackMatter/Quotation} % This calls the Quotation.tex
+
+
+%----------------------------------------------------------------------------------------
+%	LIST OF CONTENTS/FIGURES/TABLES PAGES
+%----------------------------------------------------------------------------------------
+%
+% Table of Contents (TOC) must include:
+% a: all major sections with the document in a consistent manner
+% b: section headings in document must match their listings (exact words) in TOC
+%
+\tableofcontents % Prints the main table of contents
+%
+% Lists of figures and tables must include accurate page numbers
+\listoffigures % Prints the list of figures
+
+\listoftables % Prints the list of tables
+
+
+%----------------------------------------------------------------------------------------
+%	ABBREVIATIONS
+%----------------------------------------------------------------------------------------
+%
+% Abbreviations are not a necessary item. Comment out the line below to remove from document
+%
+\include{FrontBackMatter/Abbvreviations} % This calls the Abbreviations.tex Uncomment to include
+
+
+%----------------------------------------------------------------------------------------
+%	PHYSICAL CONSTANTS/OTHER DEFINITIONS
+%----------------------------------------------------------------------------------------
+%
+% Constants are not a necessary item. Comment out the line below to remove from document
+%
+\include{FrontBackMatter/Constants} % This calls the Constants.tex Uncomment to include
+
+
+%----------------------------------------------------------------------------------------
+%	SYMBOLS
+%----------------------------------------------------------------------------------------
+%
+% Symbols are not a necessary item. 
+%
+% Comment out if not being used 
+%
+\include{FrontBackMatter/Symbols} % This calls the Symbols.tex Uncomment to include
+
+
+%----------------------------------------------------------------------------------------
+%	Abstract
+%----------------------------------------------------------------------------------------
+% This is required to appear before the first chapter of the dissertation
+
+\include{FrontBackMatter/Abstract} % This calls the Abstract.tex
+
+
+%----------------------------------------------------------------------------------------
+%	THESIS CONTENT - CHAPTERS
+%----------------------------------------------------------------------------------------
+
+%\mainmatter % Begin numeric (1,2,3...) page numbering Uncomment if using roman numerals in front matter
+
+
+\pagestyle{thesis} % Return the page headers back to the "thesis" style
+
+% Include the chapters of the thesis as separate files from the Chapters folder
+% Uncomment the lines as you write the chapters
+
+\include{Chapters/Chapter1} 
+\include{Chapters/Chapter2} 
+\include{Chapters/Chapter3}
+\include{Chapters/Chapter4} 
+\include{Chapters/Chapter5}
+\include{Chapters/ChapterInstructions}
+
+% Copy line above and use ChapterTemplate.tex in Chapters folder if additional chapters are required
+
+%----------------------------------------------------------------------------------------
+%	THESIS CONTENT - APPENDICES
+%----------------------------------------------------------------------------------------
+%
+% Appendices Requirements (if used)
+% Follow content and precede References, unless used for manuscript/previous published article disserations
+% are distinguished by capital letters, Appendix A – title, Appendix B – title, etc.
+% must be correctly listed in Table of Contents
+% Pages must be numbered in manner consistent with the rest of the document
+% Permissions for including previously published articles are included
+%
+%If no appendices are used, comment out all active lines in this section
+%\pagestyle{thesis}
+
+\renewcommand\thechapter{}
+
+\appendix % Cue to tell LaTeX that the following "chapters" are Appendices
+
+% Include the appendices of the thesis as separate files from the Appendices folder
+% Uncomment the lines as you write the Appendices
+
+\include{Appendices/AppendixA}
+%\include{Appendices/AppendixB}
+%\include{Appendices/AppendixC}
+
+% Copy line above and use AppendixTemplate.tex in Appendices folder if additional appendices are required
+
+%----------------------------------------------------------------------------------------
+%	BIBLIOGRAPHY
+%----------------------------------------------------------------------------------------
+%
+% References must be included in dissertation
+% References must be consisent (check your citation style formatting
+
+\printbibliography[heading=bibintoc]
+
+%----------------------------------------------------------------------------------------
+
+\end{document}  
