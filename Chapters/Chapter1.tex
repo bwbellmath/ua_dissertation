@@ -1,14 +1,9 @@
 % Chapter 1
-
 \chapter{Introduction} % Main chapter title
-
 \label{Chapter1} % For referencing the chapter elsewhere, use \ref{Chapter1} 
 
-
 %----------------------------------------------------------------------------------------
-
 % Define some commands to keep the formatting separated from the content 
-
 %----------------------------------------------------------------------------------------
 
 Artificial Neural Networks and other optimization-based general
@@ -27,13 +22,137 @@ properties of the learning models from which they arise.
 
 %\subsection{A Brief History of Neural Networks (NNs)}
 
-The history of Neural Networks begins in the field of Theoretical Neuropsychology with a much-cited paper by McCulloch and Pitts in which they describe the mechanics of cognition in the context of computation \cite{mcculloch1943logical}. This initial framework for computational cognition did not include a notion for learning, but the following decade brought the concept of learning (as optimization) and many simple NNs (linear regression models applied to computational cognition). The perceptron, the most granular element of a neural network, was proposed in another much-cited paper by Rosenblatt in 1958 \cite{rosenblatt1958perceptron}, and multilevel (deep) networks were proposed by 1965 in a paper by Ivakhnenko and Lapa \cite{ivakhnenko1965cybernetic}. 
+The history of Neural Networks begins very gradually in the field of Theoretical
+Neuropsychology with a much-cited paper by McCulloch and Pitts in
+which the mechanics of cognition are described in the context of
+computation \cite{mcculloch1943logical}. This initial framework for
+computational cognition did not include a notion for learning, however
+this would be brought in the following decade with in the form of
+optimization and many simple NNs (linear regression models applied to
+computational cognition). The perceptron, the most granular element of
+a neural network, was proposed in another much-cited paper by
+Rosenblatt in 1958 \cite{rosenblatt1958perceptron}. A full 7 years
+would pass before these building blocks would be assembled into
+multilevel (deep) networks which were proposed by 1965 in a paper by
+Ivakhnenko and Lapa \cite{ivakhnenko1965cybernetic}. Despite much
+theoretical work up to this point, computing resources of the time
+were not nearly capable of implementing all but the simplest toy
+versions of these models. 
 
-By the 1960s, these neural network models became disassociated from the cutting-edge of cognitive science, and interest had shifted to their application in modeling and industrial computation. The hardware limitations of the time served as a significant barrier to wider application and the concept of the "neural network" was sometimes treated as a solution looking for a problem. Compounding these limitations was a significant roadblock published by Minsky and Papert in 1969: A proof that basic perceptrons could not encode exclusive-or \cite{minsky1969perceptrons}. As a result, interest in developing neural network theory waned. The next necessary step in the development of modern neural network models was an advance that would allow them to be trained efficiently with computing power available. Learning methods required a gradient, and the technique necessary for computing gradients of large-scale multi-parameter models was apparently proposed in a 1970 in a Finnish masters thesis \cite{linnainmaa1970representation}. Techniques from control theory were applied to develop a means of propagating error backward through models which could be described as directed graphs. The idea was applied to neural networks by a Harvard student Paul Werbos\cite{werbos1974beyond} and refined in later publications. 
+By the 1960s, these neural network models became disassociated from
+the cutting-edge of cognitive science, and interest had shifted to
+their application in modeling and industrial computation. The hardware
+limitations of the time served as a significant barrier to wider
+application and the concept of the "neural network" was generally
+regarded as a cute solution looking for a problem. Compounding these
+limitations was a significant roadblock published by Minsky and Papert
+in 1969: A proof that basic perceptrons could not encode exclusive-or
+\cite{minsky1969perceptrons}. As a result, interest in developing
+neural network theory waned. The next necessary step in the
+development of modern neural network models was an advance that would
+allow them to be trained efficiently with computing power
+available. Learning methods required a gradient, and the technique
+necessary for computing gradients of large-scale multi-parameter
+models was finally proposed in a 1970 in a Finnish masters thesis \cite{linnainmaa1970representation}. Techniques from control theory were applied to develop a means of propagating error backward through models which could be described as directed graphs. The idea was applied to neural networks by a Harvard student Paul Werbos\cite{werbos1974beyond} and refined in later publications. 
 
-The final essential puzzle piece for neural network models was to take advantage of their layered structure, which would allow backpropagation computations at a given layer to be done in parallel. This key insight, indeed the core of much of modern computing, was a description of parallel and distributed processing in the context of cognition by Rumelhard and McClelland in 1986 \cite{mcclelland1986parallel} with an astonishing 22,453 citations (a number that grows nearly every day). With these pieces in place, the world was ready for someone to finally apply neural network models to a relevant problem. In 1989, Yann LeCun and a group at Bell Labs managed to do just that. LeCun  refined backpropagation into the form it is used today \cite{lecun1989backpropagation}, invented Convolutional Neural Networks \ref{cnn} \cite{lecun1995convolutional}, and by 1998, he had worked with his team to implement what has  become the industry standard for banks to recognize hand-written numbers on checks \cite{lecun1998gradient}. 
+The final essential puzzle piece for neural network models was to take
+advantage of their layered structure, which would allow
+backpropagation computations at a given layer to be done in
+parallel. This key insight, indeed the core of much of modern
+computing, was a description of parallel and distributed processing in
+the context of cognition by Rumelhard and McClelland in 1986
+\cite{mcclelland1986parallel} with an astonishing 22,453 citations (a
+number that grows nearly every day). With these pieces in place, the
+world was ready for someone to finally apply neural network models to
+a relevant problem. In 1989, Yann LeCun and a group at Bell Labs
+managed to do just that. Motivated by a poorly solved practical
+problem -- recognition of handwriting on bank checks, LeCun refined
+backpropagation into the form used today
+\cite{lecun1989backpropagation}, invented Convolutional Neural
+Networks \ref{cnn} \cite{lecun1995convolutional}, and by 1998, he had
+worked with his team to implement what rapidly became the industry
+standard for banks to recognize hand-written numbers
+\cite{lecun1998gradient}.
 
-Starting in the 2000s, neural networks have blown up in scale and application, so it's harder to keep track of the discrete historical developments. Most of the progress in terms of performance and application has come from contests (e.g: \url{http:/image-net.org/challenges/LSVRC/}) in which a bounty (or publicity) is offered and labs around the world compete to build a network which solves the competition's problem. Schimdhuber's group \cite{SCHMIDHUBER201585}, and a similar group at Google have dominated many of these competitions. The cutting-edge today is represented by networks like Inception v4 designed by Google for image classification  which contains approximately 43 million parameters  \cite{Szegedy2013}. Early versions of this network took 1-2 million dollars worth of compute-time to train. ANNs now appear in nearly every industry from devices which use ANNs to intelligently adapt their performance, to the sciences which rely on ANNs to eliminate tedious sorting and identification of data that previously had to be relegated to humans.
+It is worth noting a couple of key ingredients that led to LeCun's
+success. First, the problem context itself was both simple and
+extremely rich in training data. Second, bank checks are protected from
+both by customers' desire to write correct checks, and their
+consistent formatting. Finally, the computing resources needed had only just
+reached sufficient specifications and indeed, LeCun's team had rare
+access to this level of resources. This combination along with the
+rapid drive toward automation at the turn of the millennium left
+fertile ground for this discovery. This also removed one crucial
+threat to this system, adversarial attacks. Banks are both protected
+legally from the crime of fraudulent checks, and practically by the
+paucity of advanced computing resources at the time. While this
+protected nascent machine-learning implementations, time will
+gradually bring technological advancements that will unseat these
+controlled conditions. 
+
+Through the early 2000s, along with the internet hitting its stride,
+neural networks have quietly become ubiquitous while  remaining
+relegated to image recognition problems. Research and time was spent on increasing
+speed and efficiency. To keep these increasingly complex and structured models able
+to scale with the growing data available, Hinton and Bengio
+distinguished themselves in these middle steps. 
+~\cite{bengio2007greedy,
+hinton2006reducing,
+hinton2006fast
+}
+While many observers still treated
+them as toy models inferior to traditional modeling,  the
+industrial success of these models was beginning to fuel a new wave of
+serious theoretical and practical work in the field. A generation of
+household names including Collobert, Hinton, Bengio, and Hochreiter
+came to distinguish themselves alongside LeCun. 
+~\cite{coates2011analysis,
+glorot2011deep,
+vincent2010stacked,
+boureau2010learning,
+hinton2010practical,
+glorot2010understanding,
+erhan2010does,
+bengio2009learning}
+With this expansion in theory came a boom in the structure and
+capabilities of neural networks, including recurrent networks,
+convolutional neural networks, natural language processing, and the
+revival and implementation of an older core idea of
+Long-Short-Term-Memory networks. 
+~\cite{mikolov2010recurrent,
+lee2009convolutional,
+collobert2011natural,
+hochreiter1997long}
+
+With this growing theoretical interest came inexorable expansion of
+well-maintained libraries for working with neural networks including
+the very early creation of the now famous Torch.
+~\cite{Collobert2002TorchAM} and its python interface that still
+dominates the market-share of machine learning PyTorch
+~\cite{NEURIPS2019_9015} and with which most of the results in this
+work have been computed. 
+
+While neural networks had still not breached the mainstream of pop
+culture, they had carved out an undeniable niche by the 2010s. The
+field of computer science was ready to test what they could
+do. Gradually the era from 2010-2015 became dominated by the
+competitions (e.g:
+\url{http:/image-net.org/challenges/LSVRC/}) in which a bounty (or
+publicity) is offered and labs around the world compete to build a
+network which solves the competition's problem. Schimdhuber's group
+\cite{SCHMIDHUBER201585}, and a similar group at Google dominated
+many of these competitions. The cutting-edge became represented by
+networks like Inception v4 designed by Google for image classification
+which contains approximately 43 million parameters
+\cite{Szegedy2013}. Early versions of this network took 1-2 million
+dollars worth of compute-time to train. ANNs now appear in nearly
+every industry from devices which use ANNs to intelligently adapt
+their performance, to the sciences which rely on ANNs to eliminate
+tedious sorting and identification of data that previously had to be
+relegated to humans. Recently transformers
+~\cite{vaswani2017attention} have gained worldwide attention and
+ubiquity for seemingly miraculous results in the well known chat
+bot ChatGPT. 
 
 \subsection{Structure}
 In this subsection we give a mathematical description of artificial neural networks. 
@@ -379,144 +498,4 @@ Given an ANN $N: \R^n \to C$, an initial set of weights for this network $\vec w
 Stochastic gradient descent achieves a smoothing effect on the gradient optimization by only sampling a subset of the training data for each iteration. Miraculously, this smoothing effect not only often achieves faster convergence, the result also generalizes better than solutions using deterministic gradient methods 
 \cite{HardtRS15}. It is for this reason that SGD has been adopted as the de facto standard among ANN training applications.
 
-\subsection{Adversarial Attacks }
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%(2)
-
-In general \emph{Adversarial Attacks} against models
-are small perturbations from natural data which significantly perturb
-model output. 
-Szegedy et al. \cite{Szegedy2013} realized that the same computational tools
-used to train ANNs could be used to generate attacks that would
-confuse them. Their approach was to define a loss function
-relating the output of the ANN for a given initial image to a target adversarial 
-output plus the $L^2$-norm of the input and use backpropagation to
-compute gradients -- not on the weights of the neural network, but on
-just the input layer to the network. The solution to this optimization
-problem, efficiently approximated by a gradient-based optimizer, would
-be a slightly perturbed natural input with a highly perturbed
-output. Their experimental results are striking:\\
-
-\begin{figure}[H]
-    \centering
-\includegraphics[width=7.3cm]{c1_figures/negative1.png}\includegraphics[width=7.3cm]{c1_figures/negative2.png}
-    \caption{Natural Images are in columns 1 and 4, Adversarial images are in columns 3 and 6, and the difference between them (magnified by a factor of 10) is in columns 2 and 5. All images in columns 3 and 6 are classified by AlexNet as "Ostrich" \cite{Szegedy2013}}
-    \label{fig:my_label}
-\end{figure}
-
-\subsubsection{Common Datasets}
-
-The Dataset used above is known as ImageNet -- a large set of labeled images varying in size originally compiled for the ImageNet Large Scale Visual Recognition Challenge (ILSVRC). This dataset and its many subsets has become a standard for image classification and feature identification experiments. In the experiments that follow, ImageNet will be featured alongside the Modified National Institute of Standards and Technology (MNIST) dataset which is a database of hand written digits often used to develop image processing and character recognition systems. This dataset is much lower resolution than ImageNet and is therefore experiments run much more quickly on it and require less complex input/output.  
-
-\subsubsection{L-BFGS minimizing distortion}\label{lbfgs}
-
-Szegedy et al. took advantage of the tools they had on hand for training neural networks to set up a box-constrained optimization problem whose approximated solution generates these targeted misclassifications. 
-
-
-Let $f : \R^m \to \{1,...,k\}$ be a classifier and assume $f$ has an associated continuous loss function denoted by loss$_f : \R^m \times \{1,...,k\} \to \R^+$ and $l$ a target adversarial . \\
-\textbf{ Minimize} $\Norm{r}_2$ subject to:
-\begin{enumerate}[1.]
-\item $f(x + r) = l$
-\item $x + r \in [0,1]^m$
-\end{enumerate}
-
-The solution is approximated with L-BFGS (see Appendix \ref{appa}) as implemented in Pytorch or Keras. This technique yields examples that are close to their original counterparts in the $L^2$ sense.  \\
-
-%Find the minimum $c > 0$ for which the minimizer $r$ of the following satisfies $f(x+r) = l$\\
-
-%minimize $c|r| + $loss$_f(x+r,l)$ subject to $x + r \in [0,1]^m$.
-
-\paragraph{L-BFGS: Mnist}
-The following examples are prepared by implementing the above technique via pytorch on images from the Mnist dataset with FC200-200-10, a neural network with 2 hidden layers with 200 nodes each:
-\begin{figure}[H]
-\label{lbfgsa}
-\includegraphics[trim=200 185 100 200, clip, width=7cm]{c1_figures/FC200-200-10-2448-O8-A0-attack_summary.png}\includegraphics[trim=200 185 100 200, clip,width=7cm]{c1_figures/FC200-200-10-2448-O8-A1-attack_summary.png}
-\includegraphics[trim=200 185 100 200, clip,width=7cm]{c1_figures/FC200-200-10-2448-O8-A2-attack_summary.png}\includegraphics[trim=200 185 100 200, clip,width=7cm]{c1_figures/FC200-200-10-2448-O8-A3-attack_summary.png}
-\includegraphics[trim=200 185 100 200, clip,width=7cm]{c1_figures/FC200-200-10-2448-O8-A4-attack_summary.png}\includegraphics[trim=200 185 100 200, clip,width=7cm]{c1_figures/FC200-200-10-2448-O8-A5-attack_summary.png}
-\caption{Original images on the left, Perturbation is in the middle, Adversarial Image (total of Original with Perturbation) is on the right. Column 1 shows an original 8 being perturbed to adversarial classes 0, 2, and 4. Column 2 shows adversarial classes 1, 3, and 5}
-\end{figure}
-Borrowing a metric from Szegedy et al to compare the magnitude of these distortions, we will define
-\begin{definition}{Distortion is the $L^2$ norm of the difference between an original image and a perturbed image, divided by the square root of the number of pixels in the image: }
-\[\sqrt{\dfrac{\sum_i \hat (x_i - x_i)^2}{n}}\]
-\end{definition}
-Distortion is $L^2$ magnitude normalized by the square-root of the number of dimensions so that values can be compared for modeling problems with differing numbers of dimensions. 
-
-The 900 examples generated for the network above had an average distortion of 0.089 with the following distribution of distortions, given in figure 3.
-
-\begin{figure}[H]
-\label{lbfgsh}
-\includegraphics[trim=200 80 100 100, clip, width=16cm]{c1_figures/FC200-200-10-distortion_hist.png}
-\caption{A histogram of the distortion measured for each of 900 adversarial examples generated using L-BFGS against the FC-200-200-10 network on Mnist. Mean distortion is 0.089.}
-\end{figure}
-
-\paragraph{L-BFGS: ImageNet}
-\label{lbfgs-s}
-We also tried to replicate \cite{Szegedy2013}'s results on ImageNet. Attacking VGG16, a well known model from the ILSVRC-2014 competition \cite{simonyan2014very}, on ImageNet images with the same technique generates the examples in figure 4: 
-
-\begin{figure}[H]
-\label{lbfgsis}
-\includegraphics[trim=200 185 100 200, clip, width=8cm]{c1_figures/vgg16-ILSVRC2012_val_00039098-O722-A965-attack_summary.png}\includegraphics[trim=200 185 100 200, clip, width=8cm]{c1_figures/vgg16-ILSVRC2012_val_00027142-O52-A347-attack_summary.png}
-\includegraphics[trim=200 185 100 200, clip, width=8cm]{c1_figures/vgg16-ILSVRC2012_val_00029901-O425-A468-attack_summary.png}\includegraphics[trim=200 185 100 200, clip, width=8cm]{c1_figures/ILSVRC2012_val_00001375-Otensor([42])-A694-attack_summary.png}
-% \includegraphics[width=7cm]{c1_figures/vgg16-ILSVRC2012_val_00035978-O803-A353-attack_summary.png}
-% \includegraphics[width=7cm]{c1_figures/ILSVRC2012_val_00000886-Otensor([940])-A684-attack_summary.png}
-\caption{Original images on the left, Perturbation (magnified by a factor of 100) by is in the middle, Adversarial Image (total of Original with Perturbation) is on the right. }
-\end{figure}
-
-%The average distortion was 0.01 distributed as seen in figure \ref{lbfgsi}. 
-
-\begin{figure}[H]
-\label{lbfgsi}
-\includegraphics[trim=200 80 100 100, clip,width=14cm]{c1_figures/distortion_hist.png}
-\caption{A histogram of the distortion measured for each of 112 adversarial examples generated using L-BFGS against the VGG16 network on ImageNet images with mean distortion 0.0107}
-\end{figure}
-
-\paragraph{Fast Gradient Sign Method (FGSM)} 
-
-  We also implemented a single step attack process uses the gradient of the loss function $L$ with respect to the image to find the adversarial perturbation \cite{goodfellow_explaining_2014}. for given $\e$, the modified image $\hat x$ is computed as
-\begin{equation}
-\hat{x} = x + \epsilon \text{sign} (\nabla L (P_w(x),x))
-\end{equation}
-
-This method is simpler and much faster to compute than the L-BFGS technique described above, but produces adversarial examples less reliably and with generally larger distortion. Performance was similar but inferior to the Iterative Gradient Sign Method summarized below.  
-%\[\hat x = x + \e \sign(\Delta \ell(F(x'_m),x'_m))\]
-
-\paragraph{Iterative Gradient Sign Method (IGSM)}
-\label{igsm-s}
-In \cite{kurakin_adversarial_2016}
-  an iterative application of FGSM was proposed. After each
-  iteration, the image is clipped to a $\e L_\infty$ neighborhood of the original. Let $x'_0 = x$, then after $m$ iterations, the adversarial image obtained is:
-\begin{equation}
-x_{m+1}' = \text{Clip}_{x,\epsilon} \Bigl\{x_m' + \alpha \times \text{sign}(\nabla \ell (F(x'_m),x'_m))  \Bigr\} 
-\label{igsm}
-\end{equation}
-This method is faster than L-BFGS and more reliable than FGSM but still produces examples with greater distortion than L-BFGS. 
-%  \[x'_{m + 1} = \text{Clip}_{x,\e} \{ x'_m + \alpha \times
-%  \sign(\Delta \ell(F(x'_m),x'_m))\] 
-\begin{figure}[H]
-  \centering
-\includegraphics[trim=200 110 1200 102, clip,width=4cm]{c1_figures/ILSVRC2012_val_00002900summary_plot.png}\includegraphics[trim=900 110 500 102, clip,width=4cm]{c1_figures/ILSVRC2012_val_00002900summary_plot.png}
-%\includegraphics[width=12cm]{c1_figures/ILSVRC2012_val_00048234summary_plot.png}
-\label{fgsmhip}
-\caption{adversarial example generated against VGG16 (ImageNet) with IGSM. Original Image on the left, adversarial image and added noise (ratio of variance adversarial noise/original image: 0.0000999) on the right. }
-\end{figure}
-
-%The attacks contained in figure ~\ref{fgsmhip} were generated with IGSM against VGG16
-
-
-\subsubsection{Other Attacks}
-The following attack techniques are also prevalent in the literature but have not been replicated in these experiments. 
-
-\paragraph{Jacobian-based Saliency Map Attack (JSMA)} Another attack noted by  \cite{papernot_limitations_2015}
-  estimates the \emph{saliency map}, a rating for each of the input features (e.g. each pixel) on how influential it is for causing the model to predict a particular class with respect to the model output \cite{wiyatno2018saliency}. This attack modifies the pixels that are most salient. This is a targeted attack, and saliency is designed to find the pixel which increases the classifier's output for the target class while tending to decrease the output for other classes.
-
-\paragraph{Deep Fool (DFool)} A technique proposed by \cite{moosavi-dezfooli_deepfool:_2015}
-  to generate an un-targeted iterative attack. 
-This method approximates the classifier as a linear decision boundary and then finds the smallest perturbation needed to cross that boundary.
-This attack minimizes $L_2$ norm with respect to  to the original image.
-
-\paragraph{Carlini \& Wagner (C\&W)} In \cite{carlini_towards_2016}
-  an adversarial attack is proposed which updates the loss function such that it jointly minimizes $L_p$ and a custom differentiable loss function based on un-normalized outputs of the classifier (\textit{logits}). 
-Let $Z_k$ denote the logits of a model for a given class $k$, and $\kappa$ a margin parameter. Then C\&W tries to minimize:
-\begin{equation}
-|| x - \hat{x} ||_p + c* max\left(Z_k(\hat{x}_y) - max\{Z_k(\hat{x}) : k \neq y\},-\kappa\right)
-\end{equation}
 

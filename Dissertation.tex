@@ -54,7 +54,7 @@ openany, % eliminates all extra blank pages from entire document
 \addbibresource{example.bib} % The filename of the bibliography
 
 \usepackage[autostyle=true]{csquotes} % Required to generate language-dependent quotes in the bibliography
-\usepackage{enumerate}
+\usepackage{enumerate} 
 \usepackage{xcolor}
 \usepackage{graphicx}
 \usepackage{mathrsfs}
@@ -65,6 +65,7 @@ openany, % eliminates all extra blank pages from entire document
 \usepackage{amsmath,amssymb,amsthm,esint}
 \usepackage{longtable}
 \usepackage{tikz}
+\usepackage{bbm}
 \usepackage{float}
 \usepackage{pgfplots}
 \usepackage{caption}
@@ -624,13 +625,24 @@ Dissertation Director: \chairname \\
 % Include the chapters of the thesis as separate files from the Chapters folder
 % Uncomment the lines as you write the chapters
 
-\include{Chapters/Chapter1} 
-\include{Chapters/Chapter2} 
+% introduce neural networks and need for security 
+\include{Chapters/Chapter1}
+% define adversarial attacks and problem context
+% cut between intro and persistence sections to put definitions here.
+% TODO edit and excise things that overlap with persistence stuff
+\include{Chapters/Chapter2}
+% explore neural networks with persistence
+% TODO merge with latest paper submitted
 \include{Chapters/Chapter3}
+% demonstrate neural networks are kernel machines
+% TODO merge with latest version of paper
 \include{Chapters/Chapter4} 
+% define wedges, crossing angles, and geometric hypothesis
+% TODO work in latest images from crossing angle work
+% TODO future objectives with zonotropes or MILP
 \include{Chapters/Chapter5}
-\include{Chapters/ChapterInstructions}
 
+\include{Chapters/ChapterInstructions}
 % Copy line above and use ChapterTemplate.tex in Chapters folder if additional chapters are required
 
 %----------------------------------------------------------------------------------------
