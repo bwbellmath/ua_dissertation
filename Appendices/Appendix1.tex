@@ -1,0 +1,87 @@
+\section{Appendix: L-BFGS}\label{appa}
+Limited-memory Broyden-Fletcher-Goldfarb-Shanno (L-BFGS)
+is a quasi-newton gradient based optimization algorithm which stores a history of gradients and positions from each previous optimization step \cite{liu1989limited}. The algorithm as implemented to optimize a function $f$ with gradient at step $k$ of $g_k$ is as follows
+
+%\renewcommand{\baselinestretch}{1.0}
+\begin{algorithm}[H]{L-BFGS}
+\begin{algorithmic}
+\State Choose $x_0, m, 0 < \beta' < 1/2, \beta' < \beta < 1$, and a symmetric positive definite starting matrix $H_0$. 
+\For{$k = 0$ to $k = $ (the number of iterations so far)}
+\State $d_k = -H_kg_k$,
+\State $x_{k+1} = x_k + \alpha_kd_k$,
+Where $\alpha_k$ satisfies 
+\begin{align*}
+    f(x_k + \alpha_k d_k) &\leq f(x_k) + \beta'\alpha_kg_k^Td_k,\\
+    g(x_k + \alpha_k d_k)^Td_k &\geq \beta g_{k}^T d_k.\\
+\end{align*}
+\Comment{Trying steplength $\alpha_k = 1$ first.}
+\State Let $\hat m = \min(k, m - 1).$ 
+\For{$i$ from 0 to $\hat m + 1$}
+\Comment{Update $H_0$ $\hat m+1$ times using pairs $\{y_j,s_j\}^k_{j = k - \hat m},$}
+\begin{align*}
+    H_{k+1} &= (V_k^T \cdot V_{k-\hat m}^T)H_0(V_{k - \hat m}\cdots V_k)\\
+    &+\rho_{k-\hat m}(V_k^T \cdots V_{k-\hat m+1}^T)s_{k - \hat m} s_{k - \hat m}^T(V_{k-\hat m+1} \cdots V_k)\\
+    &+\rho_{k-\hat m + 1}(V_k^T \cdots V_{k-\hat m+2}^T)s_{k - \hat m + 1} s_{k - \hat m + 1}^T(V_{k-\hat m+2} \cdots V_k)\\
+    & \vdots\\
+    &+\rho_ks_ks_k^T\\
+\end{align*}
+\EndFor
+\EndFor
+\end{algorithmic}
+\end{algorithm}
+
+\newpage
+\section{Appendix: Bracketing Algorithm}\label{bracketing}
+This algorithm was implemented in Python for the experiments presented. 
+
+\begin{algorithm}
+\begin{algorithmic}
+\Function{bracketing}{image, ANN, n, tol, n\_real, c\_i}
+ \Comment{ start with same magnitude noise as image}
+ \State u\_tol, l\_tol = 1.01, 0.99
+ \State a\_var = Variance(image)/4 \Comment{Running Variance}
+ \State l\_var, u\_var  = 0, a\_var*2\Comment{ Upper and Lower
+   Variance of search space}
+ \Comment{ Adversarial image plus noise counts}
+ \State a\_counts = zeros(n)
+ \State n\_sz = image.shape[0]
+ \State mean = Zeros(n\_sz)
+ \State I = Identity(n\_sz)
+ \State count = 0
+\Comment{grab the classification of the image under the network}
+\State y\_a = argmax(ANN.forward(image))
+\State samp = N(0, u\_var*I, n\_real)
+\State image\_as = argmax(ANN.forward(image + samp))
+\Comment{Expand search window}
+\While{Sum(image\_as == y\_a) $>$ n\_real*tol/2}
+\State u\_var = u\_var*2
+\State samp = N(0, u\_var*I, n\_real)
+\State image\_as = argmax(ANN.forward(image + samp))
+\EndWhile
+  \Comment{ perform the bracketing }
+\For{i in range(0,n)}
+\State count+=1
+\Comment{compute sample and its torch tensor}
+\State samp = N(0, a\_var*I, n\_real)
+
+\State image\_as = argmax(ANN.forward(image + samp))
+
+\State a\_counts[i] = Sum(image\_as == y\_a)
+
+\Comment{floor and ceiling surround number}
+\If{((a\_counts[i] $\leq$ Ceil(n\_real*(tol*u\_tol))) \& (a\_counts[i] $>$ Floor(n\_real*(tol*l\_tol))))}
+
+        \Return{a\_var}
+    \ElsIf{ (a\_counts[i] $<$ n\_real*tol)} \Comment{we're too high}
+        \State u\_var = a\_var
+        \State a\_var = (a\_var + l\_var)/2
+    \ElsIf{ (a\_counts[i] $\geq$ n\_real*tol)} \Comment{we're too low}
+        \State l\_var = a\_var
+        \State a\_var = (u\_var + a\_var)/2
+        \EndIf
+\EndFor
+
+   \Return{a\_var}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}

@@ -69,10 +69,11 @@ openany, % eliminates all extra blank pages from entire document
 \usepackage{float}
 \usepackage{pgfplots}
 \usepackage{caption}
-\usepackage{subcaption}
+\usepackage{subcaption} 
 \usepackage{empheq}
 \usepackage{indentfirst}
 \usepackage{algorithm}
+\usepackage{algorithmic}
 \usepackage{algpseudocode}
 
 \usepackage[many]{tcolorbox}
@@ -98,10 +99,8 @@ openany, % eliminates all extra blank pages from entire document
 \usepackage{amsfonts}       % blackboard math symbols
 \usepackage{nicefrac}       % compact symbols for 1/2, etc.
 \usepackage{microtype}      % microtypography
-\usepackage{subcaption}
 \usepackage{textcase}
 \usepackage{thmtools,thm-restate}
-\usepackage{subcaption}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %newcommands
@@ -626,23 +625,27 @@ Dissertation Director: \chairname \\
 % Uncomment the lines as you write the chapters
 
 % introduce neural networks and need for security 
-\include{Chapters/Chapter1}
+%\include{Chapters/Chapter1}
+
 % define adversarial attacks and problem context
 % cut between intro and persistence sections to put definitions here.
 % TODO edit and excise things that overlap with persistence stuff
-\include{Chapters/Chapter2}
+%\include{Chapters/Chapter2}
+
 % explore neural networks with persistence
 % TODO merge with latest paper submitted
-\include{Chapters/Chapter3}
-% demonstrate neural networks are kernel machines
-% TODO merge with latest version of paper
-\include{Chapters/Chapter4} 
-% define wedges, crossing angles, and geometric hypothesis
-% TODO work in latest images from crossing angle work
-% TODO future objectives with zonotropes or MILP
-\include{Chapters/Chapter5}
+%\include{chapters/chapter3}
 
-\include{Chapters/ChapterInstructions}
+% demonstrate neural networks are kernel machines
+% todo merge with latest version of paper
+\include{chapters/chapter4} 
+
+% define wedges, crossing angles, and geometric hypothesis
+% todo work in latest images from crossing angle work
+% todo future objectives with zonotropes or milp
+%\include{chapters/chapter5}
+
+%\include{chapters/ChapterInstructions} 
 % Copy line above and use ChapterTemplate.tex in Chapters folder if additional chapters are required
 
 %----------------------------------------------------------------------------------------
@@ -651,7 +654,8 @@ Dissertation Director: \chairname \\
 %
 % Appendices Requirements (if used)
 % Follow content and precede References, unless used for manuscript/previous published article disserations
-% are distinguished by capital letters, Appendix A – title, Appendix B – title, etc.
+% are distinguished by capital letters, Appendix A – title, Appendix B
+% – title, etc. 
 % must be correctly listed in Table of Contents
 % Pages must be numbered in manner consistent with the rest of the document
 % Permissions for including previously published articles are included
@@ -664,9 +668,9 @@ Dissertation Director: \chairname \\
 \appendix % Cue to tell LaTeX that the following "chapters" are Appendices
 
 % Include the appendices of the thesis as separate files from the Appendices folder
-% Uncomment the lines as you write the Appendices
+% Uncomment the lines as you write the Appendices 
 
-\include{Appendices/AppendixA}
+\include{Appendices/Appendix1} 
 %\include{Appendices/AppendixB}
 %\include{Appendices/AppendixC}
 
@@ -683,4 +687,4 @@ Dissertation Director: \chairname \\
 
 %----------------------------------------------------------------------------------------
 
-\end{document}  
+\end{document}   

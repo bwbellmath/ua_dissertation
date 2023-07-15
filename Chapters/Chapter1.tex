@@ -96,50 +96,58 @@ relegated to image recognition problems. Research and time was spent on increasi
 speed and efficiency. To keep these increasingly complex and structured models able
 to scale with the growing data available, Hinton and Bengio
 distinguished themselves in these middle steps. 
-~\cite{bengio2007greedy,
-hinton2006reducing,
-hinton2006fast
-}
+~\cite{bengio2007greedy, hinton2006reducing, hinton2006fast}
 While many observers still treated
 them as toy models inferior to traditional modeling,  the
 industrial success of these models was beginning to fuel a new wave of
 serious theoretical and practical work in the field. A generation of
-household names including Collobert, Hinton, Bengio, and Hochreiter
+household names including Collobert, Hinton, Bengio, and Schmidhuber
 came to distinguish themselves alongside LeCun. 
 ~\cite{coates2011analysis,
-glorot2011deep,
 vincent2010stacked,
 boureau2010learning,
 hinton2010practical,
 glorot2010understanding,
 erhan2010does,
 bengio2009learning}
-With this expansion in theory came a boom in the structure and
-capabilities of neural networks, including recurrent networks,
-convolutional neural networks, natural language processing, and the
-revival and implementation of an older core idea of
-Long-Short-Term-Memory networks. 
-~\cite{mikolov2010recurrent,
-lee2009convolutional,
-collobert2011natural,
-hochreiter1997long}
+With this expansion in theory came a boom in the ability to
+practically implement more structured and capable neural networks: recurrent networks ~\cite{mikolov2010recurrent},
+convolutional neural networks ~\cite{lee2009convolutional}, natural
+language processing ~\cite{collobert2011natural}, and
+Long-Short-Term-Memory (LSTM) networks originally developed by
+Horchreiter (a student of Shmidhuber) in
+1997~\cite{hochreiter1997long} to actively understand time-series,
+including a solution to the problem of vanishing
+gradients problem whereby gradients computed by back propagation which
+constitutes a large product of small numbers especially for early
+layers in deep networks. This problem naturally arises for recurrent
+networks and many approaches that address time-series. The solution
+Horchreiter provided, the addition of residual connections to past
+parameter states. This insight has made the LSTM one of the most cited
+neural networks. This in combination with the surprising result that
+Rectified Linear Units (ReLUs) could also solve the vanishing gradient
+problem allowed for much deeper and more sophisticated neural networks
+to be implemented than ever before. 
 
-With this growing theoretical interest came inexorable expansion of
+In step With this growing theoretical interest came inexorable expansion of
 well-maintained libraries for working with neural networks including
 the very early creation of the now famous Torch.
 ~\cite{Collobert2002TorchAM} and its python interface that still
-dominates the market-share of machine learning PyTorch
-~\cite{NEURIPS2019_9015} and with which most of the results in this
+dominates the market-share of machine learning: PyTorch
+~\cite{NEURIPS2019_9015} with which most of the results in this
 work have been computed. 
 
 While neural networks had still not breached the mainstream of pop
-culture, they had carved out an undeniable niche by the 2010s. The
+culture, they had carved out an undeniable niche by 2009. The
 field of computer science was ready to test what they could
-do. Gradually the era from 2010-2015 became dominated by the
-competitions (e.g:
-\url{http:/image-net.org/challenges/LSVRC/}) in which a bounty (or
-publicity) is offered and labs around the world compete to build a
-network which solves the competition's problem. Schimdhuber's group
+do. With all of the ingredients in place, 2009-2010 saw competitions
+across ML tasks go viral. The ImageNet Large Scale Visual Recognition
+Challenge (ILSVRC) \url{http:/image-net.org/challenges/LSVRC/}), Segmentation of Neuronal Structures in Electron
+Microscopy Stacks, Traffic sign recognition (IJCNN2012) and more. The
+era became defined by these competitions which served to not only gain 
+visibility for the field and its strongest participants, but also
+rapidly push multiple ML applications up to the point of practical
+utility. Schimdhuber's group
 \cite{SCHMIDHUBER201585}, and a similar group at Google dominated
 many of these competitions. The cutting-edge became represented by
 networks like Inception v4 designed by Google for image classification
@@ -149,10 +157,12 @@ dollars worth of compute-time to train. ANNs now appear in nearly
 every industry from devices which use ANNs to intelligently adapt
 their performance, to the sciences which rely on ANNs to eliminate
 tedious sorting and identification of data that previously had to be
-relegated to humans. Recently transformers
-~\cite{vaswani2017attention} have gained worldwide attention and
-ubiquity for seemingly miraculous results in the well known chat
-bot ChatGPT. 
+relegated to humans. Recently natural language processing has received
+its own renaissance, led by Chat-Bots based on the popular transformer
+architecture. 
+~\cite{vaswani2017attention}. Neural network based models are here to
+stay, but as these tools expand so wildly in application, we must
+begin to ask hard questions about their limitations and implications. 
 
 \subsection{Structure}
 In this subsection we give a mathematical description of artificial neural networks. 

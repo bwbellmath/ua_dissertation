@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 112.72 57.28">
+  <defs>
+    <style>
+      .cls-1 {
+        stroke: #231f20;
+      }
+
+      .cls-1, .cls-2, .cls-3 {
+        fill: none;
+        stroke-miterlimit: 10;
+      }
+
+      .cls-4 {
+        fill: #00aeef;
+        font-family: CourierNewPS-BoldMT, 'Courier New';
+        font-size: 7px;
+        font-weight: 700;
+      }
+
+      .cls-2 {
+        stroke: #27aae1;
+      }
+
+      .cls-3 {
+        stroke: #ed1c24;
+      }
+    </style>
+  </defs>
+  <line class="cls-1" x1=".5" x2=".5" y2="56.78"/>
+  <path class="cls-3" d="m.5,56.78h0c19.7-14.47,66.17-44.81,101-28.33,1.46.69,2.91,1.47,4.33,2.33"/>
+  <line class="cls-1" x1=".5" y1="56.78" x2="112.72" y2="56.78"/>
+  <line class="cls-2" x1="55.17" y1="21.78" x2="28.5" y2="34.11"/>
+  <line class="cls-2" x1="81.17" y1="17.11" x2="55.17" y2="21.78"/>
+  <line class="cls-2" x1="105.83" y1="19.89" x2="81.17" y2="17.11"/>
+  <line class="cls-2" x1="28.5" y1="34.11" x2=".5" y2="56.78"/>
+  <text class="cls-4" transform="translate(22.85 30.37)"><tspan x="0" y="0">a</tspan></text>
+  <text class="cls-4" transform="translate(27.05 32.7) scale(.58)"><tspan x="0" y="0">1</tspan></text>
+  <text class="cls-4" transform="translate(50.03 17.86)"><tspan x="0" y="0">a</tspan></text>
+  <text class="cls-4" transform="translate(54.23 20.2) scale(.58)"><tspan x="0" y="0">2</tspan></text>
+  <text class="cls-4" transform="translate(77.84 13.79)"><tspan x="0" y="0">a</tspan></text>
+  <text class="cls-4" transform="translate(82.04 16.13) scale(.58)"><tspan x="0" y="0">3</tspan></text>
+  <text class="cls-4" transform="translate(103.32 16.89)"><tspan x="0" y="0">a</tspan></text>
+  <text class="cls-4" transform="translate(107.52 19.22) scale(.58)"><tspan x="0" y="0">4</tspan></text>
+</svg>
