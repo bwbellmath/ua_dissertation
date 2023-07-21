@@ -1,4 +1,4 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 % Masters/Doctoral Thesis 
 % LaTeX Template
 % Version 2.5 (27/8/17)
@@ -44,7 +44,7 @@ openany, % eliminates all extra blank pages from entire document
 ]{DoctoralThesis} % The class file specifying the document structure
 
 \usepackage[utf8]{inputenc} % Required for inputting international characters
-
+ 
 \usepackage[T1]{fontenc} % Output font encoding for international characters
 
 \usepackage{mathpazo} % Use the Palatino font by default
@@ -54,7 +54,7 @@ openany, % eliminates all extra blank pages from entire document
 \addbibresource{example.bib} % The filename of the bibliography
 
 \usepackage[autostyle=true]{csquotes} % Required to generate language-dependent quotes in the bibliography
-\usepackage{enumerate} 
+\usepackage{enumerate}
 \usepackage{xcolor}
 \usepackage{graphicx}
 \usepackage{mathrsfs}
@@ -73,8 +73,8 @@ openany, % eliminates all extra blank pages from entire document
 \usepackage{empheq}
 \usepackage{indentfirst}
 \usepackage{algorithm}
-\usepackage{algorithmic}
-\usepackage{algpseudocode}
+%\usepackage{algorithmic}
+%\usepackage{algpseudocode}
 
 \usepackage[many]{tcolorbox}
 \usepackage[T1]{fontenc}
@@ -82,10 +82,10 @@ openany, % eliminates all extra blank pages from entire document
 \usepackage{lmodern}
 %\usepackage[english]{babel}
 %\usepackage{bbm}
-\usepackage{algorithm}
+%\usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{booktabs}
-\usepackage{pgfplots}
+\usepackage{pgfplots} 
 \usepackage{tikz-3dplot}
 \usepackage{dsfont}
 \usepackage{mathpazo}
@@ -133,6 +133,10 @@ openany, % eliminates all extra blank pages from entire document
 
 \newtheorem{proposition}[theorem]{Proposition}
 %\newenvironment{proof}[1][Proof]{\noindent\textbf{#1.} }{\ \rule{0.5em}{0.5em}}
+\newtheorem{remark}[theorem]{Remark}
+%\newenvironment{proof}[1][Proof]{\noindent\textbf{#1.} }{\ \rule{0.5em}{0.5em}}
+\newenvironment{sproof}{%
+  \renewcommand{\proofname}{Proof Sketch}\proof}{\endproof}
 \newcommand{\e}{\varepsilon}
 \newcommand{\relu}{\text{ReLU}}
 \newcommand{\norm}[1]{\left\vert #1 \right\vert}
@@ -625,25 +629,28 @@ Dissertation Director: \chairname \\
 % Uncomment the lines as you write the chapters
 
 % introduce neural networks and need for security 
-%\include{Chapters/Chapter1}
+\include{Chapters/Chapter1}
 
 % define adversarial attacks and problem context
 % cut between intro and persistence sections to put definitions here.
 % TODO edit and excise things that overlap with persistence stuff
-%\include{Chapters/Chapter2}
+\include{Chapters/Chapter2}
 
 % explore neural networks with persistence
 % TODO merge with latest paper submitted
-%\include{chapters/chapter3}
+\include{chapters/chapter3}
 
 % demonstrate neural networks are kernel machines
-% todo merge with latest version of paper
+% DONE merge with latest version of paper
+% TODO : parse through and carefully identify my versus collaborators'
+% contributions.
+% TODO : Move kernel proof from appendix to body. 
 \include{chapters/chapter4} 
 
 % define wedges, crossing angles, and geometric hypothesis
 % todo work in latest images from crossing angle work
 % todo future objectives with zonotropes or milp
-%\include{chapters/chapter5}
+\include{chapters/chapter5}
 
 %\include{chapters/ChapterInstructions} 
 % Copy line above and use ChapterTemplate.tex in Chapters folder if additional chapters are required
@@ -671,6 +678,8 @@ Dissertation Director: \chairname \\
 % Uncomment the lines as you write the Appendices 
 
 \include{Appendices/Appendix1} 
+\include{Appendices/Appendix3}
+\include{Appendices/Appendix4}
 %\include{Appendices/AppendixB}
 %\include{Appendices/AppendixC}
 
