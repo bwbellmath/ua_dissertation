@@ -1,11 +1,8 @@
 \chapter{Persistent Classification}
 
-
-
-
-
-
-
+Whereas ~\cite{roth19aodds} consider adding various types of noise to a given point and ~\cite{hosseini2019odds} consider small Gaussian perturbations of $x$ sampled from $N(x,\varepsilon^2 I)$ for small $\varepsilon$, %\todo{[K]: Should we go ahead and just be clear here and say $N(x,\varepsilon^2 I)$?} %noise perturbations of $\varepsilon$ times a vector with normal distribution $N(0,I)$ with a small selection of choices for $\varepsilon.$
+we specifically focus on %Our choice to consider varying standard deviations is quite similar to considering varying choices of $\varepsilon$ in the latter, but our focus is on 
+tuning the standard deviation parameter to determine a statistic describing how a given data point is placed within its class. The $\gamma$-persistence then gives a measurement similar to distance to the boundary but that is drawn from sampling instead of distance. The sampling allows for a better description of the local geometry of the class and decision boundary, as we will see in Section \ref{subsec:stab}. Our statistic is based on the fraction of a Gaussian sampling of the neighborhood of a point which receives the same classification; this is different from that of ~\cite{roth19aodds}, which is the expected difference of the output of the logit layer of the original data point and the output of the logit layer for perturbed data points.  Additionally, while their statistics are defined pairwise with reference to pre-chosen original and candidate classes, ours is not.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % persistence paper
