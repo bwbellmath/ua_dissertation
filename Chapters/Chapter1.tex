@@ -2,9 +2,91 @@
 \chapter{Introduction} % Main chapter title
 \label{Chapter1} % For referencing the chapter elsewhere, use \ref{Chapter1} 
 
+The intention of this work is to understand the curious vulnerability
+that has been observed (~\cite{szegedy2013}) within artificial neural
+networks. These models models chronically admit inputs which might be
+very geometrically close and also usually indistinguishable according
+to users from natural data and yet which produce significant changes
+in output. In recent years, the usage of such models has expanded
+widely into applications across every scientific, industrial, and
+personal application. Despite this wide and growing usage,
+the impact of adversarial vulnerability on security, reliability, and
+safety in machine-learning are very poorly understood. In order to
+rigorously examine this topic, a robust theory and a rigorous
+mathematical framework for it to rest upon is necessary. We will build
+this frame-work from the ground up leveraging high dimensional
+geometry tools related to curvature, implicit representations drawn
+from functional analysis and theory of hilbert spaces, optimization,
+and vigorous experimentation. Our goal is to build out theory which
+can support increasingly sophisticated conjecture about adversarial
+attacks with a particular focus on the so called ``Dimpled Manifold
+Hypothesis'' by ~\cite{shamir2021dimpled}.
+
+Chapter One will cover the history and architecture of neural network
+architecture. This will include a brief description of the surprising
+theoretical and experimental results upon which modern
+machine-learning has been built. In combination with these theoretical
+results, a brief rigorous introduction to the practical components of
+a neural network model, its training objective, and training
+considerations are presented. Chapter Two is focused on the background
+of adversarial vulnerability. Starting from the seminal paper by
+~\cite{szegedy2013} we will develop the theory of adversarial
+perturbation and attack. We will consider both the theoretical and
+practical objectives and optimization problems related to creating
+adversarial examples, however we will put a particular emphasis to
+build up careful definitions for what ``adversarial'' means in context
+of modern machine learning.
+
+Chapter Three is where the fun begins,
+following the outline of a paper which is currently under submission
+on the topic of measuring geometric properties in order to understand
+adversarial examples, and to identify certain classes of attack when
+they are performed. This chapter will build a theory of persistence
+which is related to Ricci Curvature, which can be used to measure
+properties of decision boundaries. These properties include the theory
+of persistence and how it changes while interpolating across decision
+boundaries, measurement of normal vectors for decision boundaries, and
+comparison of various interpolation trajectories between various
+combinations of natural classed images, adversarial images, etc... The
+conclusion of this chapter is a conjecture relating adversarial
+attacks with properties of the decision boundary defined by an
+arbitrary model. 
+
+Chapter Four starts
+from a recent theory of the neural tangent kernel. By a clever
+re-ordering of a gradient formulation for the steps taken during
+optimization of a model for a given loss function, a representation
+can be obtained as the inner product of the model gradient for a test
+point with the sum over the model gradients for a query point. This
+inner product formulation is colloquially termed a ``kernel method''
+or a ``kernel machine'' which has some clearer mathematical properties
+than artificial neural networks do. Well known work has demonstrated
+that his representation is exact for infinite-width neural networks,
+but has significant shortcomings for practical finite models. This
+chapter outlines a recently accepted paper (~\cite{bell2023icml}) in
+which this kernel method is extended by careful integration along the
+training steps of a model's optimization in order to produce an exact
+representation for finite networks which can be computed in practice,
+and whose numerical error can be easily controlled.
+
+Chapter Five combines these theories and a better tool for
+visualizing (soft ricci curvature) near decision boundaries in order
+to refine the conjecture stated in Chapter Three. The main purpose of
+this chapter is to consolidate this conjecture as a foundation for a
+large body of continuing work. Based on the foundation presented
+within the first parts of this work, we will paint an actionable
+geometric picture for how adversarial examples come about and the
+properties of both the data and models used within modern
+machine-learning applications. This work will be collected into a
+forthcoming submission to ICLR. 
+
+% TODO paper connecting the kernel work directly with the RKBS/RKHS
+% and write that ensemble result which is generally true. 
+
 %----------------------------------------------------------------------------------------
 % Define some commands to keep the formatting separated from the content 
 %----------------------------------------------------------------------------------------
+\section{Background}
 
 Artificial Neural Networks and other optimization-based general
 function approximation models are the core of modern
