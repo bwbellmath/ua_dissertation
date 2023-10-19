@@ -2,7 +2,7 @@
 \chapter{Adversarial Attacks}
 
 \label{Chapter2} % Change X to a consecutive number; for referencing this chapter 
-\section{Introduction}
+%\section{Introduction}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%(2)
 
 Deep Neural Networks (DNNs) and their variants are core to the success
@@ -53,12 +53,12 @@ some subtle features for classification which are neither intuitive to
 humans nor robust to perturbation. In particular, that ML models can
 efficiently extract features from training data, but that they do not
 connect these features robustly across scales. The prevalence of these
-features is illustrated by the simple experiment of adding vast
+features is illustrated by ~\cite{madry2018towards} with the simple experiment of adding vast
 quantities of adversarially perturbed data during training
-~\cite{adversarial-training}. Although this method increases
-adversarial robustness, it does not do so very significantly, and
-leaves behind vulnerabilities that can still be reduced to non-robust
-features ~\cite{adversarial-training-vulnerability}. 
+. Although this method increases
+adversarial robustness at a cost to prediction accuracy (~\cite{tsipras2018robustness}), it does not
+do so very significantly, and leaves behind vulnerabilities that can
+still be reduced to non-robust features (~\cite{inevitable2018}). 
 
 %There are now a wide variety of attacks which produce adversarial examples and defenses which try to detect them. \todo{[DG]: not sure this is necessary. [K]: This paragraph is incomplete. Do you think there shouldn't be such a paragraph at all? [DG]: Not sure it is needed. If so, it maybe should probably come right at the beginning before the shafahi/are adversarial examples inevitable.}
 
@@ -79,7 +79,7 @@ A related idea is that adversarial examples often arise within cones, outside of
 \begin{figure}[H]
     \centering
 \includegraphics[width=7.3cm]{c1_figures/negative1.png}\includegraphics[width=7.3cm]{c1_figures/negative2.png}
-    \caption{Natural Images are in columns 1 and 4, Adversarial images are in columns 3 and 6, and the difference between them (magnified by a factor of 10) is in columns 2 and 5. All images in columns 3 and 6 are classified by AlexNet as "Ostrich" \cite{Szegedy2013}}
+    \caption{Natural Images are in columns 1 and 4, Adversarial images are in columns 3 and 6, and the difference between them (magnified by a factor of 10) is in columns 2 and 5. All images in columns 3 and 6 are classified by AlexNet as "Ostrich" (~\cite{Szegedy2013})}
     \label{fig:szegedy}
 \end{figure}
 
