@@ -50,6 +50,7 @@ openany, % eliminates all extra blank pages from entire document
 \usepackage{mathpazo} % Use the Palatino font by default
 
 \usepackage[backend=bibtex,style=authoryear,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
+%\usepackage{natbib}
 
 \addbibresource{example.bib} % The filename of the bibliography
 
@@ -374,6 +375,12 @@ openany, % eliminates all extra blank pages from entire document
 \hypersetup{hidelinks} % Set all hyperlinks standard color text
 }
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% stuff from iclr format...
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 %\usepackage{times} % Uncomment to use Times New Roman font
 
 \begin{document}
@@ -629,28 +636,34 @@ Dissertation Director: \chairname \\
 % Uncomment the lines as you write the chapters
 
 % introduce neural networks and need for security 
-\include{Chapters/Chapter1}
+%\include{Chapters/Chapter1}
 
 % define adversarial attacks and problem context
 % cut between intro and persistence sections to put definitions here.
 % TODO edit and excise things that overlap with persistence stuff
-\include{Chapters/Chapter2}
+%\include{Chapters/Chapter2}
 
 % explore neural networks with persistence
 % TODO merge with latest paper submitted
-\include{chapters/chapter3}
+%\include{chapters/chapter3}
+
 
 % demonstrate neural networks are kernel machines
 % DONE merge with latest version of paper
 % TODO : parse through and carefully identify my versus collaborators'
 % contributions.
-% TODO : Move kernel proof from appendix to body. 
-\include{chapters/chapter4} 
+% TODO : Move kernel proof from appendix to body.
+% TODO : summarize for dissertation 
+%\include{chapters/chapter4} 
+
+% TODO : summarize for dissertation
+\include{chapters/chapter4a} 
 
 % define wedges, crossing angles, and geometric hypothesis
-% todo work in latest images from crossing angle work
-% todo future objectives with zonotropes or milp
-\include{chapters/chapter5}
+% todo put image from crossing-angles work, mention for future
+% directions (steal straight from ISTI proposal?)
+% todo future objectives
+%\include{chapters/chapter5}
 
 %\include{chapters/ChapterInstructions} 
 % Copy line above and use ChapterTemplate.tex in Chapters folder if additional chapters are required
