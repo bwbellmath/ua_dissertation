@@ -232,9 +232,18 @@
 % %\printAffiliationsAndNotice{}  % leave blank if no need to mention equal contribution
 % \printAffiliationsAndNotice{\icmlEqualContribution} % otherwise use the standard text.
 
-\begin{abstract}
-We explore the equivalence between neural networks and kernel methods by deriving the first exact representation of any finite-size parametric classification model trained with gradient descent as a kernel machine. We compare our exact representation to the well-known Neural Tangent Kernel (NTK) and discuss approximation error relative to the NTK and other non-exact path kernel formulations. We experimentally demonstrate that the kernel can be computed for realistic networks up to machine precision. We use this exact kernel to show that our theoretical contribution can provide useful insights into the predictions made by neural networks, particularly the way in which they generalize.
-\end{abstract}
+This paper proposes the first exact path kernel representation for
+general gradient trained classifiers. The primary derivation and proof
+was written by Brian Bell and the supporting impoementation and work
+were mostly conducted by Michael Geyer. The central focus of the paper
+is on the derivation and demonstration that this method works in
+practice. The interest that gave rise for this approach comes from the fact that
+kernel methods and more specifically bilinear map based models
+decompose their predictions into a contribution from each of their
+training data. the Neural Tangent Kernel (NTK) is an interesting tool,
+but predicated on too many approximation assumptions. This exact
+formulation allows a much more solid foundation for geometric
+inferences. 
 
 \section{Introduction}
 
@@ -805,7 +814,7 @@ f_0(x) = f_{w_0(0)}(x) +  -\varepsilon \int_{P_S} \dfrac{d
       f_{w_s(0)}(x_i)\\   \label{eqint}
 \end{align}
 
-We will borrow the semi-inner-product from ~\cite{rkbs-paper}
+We will borrow the semi-inner-product from ~\cite{zhang2009reproducing}
 
 \begin{restatable}{lemma}{rkbs}
 All neural networks can be composed from a sheaf within a reproducing

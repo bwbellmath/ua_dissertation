@@ -51,16 +51,71 @@ machine-learning.
 %\includegraphics[width=0.9\textwidth]{c5_figures/wedge-mnist-C32-50-50-10-0.001-eval-1e-06-pgd-1-7-db_interp-stability-0.png}
 
     % \includegraphics[width=0.45\textwidth]{c4a_figures/dimensionality_means.pdf}
-    \caption{Left: 	}
-    \label{fig:wedge_db}
+    \caption{Left: Interpolation across the decision boundary between
+      two natural images from the test data for MNIST. Right :
+      Interpolation across the decision bundary between a natural
+      example (left) and an adversarial example (right). Top Heatmaps
+      show the fraction of uniform samples from a sphere which return
+      the same class, middle  heatmaps show the 0.7 level set of these
+      fractions, bottom plot shows incident angles on the decision
+      boundary of the interpolant (black), the training gradient
+      (blue) and the testing gradient (red). }
+    \label{fig:dbs}
 \end{figure}
 
 
-In Fig. ~\ref{fig:wedge_db} we can see 
+In Fig. ~\ref{fig:dbs} we can see that sharp geometric curvature
+and shallow angles are observed when interpolating across decision
+boundaries between natural and especially adversarial images. One line
+of research will follow the direct geometric approach by constructing
+test objects (wedges) which replicate the structure observed in the
+practical networks. an example of this is shown in ~\ref{fig:dbs}. The
+second approach is to take advantage of the framework from Chapters
+~\ref{Chapter4} and ~\ref{Chapter4a} in order to decompose the
+training gradients at points on the decision boundary to understand
+neural networks' learned degrees of freedom at these locations. The
+goal of this line of research is to understand these geometric
+constraints and eventually pose both updated training objectives and
+also better definitions for the identification of adversarial examples
+in practice. This line of research may have implications beyond
+robustness, to include uncertainty quantification, generalization,
+out-of-distribution detection, and other useful metrics to create
+trustworthy AI.
 
-\section{decision boundary definitions} 
-%%%%%%%%%%%%%%%%%
-\section{The Argmax Function}
+In particular, we can decompose adversarial gradients into an
+initial gradient plus a component from each training input,
+\begin{align}
+  f(x, \theta_F) &= f(x, \theta_0) + \sum_i \sum_s \int_0^1 \langle
+  \nabla_\theta f(x, \theta_s(t)), f(x_i, \theta_s(t))\rangle dt \\
+  \dfrac{d f(x, \theta_F)}{dx} &= \dfrac{d f(x, \theta_0)}{dx} + \sum_i \sum_s \int_0^1 \langle
+  \nabla_\theta \dfrac{d f(x, \theta_s(t))}{dx}, f(x_i,
+                                 \theta_s(t))\rangle dt.
+\end{align}
+From this decomposition, we can also replace the individual training
+data with an orthogonal basis by choosing vectors as in
+~\citet{halko2011finding}, solving SVD for each step, or more
+generally, we can define spectral components across all training steps
+and perform more general spectral decomposition with further
+efficiency reduction as in ~\citet{tancik2020fourierfeatures}. The path kernel
+formulation allows easy management of numerical error for any of these
+approaches. 
+
+Regardless of how sophisticated we make this decomposition, all of
+these methods have the advantage of maintaining an exact mapping to
+the tangent space around each input point. This mapping implicitly
+defines natural dimension reduction -- by truncating the chosen
+basis. The tangent space can be thought of as the models implicit
+justifications -- which training influences are affecting its
+decisions on this prediction. These directions are implicitly how we
+can analyze (and potentially penalize) points of high curvature
+e.g. at the decision boundary. This provides a theoretical foundation
+from which recent work in manifold study and data augmentation
+~\citep{kaufman_data_2023, liu_linear_2023, sipka_differentiable_2023,
+  cha_orthogonality-enforced_2023, marbut_reliable_2023,
+  gao_out--domain_2023, oh_provable_2023, chen2023aware}. 
+
+
+\section{Foundation for Study of Decision Boundaries} 
 
 A central issue when writing classifiers is mapping from continuous outputs or probabilities to discrete sets of classes. Frequently argmax type functions are used to accomplish this mapping. To discuss decision boundaries, we must precisely define argmax and some of its properties. 
 
@@ -542,90 +597,87 @@ have
 We can solve for a perturbation in the $e_1$ direction which will make
 these two normal vectors orthogonal but due to preserving 
 
+% \section{exploring boundary curvature with Random Walks}
+
+% To analyze decision boundary curvature, we will project samples of points onto the decision boundary and then use Singular Value Decomposition to analyze the \emph{projected points}. In general, this process will involve first selecting two images $x_1$ and $x_2$ for which $C(x_1) \neq C(x_2)$. A point $x_b$ for which $C(x_b)$ is ambiguous between $C(x_1)$ and $C(x_2)$. The resulting sample $X$ will be projected to the decision boundary by either computing a loss function that is minimized when each of the classes $C(X)$ flip from $C(x_1)$ to $C(x_2)$ or vice versa respectively and performing gradient descent, or by interpolating to the parent point of opposite class (so for $x \in X$, if $C(x) = C(x_1)$, we will interpolate from $x$ to $x_2$). 
+
+% Once a projection has been found, we will take the singular value decomposition (SVD) of this sample and examine it for degeneracy. 
 
 
+% Initial comparison of SVDs of decision boundary points yields a single dominant singular value which corresponds with the content of the original image on the boundary. All random noise appears to be mostly orthogonal to this. 
 
-\section{exploring boundary curvature with Random Walks}
+% Once this vector is removed, the remaining signal is simply the adversarial attack information. 
 
-To analyze decision boundary curvature, we will project samples of points onto the decision boundary and then use Singular Value Decomposition to analyze the \emph{projected points}. In general, this process will involve first selecting two images $x_1$ and $x_2$ for which $C(x_1) \neq C(x_2)$. A point $x_b$ for which $C(x_b)$ is ambiguous between $C(x_1)$ and $C(x_2)$. The resulting sample $X$ will be projected to the decision boundary by either computing a loss function that is minimized when each of the classes $C(X)$ flip from $C(x_1)$ to $C(x_2)$ or vice versa respectively and performing gradient descent, or by interpolating to the parent point of opposite class (so for $x \in X$, if $C(x) = C(x_1)$, we will interpolate from $x$ to $x_2$). 
+% To get a set of singular vectors which to not emphasize the image content, we take random differences among the sampled images and take the SVD of those random differences. 
 
-Once a projection has been found, we will take the singular value decomposition (SVD) of this sample and examine it for degeneracy. 
+% In these first 10 images, this procedure is carried out on the orthant, where samples are generated with mean 0 and are projected onto orthants with increasing numbers of dimensions. We can see a very clear dropped set of singular values smaller than the rest, which indicate the number of degenerate dimensions. In each of these cases, the dropped singular values match the dimension of the orthant. 
 
+% Experiment : A valid experiment here is to measure the difference between the images and the projection to get -- in this case -- normal vectors to the orthant for each image sampled. The SVD of these normals can be computed to determine the number of dimensions in the projecetion operation. This same procedure can be caried out later in the real practical image projections, although in that case orthogonality is not guaranteed. 
 
-Initial comparison of SVDs of decision boundary points yields a single dominant singular value which corresponds with the content of the original image on the boundary. All random noise appears to be mostly orthogonal to this. 
+% \includegraphics[width=8cm]{c4_figures/e03-SVD-Orthant_origin-dim-cropped1.png}
+% \includegraphics[width=9cm]{c4_figures/e03-SVD-Orthant_origin-dim-cropped2.png}
+% \includegraphics[width=9cm]{c4_figures/e03-SVD-Orthant_origin-dim-cropped3.png}
+% \includegraphics[width=9cm]{c4_figures/e03-SVD-Orthant_origin-dim-cropped4.png}
+% \includegraphics[width=9cm]{c4_figures/e03-SVD-Orthant_origin-dim-cropped5.png}
+% \includegraphics[width=9cm]{c4_figures/e03-SVD-Orthant_origin-dim-cropped6.png}
+% \includegraphics[width=9cm]{c4_figures/e03-SVD-Orthant_origin-dim-cropped7.png}
+% \includegraphics[width=9cm]{c4_figures/e03-SVD-Orthant_origin-dim-cropped8.png}
+% \includegraphics[width=9cm]{c4_figures/e03-SVD-Orthant_origin-dim-cropped9.png}
+% \includegraphics[width=9cm]{c4_figures/e03-SVD-Orthant_origin-dim-cropped10.png}
 
-Once this vector is removed, the remaining signal is simply the adversarial attack information. 
+% There is a question of how best to measure "normal" vectors for each projection. The most direct computation is to take a sample with small variance around each point on the decision boundary and solve least squares of each of these samples. We have previously observed that \emph{most} of the decision boundary is locally planar. 
 
-To get a set of singular vectors which to not emphasize the image content, we take random differences among the sampled images and take the SVD of those random differences. 
+% It remains to compare these computed normals with other known quantities, e.g. the gradient computed with respect to adversarial loss functions and the difference between each sampled image and its resultant projection. In addition, it remains to compare the normals of multiple nearby images to determine at what radius of sample the decision boundary begins to show curvature.\\
 
-In these first 10 images, this procedure is carried out on the orthant, where samples are generated with mean 0 and are projected onto orthants with increasing numbers of dimensions. We can see a very clear dropped set of singular values smaller than the rest, which indicate the number of degenerate dimensions. In each of these cases, the dropped singular values match the dimension of the orthant. 
+% The following image shows singular values in order for a sample around a decision boundary image in MNIST generated by interpolating from a test image to an adversarial image generated from it. This plot is dominated by the natural distribution of singular values for a gaussian and also by the original image information which can be seen as a huge singular value on the far left. We will address both of these factors in following plots. \\
 
-Experiment : A valid experiment here is to measure the difference between the images and the projection to get -- in this case -- normal vectors to the orthant for each image sampled. The SVD of these normals can be computed to determine the number of dimensions in the projecetion operation. This same procedure can be caried out later in the real practical image projections, although in that case orthogonality is not guaranteed. 
+% \includegraphics[width=14cm]{c4_figures/SVD-rand_diff-decision_boundary_uvar-1.0-index-0-image-999.png}
 
-\includegraphics[width=8cm]{c4_figures/e03-SVD-Orthant_origin-dim-cropped1.png}
-\includegraphics[width=9cm]{c4_figures/e03-SVD-Orthant_origin-dim-cropped2.png}
-\includegraphics[width=9cm]{c4_figures/e03-SVD-Orthant_origin-dim-cropped3.png}
-\includegraphics[width=9cm]{c4_figures/e03-SVD-Orthant_origin-dim-cropped4.png}
-\includegraphics[width=9cm]{c4_figures/e03-SVD-Orthant_origin-dim-cropped5.png}
-\includegraphics[width=9cm]{c4_figures/e03-SVD-Orthant_origin-dim-cropped6.png}
-\includegraphics[width=9cm]{c4_figures/e03-SVD-Orthant_origin-dim-cropped7.png}
-\includegraphics[width=9cm]{c4_figures/e03-SVD-Orthant_origin-dim-cropped8.png}
-\includegraphics[width=9cm]{c4_figures/e03-SVD-Orthant_origin-dim-cropped9.png}
-\includegraphics[width=9cm]{c4_figures/e03-SVD-Orthant_origin-dim-cropped10.png}
+% The following plots are generated with a new distribution to replace the gaussian. This "Flat SVD" distribution is generated by first taking a gaussian sample representable by a matrix $X$, then taking the SVD of this gaussian sample $U \Sigma V = X$, replacing $\Sigma$ by $|\Sigma|_2 I$. This distribution has the property that its SVD is flat, while maintaining the Frobenius norm of $X$. This helps to highlight degeneracy in singular values. \\
 
-There is a question of how best to measure "normal" vectors for each projection. The most direct computation is to take a sample with small variance around each point on the decision boundary and solve least squares of each of these samples. We have previously observed that \emph{most} of the decision boundary is locally planar. 
+% These first two plots are generated by sampling around a decision boundary image found by interpolating between two test images (rather than a test image and an adversarial example generated from it). We note that the SVD contains two degernate values. These seem to correpond with the two original images of the interpolation. 
 
-It remains to compare these computed normals with other known quantities, e.g. the gradient computed with respect to adversarial loss functions and the difference between each sampled image and its resultant projection. In addition, it remains to compare the normals of multiple nearby images to determine at what radius of sample the decision boundary begins to show curvature.\\
+% \includegraphics[width=14cm]{c4_figures/e05-SVD-uniform-rand_diff-decision_boundary_uvar-0.001-index-0-image-999.png}
 
-The following image shows singular values in order for a sample around a decision boundary image in MNIST generated by interpolating from a test image to an adversarial image generated from it. This plot is dominated by the natural distribution of singular values for a gaussian and also by the original image information which can be seen as a huge singular value on the far left. We will address both of these factors in following plots. \\
-
-\includegraphics[width=14cm]{c4_figures/SVD-rand_diff-decision_boundary_uvar-1.0-index-0-image-999.png}
-
-The following plots are generated with a new distribution to replace the gaussian. This "Flat SVD" distribution is generated by first taking a gaussian sample representable by a matrix $X$, then taking the SVD of this gaussian sample $U \Sigma V = X$, replacing $\Sigma$ by $|\Sigma|_2 I$. This distribution has the property that its SVD is flat, while maintaining the Frobenius norm of $X$. This helps to highlight degeneracy in singular values. \\
-
-These first two plots are generated by sampling around a decision boundary image found by interpolating between two test images (rather than a test image and an adversarial example generated from it). We note that the SVD contains two degernate values. These seem to correpond with the two original images of the interpolation. 
-
-\includegraphics[width=14cm]{c4_figures/e05-SVD-uniform-rand_diff-decision_boundary_uvar-0.001-index-0-image-999.png}
-
-\includegraphics[width=14cm]{c4_figures/e05-SVD-uniform-rand_diff-decision_boundary_uvar-0.001-index-0-image-999-cropped.png}
+% \includegraphics[width=14cm]{c4_figures/e05-SVD-uniform-rand_diff-decision_boundary_uvar-0.001-index-0-image-999-cropped.png}
 
 
-These last two images are generated with the flattened distribution 
+% These last two images are generated with the flattened distribution 
 
-\includegraphics[width=14cm]{c4_figures/e06-SVD-uniform-rand_diff-decision_boundary_uvar-0.0001-index-0-image-999-cropped.png}
+% \includegraphics[width=14cm]{c4_figures/e06-SVD-uniform-rand_diff-decision_boundary_uvar-0.0001-index-0-image-999-cropped.png}
 
-\includegraphics[width=14cm]{c4_figures/e06-SVD-uniform-rand_diff-decision_boundary_uvar-0.0001-index-0-image-999.png}
+% \includegraphics[width=14cm]{c4_figures/e06-SVD-uniform-rand_diff-decision_boundary_uvar-0.0001-index-0-image-999.png}
 
-What these experiments tell us is that most of the time when we cross a decision oundary in the MNIST Dataset, we are crossing at a plane, however if we examine a slightly larger ball around a given point, it will intersect the decision boundary at many other places. 
+% What these experiments tell us is that most of the time when we cross a decision oundary in the MNIST Dataset, we are crossing at a plane, however if we examine a slightly larger ball around a given point, it will intersect the decision boundary at many other places. 
 
-\section{Re-Examining Persistence}
+% \section{Re-Examining Persistence}
 
-A movivating picture in this research is an image generated while interpolating persistence in the beginning of this research. 
+% A movivating picture in this research is an image generated while interpolating persistence in the beginning of this research. 
 
-\includegraphics[width=15cm]{c4_figures/persistence_interpolation-IMNET-class-11-vgg16-BIM-48-attack_data-001 (2).png}
+% \includegraphics[width=15cm]{c4_figures/persistence_interpolation-IMNET-class-11-vgg16-BIM-48-attack_data-001 (2).png}
 
-The next objective is to examine this particular case with our random walk and projection Tools. 
+% The next objective is to examine this particular case with our random walk and projection Tools. 
 
-We also wish to augment these tools to include 
+% We also wish to augment these tools to include 
 
-%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%
 
-\subsection{in probability space}
-\subsection{in image space}
-\section{define orthants}
-\section{skewness}
+% \subsection{in probability space}
+% \subsection{in image space}
+% \section{define orthants}
+% \section{skewness}
 
-\section{sampling decision boundaries and analyzing dimensionality
-with PCA}
+% \section{sampling decision boundaries and analyzing dimensionality
+% with PCA}
 
-\section{neural network attack gradients versus decision boundaries}
+% \section{neural network attack gradients versus decision boundaries}
 
-\section{skewed orthant recreates persistence picture (?). }
-\section{measuring skewness of ANNs}
-\section{Relate skewness with dimpled manifold and features not bugs papers}
+% \section{skewed orthant recreates persistence picture (?). }
+% \section{measuring skewness of ANNs}
+% \section{Relate skewness with dimpled manifold and features not bugs papers}
 
 
-turn observations into are they a definition, a theorem, or a discussion
+% turn observations into are they a definition, a theorem, or a discussion
 
-decision\_boundary crossing
+% decision\_boundary crossing
 

@@ -11,7 +11,7 @@ have dominated competitions in image processing, optical character
 recognition, object detection, video classification, natural language
 processing, and many other fields ~\cite{SCHMIDHUBER201585}. Ten years
 ago, along the explosion of applications, an interesting property of
-such networks was observed by \cite{Szegedy2013}. Their approach was to define a loss function
+such networks was observed by \cite{szegedy2013}. Their approach was to define a loss function
 relating the output of the ANN for a given initial image to a target adversarial 
 output plus the $L^2$-norm of the input and use backpropagation to
 compute gradients -- not on the weights of the neural network, but on
@@ -25,12 +25,11 @@ model may succeed against a totally different model. With the
 incredible expansion of the application of universal function
 approximators in machine-learning, their reliability has come to have
 real-world significance. The ability of an image processing vehicle to
-distinguish speed limit versus stop-signs ~\cite{stop-sign-paper},
+distinguish speed limit versus stop-signs ~\cite{DBLP:journals/corr/EvtimovEFKLPRS17},
 optimization based models are increasingly relied upon by the defense
-intelligence apparatus ~\cite{intelligence-applications}, search
+intelligence apparatus ~\cite{hutchins2011intelligence}, search
 engines use ML increasingly to
 determine which sources will receive attention when we ask questions
-~\cite{search-engines},
 and even our personal information security may rely on the robustness
 of machine-learning models against adversarial perturbations. In order
 to wisely use these tools, it is crucial that we carefully understand
@@ -79,7 +78,7 @@ A related idea is that adversarial examples often arise within cones, outside of
 \begin{figure}[H]
     \centering
 \includegraphics[width=7.3cm]{c1_figures/negative1.png}\includegraphics[width=7.3cm]{c1_figures/negative2.png}
-    \caption{Natural Images are in columns 1 and 4, Adversarial images are in columns 3 and 6, and the difference between them (magnified by a factor of 10) is in columns 2 and 5. All images in columns 3 and 6 are classified by AlexNet as "Ostrich" (~\cite{Szegedy2013})}
+    \caption{Natural Images are in columns 1 and 4, Adversarial images are in columns 3 and 6, and the difference between them (magnified by a factor of 10) is in columns 2 and 5. All images in columns 3 and 6 are classified by AlexNet as "Ostrich" (~\cite{szegedy2013})}
     \label{fig:szegedy}
 \end{figure}
 
@@ -92,7 +91,7 @@ classic image classification problems, although several of our results
 will hold more generally. The Dataset used above in
 Figure.~\ref{fig:szegedy} is known as ImageNet -- a large set of
 labeled images varying in size originally compiled for the ImageNet
-Large Scale Visual Recognition Challenge (ILSVRC ~\cite{ilvsrc}). This
+Large Scale Visual Recognition Challenge (ILSVRC ~\cite{ILSVRC15}). This
 dataset and its many subsets has become a standard for image
 classification and feature identification experiments. In the
 experiments that follow, ImageNet will be featured alongside the
@@ -159,7 +158,7 @@ The 900 examples generated for the network above had an average distortion of 0.
 
 \paragraph{L-BFGS: ImageNet}
 \label{lbfgs-s}
-We also tried to replicate \cite{Szegedy2013}'s results on ImageNet. Attacking VGG16, a well known model from the ILSVRC-2014 competition \cite{simonyan2014very}, on ImageNet images with the same technique generates the examples in figure 4: 
+We also tried to replicate \cite{szegedy2013}'s results on ImageNet. Attacking VGG16, a well known model from the ILSVRC-2014 competition \cite{simonyan2014very}, on ImageNet images with the same technique generates the examples in figure 4: 
 
 \begin{figure}[H]
 \label{lbfgsis}
@@ -254,7 +253,7 @@ demonstrated the incredible difficulty of producing successful general
 defenses against adversarial attacks. Ironically despite its poor
 performance, the strategy of adversarial training is one of the few
 defenses which have maintained any advantage under the Tramer/Carlini
-adaptive framework ~\cite{adversarial_robustness}. 
+adaptive framework ~\cite{tramer2019adversarial}. 
 
 
 \section{Theory of Adversarial Examples}
@@ -316,7 +315,7 @@ Note that there is no restriction on whether adversarial examples come from the 
 We define adversarial examples, sometimes called adversarial attacks, against classifiers
 to be small perturbations from natural data that significantly change the classifier output. See Definition \ref{def:advers} for a formal definition.
 Szegedy et al. 
-~\cite{Szegedy2013} realized that the same computational tools
+~\cite{szegedy2013} realized that the same computational tools
 used to train DNN classifiers could be used to generate attacks that would
 confuse them. Their approach was to define a loss function
 relating the output of the DNN for a given initial image to a target adversarial 
@@ -334,7 +333,7 @@ Their experimental results are striking:\\
 \begin{figure}[t]
    \centering
 \includegraphics[width=7.3cm]{negative1.png}\includegraphics[width=7.3cm]{negative2.png}
-   \caption{Natural Images are in columns 1 and 4, Adversarial images are in columns 3 and 6, and the difference between them (magnified by a factor of 10) is in columns 2 and 5. All images in columns 3 and 6 are classified by AlexNet as "Ostrich" \cite{Szegedy2013}}
+   \caption{Natural Images are in columns 1 and 4, Adversarial images are in columns 3 and 6, and the difference between them (magnified by a factor of 10) is in columns 2 and 5. All images in columns 3 and 6 are classified by AlexNet as "Ostrich" \cite{szegedy2013}}
    \label{fig:my_label}
 \end{figure}
 
