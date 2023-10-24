@@ -2,6 +2,62 @@
 
 \label{Chapter5} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{Chapter5}
 
+Throughout this work, I have sought to understand the intrinsic
+structure of machine-learning models and how this gives
+rise to adversarial attacks. I began by studying the construction of
+neural networks in Chapter. ~\ref{Chapter1} and learning in practice by generating adversarial
+attacks in Chapter. ~\ref{Chapter2}. This led naturally to a more careful study of decision
+boundaries and the development of the Persistence metric in Chapter
+3. ~\ref{Chapter3}. Uncanny drops in persistence while crossing
+decision boundaries toward adversarial attacks indicated that attacks
+may exist in highly curved regions. The field conspicuously lacks
+tools for evaluating curvature, although some progress is being
+made. In the process of lit review for methods that would allow more
+direct analysis I discovered deficiencies in nascent literature on
+path kernels starting with the work of ~\citet{domingos2020}. The
+initial work to correct these deficiencies and produce an exact path
+kernel are presented in Chapter ~\ref{Chapter4}. This new exact path kernel
+representation for neural networks has a primary advantage which is to
+decompose model predictions into contributions from each training
+point. This decomposition is in the form of decomposing a prediction
+in a tangent space, where the exact path kernel implicitly maps the
+training data into a given tangent space. This mapping can be done for
+parameter gradients, input space gradients, and several dual tangent
+spaces related to both of these. Two such decompositions are applied
+in Chapter. ~\ref{Chapter4a} to demonstrate that many cutting edge OOD
+detection algorithms implicitly use this decomposition in terms of
+parameter gradients, and that the dual of the input gradients can be
+used to measure signal manifold dimension.
+
+We can summarize the first 3 chapters as posing some fundamental
+geometric questions related to machine-learning robustness. 
+Chapters 4 and 5 as propose a new framework for analyzing geometric
+properties and demonstrating that this framework can be applied very
+generally. From here, there are several important directions for
+future research. First is the application of these methods directly to
+the questions from Chapters 1-3. Second is the complete generalization
+of this new framework including conditions under which such
+representations live in Banach spaces or Hilbert spaces and what order
+of accuracy can be maintained using truncated spectral
+decompositions. Third is the application of this theory more broadly
+to the wide variety of spatial problems that are present in
+machine-learning.
+
+\section{Applications to Adversarial Robustness}
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.42\textwidth]{c5_figures/stab-mnist-C32-50-50-10-0.001-eval-1e-06-none-4-6-db_interp-stability-50.png}\includegraphics[width=0.42\textwidth]{c5_figures/stab-mnist-C32-50-50-10-0.001-eval-1e-06-pgd-4-6-db_interp-stability-50.png}
+%\includegraphics[width=0.9\textwidth]{c5_figures/wedge-mnist-C32-50-50-10-0.001-eval-1e-06-pgd-1-7-db_interp-stability-0.png}
+
+    % \includegraphics[width=0.45\textwidth]{c4a_figures/dimensionality_means.pdf}
+    \caption{Left: 	}
+    \label{fig:wedge_db}
+\end{figure}
+
+
+In Fig. ~\ref{fig:wedge_db} we can see 
+
 \section{decision boundary definitions} 
 %%%%%%%%%%%%%%%%%
 \section{The Argmax Function}
