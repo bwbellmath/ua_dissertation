@@ -6,12 +6,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%(2)
 
 Deep Neural Networks (DNNs) and their variants are core to the success
-of modern machine learning as summarized by \cite{prakash2018}. They
+of modern machine learning as summarized by ~\citet{prakash2018}. They
 have dominated competitions in image processing, optical character
 recognition, object detection, video classification, natural language
-processing, and many other fields ~\cite{SCHMIDHUBER201585}. Ten years
+processing, and many other fields ~\citet{SCHMIDHUBER201585}. Ten years
 ago, along the explosion of applications, an interesting property of
-such networks was observed by \cite{szegedy2013}. Their approach was to define a loss function
+such networks was observed by ~\citet{szegedy2013}. Their approach was to define a loss function
 relating the output of the ANN for a given initial image to a target adversarial 
 output plus the $L^2$-norm of the input and use backpropagation to
 compute gradients -- not on the weights of the neural network, but on
@@ -25,9 +25,9 @@ model may succeed against a totally different model. With the
 incredible expansion of the application of universal function
 approximators in machine-learning, their reliability has come to have
 real-world significance. The ability of an image processing vehicle to
-distinguish speed limit versus stop-signs ~\cite{DBLP:journals/corr/EvtimovEFKLPRS17},
+distinguish speed limit versus stop-signs ~\citep{DBLP:journals/corr/EvtimovEFKLPRS17},
 optimization based models are increasingly relied upon by the defense
-intelligence apparatus ~\cite{hutchins2011intelligence}, search
+intelligence apparatus ~\citep{hutchins2011intelligence}, search
 engines use ML increasingly to
 determine which sources will receive attention when we ask questions
 and even our personal information security may rely on the robustness
@@ -43,21 +43,21 @@ significantly different model output. ``Small'' in this context may
 refer to small in a particular metric or sometimes is referred to in
 the context of human perception. It is important to note that Adversarial
 examples are not just a peculiarity, but seem to occur for most, if
-not all, DNN  classifiers. For example, ~\cite{inevitable2018} used
+not all, DNN  classifiers. For example, ~\citet{inevitable2018} used
 isoperimetric inequalities on high dimensional spheres and hypercubes
 to conclude that there is a reasonably high probability that each
 correctly classified data point has a nearby adversarial
-example. ~\cite{ilyas2019adversarial} argued that optimized models use
+example. ~\citet{ilyas2019adversarial} argued that optimized models use
 some subtle features for classification which are neither intuitive to
 humans nor robust to perturbation. In particular, that ML models can
 efficiently extract features from training data, but that they do not
 connect these features robustly across scales. The prevalence of these
-features is illustrated by ~\cite{madry2018towards} with the simple experiment of adding vast
+features is illustrated by ~\citet{madry2018towards} with the simple experiment of adding vast
 quantities of adversarially perturbed data during training
 . Although this method increases
-adversarial robustness at a cost to prediction accuracy (~\cite{tsipras2018robustness}), it does not
+adversarial robustness at a cost to prediction accuracy ~\citep{tsipras2018robustness}, it does not
 do so very significantly, and leaves behind vulnerabilities that can
-still be reduced to non-robust features (~\cite{inevitable2018}). 
+still be reduced to non-robust features ~\citep{inevitable2018}. 
 
 %There are now a wide variety of attacks which produce adversarial examples and defenses which try to detect them. \todo{[DG]: not sure this is necessary. [K]: This paragraph is incomplete. Do you think there shouldn't be such a paragraph at all? [DG]: Not sure it is needed. If so, it maybe should probably come right at the beginning before the shafahi/are adversarial examples inevitable.}
 
@@ -66,19 +66,19 @@ robustness, both in terms of the models' understanding of underlying
 data geometry and by carefully defining the decision boundary of a
 model and studying its properties. In this vein, there have been many
 attempts to identify adversarial examples using properties of the
-decision boundary.  ~\cite{Fawzi2018empirical} found that decision
+decision boundary.  ~\citet{Fawzi2018empirical} found that decision
 boundaries tend to have highly curved regions, and these regions tend
 to favor negative curvature, indicating that regions that define
 classes are highly nonconvex. These were found for a variety of DNNs
 and classification  tasks. 
 %They also suggest exploiting this curvature discrepancy to identify when a data point is a natural image and when it is adversarial. 
-A related idea is that adversarial examples often arise within cones, outside of which images are classified in the original class, as observed by ~\cite{roth19aodds}. Many theoretical models of adversarial examples, for instance the dimple model developed by ~\cite{shamir2021}, have high curvature and/or sharp corners as an essential piece of why adversarial examples can exists very close to natural examples.
+A related idea is that adversarial examples often arise within cones, outside of which images are classified in the original class, as observed by ~\citet{roth19aodds}. Many theoretical models of adversarial examples, for instance the dimple model developed by ~\citet{shamir2021}, have high curvature and/or sharp corners as an essential piece of why adversarial examples can exists very close to natural examples.
 
 
 \begin{figure}[H]
     \centering
 \includegraphics[width=7.3cm]{c1_figures/negative1.png}\includegraphics[width=7.3cm]{c1_figures/negative2.png}
-    \caption{Natural Images are in columns 1 and 4, Adversarial images are in columns 3 and 6, and the difference between them (magnified by a factor of 10) is in columns 2 and 5. All images in columns 3 and 6 are classified by AlexNet as "Ostrich" (~\cite{szegedy2013})}
+    \caption{Natural Images are in columns 1 and 4, Adversarial images are in columns 3 and 6, and the difference between them (magnified by a factor of 10) is in columns 2 and 5. All images in columns 3 and 6 are classified by AlexNet as "Ostrich" ~\citep{szegedy2013}.}
     \label{fig:szegedy}
 \end{figure}
 
@@ -91,17 +91,17 @@ classic image classification problems, although several of our results
 will hold more generally. The Dataset used above in
 Figure.~\ref{fig:szegedy} is known as ImageNet -- a large set of
 labeled images varying in size originally compiled for the ImageNet
-Large Scale Visual Recognition Challenge (ILSVRC ~\cite{ILSVRC15}). This
+Large Scale Visual Recognition Challenge (ILSVRC ~\citet{ILSVRC15}). This
 dataset and its many subsets has become a standard for image
 classification and feature identification experiments. In the
 experiments that follow, ImageNet will be featured alongside the
-Modified National Institute of Standards and Technology dataset (MNIST ~\cite{}) which is a database of hand written digits often used to develop image processing and character recognition systems. This dataset is much lower resolution than ImageNet and is therefore experiments run much more quickly on it and require less complex input/output.  
+Modified National Institute of Standards and Technology dataset (MNIST ~\citet{MNIST}) which is a database of hand written digits often used to develop image processing and character recognition systems. This dataset is much lower resolution than ImageNet and is therefore experiments run much more quickly on it and require less complex input/output.  
 
 \section{Common Attack Techniques}
 % TODO : Add massive carlini toolkit reference
 Adversarial attacks are generally produced by introducing an objective
 function which balances the adversarial objective, e.g. \emph{cross-entropy
-loss} ~\cite{cross entropy loss} of the source image as a positive
+loss} defined by ~\citet{good1963maximum} of the source image as a positive
 value to be minimized or with a specific target combined with a
 regularization term in image space (e.g. the $L^2$ norm) which
 penalizes the generated adversary for being too far from its starting
@@ -111,7 +111,7 @@ in order to produce an attack.
 
 \subsection{L-BFGS minimizing distortion}\label{lbfgs}
 
-The original attack used by ~\cite{szegedy2013} took advantage of the
+The original attack used by ~\citet{szegedy2013} took advantage of the
 tools they had on  hand for training neural networks to set up a
 box-constrained optimization problem whose approximated solution
 generates these targeted mis-classifications. We will write this
@@ -158,7 +158,7 @@ The 900 examples generated for the network above had an average distortion of 0.
 
 \paragraph{L-BFGS: ImageNet}
 \label{lbfgs-s}
-We also tried to replicate \cite{szegedy2013}'s results on ImageNet. Attacking VGG16, a well known model from the ILSVRC-2014 competition \cite{simonyan2014very}, on ImageNet images with the same technique generates the examples in figure 4: 
+We also tried to replicate the results of ~\citet{szegedy2013} on ImageNet. Attacking VGG16, a well known model from the ILSVRC-2014 competition ~\citep{simonyan2014very}, on ImageNet images with the same technique generates the examples in figure 4: 
 
 \begin{figure}[H]
 \label{lbfgsis}
@@ -181,11 +181,12 @@ We also tried to replicate \cite{szegedy2013}'s results on ImageNet. Attacking V
 
 As the study of adversarial examples has expanded, it has become known
 that often very simple single-step attacks are successful and
-sufficiently subtle. One such attack which we have also implemented is
-a single step attack process which uses the sign of the gradient of
-the loss function $L$  with respect to the image to find the
-adversarial perturbation  \cite{goodfellow_explaining_2014}. For given
-$\e$, the modified  image $\hat x$ is computed as
+sufficiently subtle. ~\citet{goodfellow_explaining_2014} proposed one
+such attack which we have also implemented. This is a single step
+attack process which uses the sign of the gradient of the loss
+function $L$  with respect to the image to find the adversarial
+perturbation . For given $\e$, the modified  image $\hat x$ is
+computed as 
 \begin{equation}
 \hat{x} = x + \epsilon \text{sign} (\nabla L (P_w(x),x))
 \end{equation}
@@ -195,7 +196,7 @@ This method is simpler and much faster to compute than the L-BFGS technique desc
 
 \paragraph{Iterative Gradient Sign Method (IGSM)}
 \label{igsm-s}
-In \cite{kurakin_adversarial_2016}
+In work by ~\citet{kurakin_adversarial_2016}
   an iterative application of FGSM was proposed. After each
   iteration, the image is clipped to a $\e L_\infty$ neighborhood of the original. Let $x'_0 = x$, then after $m$ iterations, the adversarial image obtained is:
 \begin{equation}
@@ -219,15 +220,15 @@ This method is faster than L-BFGS and more reliable than FGSM but still produces
 \subsection{Other Attacks}
 The following attack techniques are also prevalent in the literature 
 
-\paragraph{Jacobian-based Saliency Map Attack (JSMA)} Another attack noted by  \cite{papernot_limitations_2015}
-  estimates the \emph{saliency map}, a rating for each of the input features (e.g. each pixel) on how influential it is for causing the model to predict a particular class with respect to the model output \cite{wiyatno2018saliency}. This attack modifies the pixels that are most salient. This is a targeted attack, and saliency is designed to find the pixel which increases the classifier's output for the target class while tending to decrease the output for other classes.
+\paragraph{Jacobian-based Saliency Map Attack (JSMA)} Another attack noted by  ~\citet{papernot_limitations_2015}
+  estimates the \emph{saliency map}, a rating for each of the input features (e.g. each pixel) on how influential it is for causing the model to predict a particular class with respect to the model output ~\citep{wiyatno2018saliency}. This attack modifies the pixels that are most salient. This is a targeted attack, and saliency is designed to find the pixel which increases the classifier's output for the target class while tending to decrease the output for other classes.
 
-\paragraph{Deep Fool (DFool)} A technique proposed by \cite{moosavi-dezfooli_deepfool:_2015}
+\paragraph{Deep Fool (DFool)} A technique proposed by ~\citet{moosavi-dezfooli_deepfool:_2015}
   to generate an un-targeted iterative attack. 
 This method approximates the classifier as a linear decision boundary and then finds the smallest perturbation needed to cross that boundary.
 This attack minimizes $L_2$ norm with respect to  to the original image.
 
-\paragraph{Carlini \& Wagner (C\&W)} In \cite{carlini_towards_2016}
+\paragraph{Carlini \& Wagner (C\&W)} In work by ~\citet{carlini_towards_2016}
   an adversarial attack is proposed which updates the loss function such that it jointly minimizes $L_p$ and a custom differentiable loss function based on un-normalized outputs of the classifier (\textit{logits}). 
 Let $Z_k$ denote the logits of a model for a given class $k$, and $\kappa$ a margin parameter. Then C\&W tries to minimize:
 \begin{equation}
@@ -243,17 +244,18 @@ defense that fit a narrow context and releasing it to the community
 for evaluation was seen as useful. However, most such approaches would
 inevitably face simple rebuttals by small modification of the attack
 techniques used. Carlini and their group gained a particular
-reputation for brief rebuttals (~\cite{carlini_towards_2016, papernot_cleverhans_2016}) of such methods, to the prolific extent
+reputation for brief rebuttals ~\citep{carlini_towards_2016, papernot_cleverhans_2016} of such methods, to the prolific extent
 that it has now become a de facto standard. These approaches were
-finally codified by ~\cite{tramer2020adaptive} in the form of a set of
+finally codified by ~\citet{tramer2020adaptive} in the form of a set of
 guidelines that should be used to attack any proposed defense before
 releasing it to the community. This high bar has greatly reduced the
 number of low quality defenses which gain attention, but it has also
 demonstrated the incredible difficulty of producing successful general
 defenses against adversarial attacks. Ironically despite its poor
-performance, the strategy of adversarial training is one of the few
+performance, the strategy of adversarial training proposed by
+~\citet{tramer2019adversarial} is one of the few
 defenses which have maintained any advantage under the Tramer/Carlini
-adaptive framework ~\cite{tramer2019adversarial}. 
+adaptive framework. 
 
 
 \section{Theory of Adversarial Examples}
@@ -274,9 +276,9 @@ practice, however, we know this is at least not trivial.
 
 \subsection{Defining ``Adversarial''}
 
-~\cite{roth19aodds} proposed a statistical method to identify adversarial examples from natural data. Their main idea was to consider how the last layer in the neural network (the logit layer) would behave on small perturbations of a natural example. %, i.e., on $x+\varepsilon n$ where $x$ is a natural example, $\varepsilon>0$ is small, and $n \sim N(0,I)$.  
+~\citet{roth19aodds} proposed a statistical method to identify adversarial examples from natural data. Their main idea was to consider how the last layer in the neural network (the logit layer) would behave on small perturbations of a natural example. %, i.e., on $x+\varepsilon n$ where $x$ is a natural example, $\varepsilon>0$ is small, and $n \sim N(0,I)$.  
 This is then compared to the behavior of a potential adversarial example. If it differs by a predetermined threshold, the example is flagged as adversarial. Successfully flagging adversarial examples in this way works best when adversarial examples tend to perturb toward the original class from which the adversarial example was perturbed. However, this is not always the case.
-It was shown by ~\cite{hosseini2019odds} that it is possible to produce adversarial examples, for instance using a logit mimicry attack, that instead of perturbing an adversarial example toward the true class, actually perturb to some other background class. In fact, we will see in Section \ref{sec:mnist} that the emergence of a background class, which was observed as well by ~\cite{roth19aodds}, is quite common. 
+It was shown by ~\citet{hosseini2019odds} that it is possible to produce adversarial examples, for instance using a logit mimicry attack, that instead of perturbing an adversarial example toward the true class, actually perturb to some other background class. In fact, we will see in Section \ref{sec:mnist} that the emergence of a background class, which was observed as well by ~\citet{roth19aodds}, is quite common. 
 
 We primarily consider adversarial examples for classifiers.  To wit, let $X$ be a set of possible data and let $L$ be a set of labels. We will consider classifier as a map $\CC: X \to L$. In general $X$ may be much larger than the actual space from which our data are drawn. If the data actually come from a submanifold of $X$, we call this the \emph{data submanifold}. The data submanifold may not be a strict submanifold, and we often do not know the shape or even dimension of it.
 
@@ -314,8 +316,7 @@ These definitions rely on a metric $d$, emphasizing the reliance on the choice o
 Note that there is no restriction on whether adversarial examples come from the set of natural examples, and typically we will assume that they do not so that we can draw a contrast. 
 We define adversarial examples, sometimes called adversarial attacks, against classifiers
 to be small perturbations from natural data that significantly change the classifier output. See Definition \ref{def:advers} for a formal definition.
-Szegedy et al. 
-~\cite{szegedy2013} realized that the same computational tools
+~\citet{szegedy2013} realized that the same computational tools
 used to train DNN classifiers could be used to generate attacks that would
 confuse them. Their approach was to define a loss function
 relating the output of the DNN for a given initial image to a target adversarial 
@@ -333,11 +334,9 @@ Their experimental results are striking:\\
 \begin{figure}[t]
    \centering
 \includegraphics[width=7.3cm]{negative1.png}\includegraphics[width=7.3cm]{negative2.png}
-   \caption{Natural Images are in columns 1 and 4, Adversarial images are in columns 3 and 6, and the difference between them (magnified by a factor of 10) is in columns 2 and 5. All images in columns 3 and 6 are classified by AlexNet as "Ostrich" \cite{szegedy2013}}
+   \caption{Natural Images are in columns 1 and 4, Adversarial images are in columns 3 and 6, and the difference between them (magnified by a factor of 10) is in columns 2 and 5. All images in columns 3 and 6 are classified by AlexNet as "Ostrich" ~\citep{szegedy2013}}
    \label{fig:my_label}
 \end{figure}
-
-
 
 The Dataset used above is known as ImageNet -- a large set of labeled images varying in size originally compiled for the ImageNet Large Scale Visual Recognition Challenge (ILSVRC). This dataset and its many subsets has become a standard for image classification and feature identification experiments. In the experiments that follow, ImageNet will be featured alongside the Modified National Institute of Standards and Technology (MNIST) dataset which is a database of hand written digits often used to develop image processing and character recognition systems. This dataset is much lower resolution than ImageNet and is therefore experiments run much more quickly on it and require less complex input/output.  
 

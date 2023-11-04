@@ -1,9 +1,9 @@
 % Chapter 1
-\chapter{General Introduction} % Main chapter title
+\chapter{General Introduction to Deep Learning} % Main chapter title
 \label{Chapter1} % For referencing the chapter elsewhere, use \ref{Chapter1} 
 
-The intention of this work is to understand the curious vulnerability
-that has been observed (~\cite{szegedy2013}) within artificial neural
+The intention of this work is to understand the intriguing vulnerability
+observed by ~\citet{szegedy2013} within artificial neural
 networks. These models models chronically admit inputs which might be
 very geometrically close and also usually indistinguishable according
 to users from natural data and yet which produce significant changes
@@ -20,7 +20,7 @@ from functional analysis and theory of hilbert spaces, optimization,
 and vigorous experimentation. Our goal is to build out theory which
 can support increasingly sophisticated conjecture about adversarial
 attacks with a particular focus on the so called ``Dimpled Manifold
-Hypothesis'' by ~\cite{shamir2021dimpled}.
+Hypothesis'' by ~\citet{shamir2021dimpled}.
 
 Chapter One will cover the history and architecture of neural network
 architecture. This will include a brief description of the surprising
@@ -30,7 +30,7 @@ results, a brief rigorous introduction to the practical components of
 a neural network model, its training objective, and training
 considerations are presented. Chapter Two is focused on the background
 of adversarial vulnerability. Starting from the seminal paper by
-~\cite{szegedy2013} we will develop the theory of adversarial
+~\citet{szegedy2013} we will develop the theory of adversarial
 perturbation and attack. We will consider both the theoretical and
 practical objectives and optimization problems related to creating
 adversarial examples, however we will put a particular emphasis to
@@ -63,7 +63,7 @@ or a ``kernel machine'' which has some clearer mathematical properties
 than artificial neural networks do. Well known work has demonstrated
 that his representation is exact for infinite-width neural networks,
 but has significant shortcomings for practical finite models. This
-chapter outlines a recently accepted paper (~\cite{bell2023}) in
+chapter outlines a recently accepted paper ~\citep{bell2023} in
 which this kernel method is extended by careful integration along the
 training steps of a model's optimization in order to produce an exact
 representation for finite networks which can be computed in practice,
@@ -90,12 +90,14 @@ forthcoming submission to ICLR.
 
 Artificial Neural Networks and other optimization-based general
 function approximation models are the core of modern
-machine learning \cite{prakash2018}. These models have dominated competitions in image processing, optical character recognition, object detection, video classification, natural language processing, and many other fields \cite{SCHMIDHUBER201585}. All such modern models are
+machine learning ~\citep{prakash2018}. These models have dominated competitions in image processing, optical character recognition, object detection, video classification, natural language processing, and many other fields ~\citep{SCHMIDHUBER201585}. All such modern models are
 trained via gradient-based optimization, e.g. Stochastic Gradient Descent (SGD) with
-gradients computed via back propagation. \cite{goodfellow2013multidigit}. Although the performance of these models is practically
-miraculous within the training and testing context for which they are designed, they have a few intriguing properties. It was discovered in 2013 
-\cite{szegedy2013} that images can be generated
-which apparently trick such models in a classification context in  difficult-to-control ways \cite{Khoury2018}. The intent of this
+gradients computed via back propagation using theory brought to the
+mainstream by ~\citet{goodfellow2013multidigit}. Although the performance of these models is practically
+miraculous within the training and testing context for which they are
+designed, they have a few intriguing properties. It was discovered in
+2013 by ~\citet{szegedy2013} that images can be generated
+which apparently trick such models in a classification context in  difficult-to-control ways ~\citep{khoury2018}. The intent of this
 research is to investigate these \emph{adversarial examples} in a
 mathematical context and use them to study pertinent 
 properties of the learning models from which they arise.
@@ -107,16 +109,14 @@ properties of the learning models from which they arise.
 The history of Neural Networks begins very gradually in the field of Theoretical
 Neuropsychology with a much-cited paper by McCulloch and Pitts in
 which the mechanics of cognition are described in the context of
-computation \cite{mcculloch1943logical}. This initial framework for
+computation by ~\citet{mcculloch1943logical}. This initial framework for
 computational cognition did not include a notion for learning, however
 this would be brought in the following decade with in the form of
 optimization and many simple NNs (linear regression models applied to
 computational cognition). The perceptron, the most granular element of
-a neural network, was proposed in another much-cited paper by
-Rosenblatt in 1958 \cite{rosenblatt1958perceptron}. A full 7 years
+a neural network, was proposed in another much-cited paper ~\citet{rosenblatt1958perceptron}. A full 7 years
 would pass before these building blocks would be assembled into
-multilevel (deep) networks which were proposed by 1965 in a paper by
-Ivakhnenko and Lapa \cite{ivakhnenko1965cybernetic}. Despite much
+multilevel (deep) networks which were proposed by 1965 in a paper by ~\citet{ivakhnenko1965cybernetic}. Despite much
 theoretical work up to this point, computing resources of the time
 were not nearly capable of implementing all but the simplest toy
 versions of these models. 
@@ -127,34 +127,35 @@ their application in modeling and industrial computation. The hardware
 limitations of the time served as a significant barrier to wider
 application and the concept of the "neural network" was generally
 regarded as a cute solution looking for a problem. Compounding these
-limitations was a significant roadblock published by Minsky and Papert
-in 1969: A proof that basic perceptrons could not encode exclusive-or
-\cite{minsky1969perceptrons}. As a result, interest in developing
+limitations was a significant roadblock published by ~\citet{minsky1969perceptrons}: A proof that basic perceptrons could not encode exclusive-or. As a result, interest in developing
 neural network theory waned. The next necessary step in the
 development of modern neural network models was an advance that would
 allow them to be trained efficiently with computing power
 available. Learning methods required a gradient, and the technique
 necessary for computing gradients of large-scale multi-parameter
-models was finally proposed in a 1970 in a Finnish masters thesis \cite{linnainmaa1970representation}. Techniques from control theory were applied to develop a means of propagating error backward through models which could be described as directed graphs. The idea was applied to neural networks by a Harvard student Paul Werbos\cite{werbos1974beyond} and refined in later publications. 
+models was finally proposed in a 1970 in a Finnish masters thesis by
+~\citet{linnainmaa1970representation}. Techniques from control theory
+were applied to develop a means of propagating error backward through
+models which could be described as directed graphs. The idea was
+applied to neural networks by a Harvard student Paul Werbos ~\citep{werbos1974beyond} and refined in later publications. 
 
 The final essential puzzle piece for neural network models was to take
 advantage of their layered structure, which would allow
 backpropagation computations at a given layer to be done in
 parallel. This key insight, indeed the core of much of modern
 computing, was a description of parallel and distributed processing in
-the context of cognition by Rumelhard and McClelland in 1986
-\cite{mcclelland1986parallel} with an astonishing 22,453 citations (a
+the context of cognition by 
+~\citet{mcclelland1986parallel} 1986 with an astonishing 22,453 citations (a
 number that grows nearly every day). With these pieces in place, the
 world was ready for someone to finally apply neural network models to
 a relevant problem. In 1989, Yann LeCun and a group at Bell Labs
 managed to do just that. Motivated by a poorly solved practical
-problem -- recognition of handwriting on bank checks, LeCun refined
-backpropagation into the form used today
-\cite{lecun1989backpropagation}, invented Convolutional Neural
-Networks \ref{cnn} \cite{lecun1995convolutional}, and by 1998, he had
-worked with his team to implement what rapidly became the industry
-standard for banks to recognize hand-written numbers
-\cite{lecun1998gradient}.
+problem -- recognition of handwriting on bank checks,
+~\citet{lecun1989backpropagation} refined backpropagation into the
+form used today, invented Convolutional Neural Networks \ref{cnn}
+~\citep{lecun1995convolutional}, and by  1998, he had worked with his
+team to implement what rapidly became the industry standard for banks
+to recognize hand-written numbers ~\citep{lecun1998gradient}.
 
 It is worth noting a couple of key ingredients that led to LeCun's
 success. First, the problem context itself was both simple and
@@ -178,14 +179,14 @@ relegated to image recognition problems. Research and time was spent on increasi
 speed and efficiency. To keep these increasingly complex and structured models able
 to scale with the growing data available, Hinton and Bengio
 distinguished themselves in these middle steps. 
-~\cite{bengio2007greedy, hinton2006reducing, hinton2006fast}
+~\citep{bengio2007greedy, hinton2006reducing, hinton2006fast}
 While many observers still treated
 them as toy models inferior to traditional modeling,  the
 industrial success of these models was beginning to fuel a new wave of
 serious theoretical and practical work in the field. A generation of
 household names including Collobert, Hinton, Bengio, and Schmidhuber
 came to distinguish themselves alongside LeCun. 
-~\cite{coates2011analysis,
+~\citep{coates2011analysis,
 vincent2010stacked,
 boureau2010learning,
 hinton2010practical,
@@ -193,12 +194,12 @@ glorot2010understanding,
 erhan2010does,
 bengio2009learning}
 With this expansion in theory came a boom in the ability to
-practically implement more structured and capable neural networks: recurrent networks ~\cite{mikolov2010recurrent},
-convolutional neural networks ~\cite{lee2009convolutional}, natural
-language processing ~\cite{collobert2011natural}, and
+practically implement more structured and capable neural networks: recurrent networks ~\citep{mikolov2010recurrent},
+convolutional neural networks ~\citep{lee2009convolutional}, natural
+language processing ~\citep{collobert2011natural}, and
 Long-Short-Term-Memory (LSTM) networks originally developed by
 Horchreiter (a student of Shmidhuber) in
-1997~\cite{hochreiter1997long} to actively understand time-series,
+1997 ~\citep{hochreiter1997long} to actively understand time-series,
 including a solution to the problem of vanishing
 gradients problem whereby gradients computed by back propagation which
 constitutes a large product of small numbers especially for early
@@ -213,10 +214,10 @@ to be implemented than ever before.
 
 In step With this growing theoretical interest came inexorable expansion of
 well-maintained libraries for working with neural networks including
-the very early creation of the now famous Torch.
-~\cite{Collobert2002TorchAM} and its python interface that still
+the very early creation of the now famous Torch
+~\citep{Collobert2002TorchAM} and its python interface that still
 dominates the market-share of machine learning: PyTorch
-~\cite{pytorch2019} with which most of the results in this
+~\citep{pytorch2019} with which most of the results in this
 work have been computed. 
 
 While neural networks had still not breached the mainstream of pop
@@ -230,21 +231,21 @@ era became defined by these competitions which served to not only gain
 visibility for the field and its strongest participants, but also
 rapidly push multiple ML applications up to the point of practical
 utility. Schimdhuber's group
-\cite{SCHMIDHUBER201585}, and a similar group at Google dominated
+~\citep{SCHMIDHUBER201585}, and a similar group at Google dominated
 many of these competitions. The cutting-edge became represented by
 networks like Inception v4 designed by Google for image classification
 which contains approximately 43 million parameters
-\cite{szegedy2013}. Early versions of this network took 1-2 million
+~\citep{szegedy2013}. Early versions of this network took 1-2 million
 dollars worth of compute-time to train. ANNs now appear in nearly
 every industry from devices which use ANNs to intelligently adapt
 their performance, to the sciences which rely on ANNs to eliminate
 tedious sorting and identification of data that previously had to be
 relegated to humans. Recently natural language processing has received
 its own renaissance, led by Chat-Bots based on the popular transformer
-architecture. 
-~\cite{vaswani2017attention}. Neural network based models are here to
-stay, but as these tools expand so wildly in application, we must
-begin to ask hard questions about their limitations and implications. 
+architecture proposed by  ~\citet{vaswani2017attention}. Neural
+network based models are here to stay, but as these tools expand so
+wildly in application, we must begin to ask hard questions about their
+limitations and implications. 
 
 \subsection{Structure}
 In this subsection we give a mathematical description of artificial neural networks. 
@@ -267,8 +268,19 @@ where $f: \R \to \R$ is continuous. The function $f$ is called the \textbf{activ
 \end{definition}
 
 
-The only nonlinearity in $P_w$ is contained in $f$. If $f$ is chosen to be linear, then $P$ will be a linear operator. Although this has the advantage of simplicity, linear operators do not perform well on nonlinear problems like classification. For this reason, activation functions are generally chosen to be nonlinear. Historically, heaviside functions were used for activation, later replaced with sigmoids \cite{malik1990preattentive} for their smoothness, switching structure, and convenient
-compactification of the output from each perceptron.  It was recently discovered that a simpler nonlinear function, the \emph{Rectified Linear Unit (ReLU)} works as well or better in most neural-network-type applications \cite{glorot2011deep} and additionally training algorithms on ReLU activated networks converge faster \cite{nair_rectified_nodate}. 
+The only nonlinearity in $P_w$ is contained in $f$. If $f$ is chosen
+to be linear, then $P$ will be a linear operator. Although this has
+the advantage of simplicity, linear operators do not perform well on
+nonlinear problems like classification. For this reason, activation
+functions are generally chosen to be nonlinear. Historically,
+heaviside functions were used for activation, later replaced based on
+work by ~\citet{malik1990preattentive} with sigmoids for their smoothness, switching structure, and convenient
+compactification of the output from each perceptron.  It was recently
+discovered that a simpler nonlinear function, the \emph{Rectified
+  Linear Unit (ReLU)} works as well or better in most
+neural-network-type applications according to ~\citet{glorot2011deep}
+and additionally training algorithms on ReLU activated networks
+converge faster according to ~\citet{nair_rectified_nodate}. 
 
 \begin{definition}{The Rectified Linear Unit (ReLU) function is}
 \label{relu}
@@ -278,18 +290,18 @@ compactification of the output from each perceptron.  It was recently discovered
 \end{definition}
 
 
-The single nonlinearity of this activation function
-at $x = 0$ is sufficient to guarantee existence of $\epsilon$ approximation of smooth functions by an ANN composed of sufficiently numerous perceptrons connected by ReLU \cite{petersen2018optimal}. In addition, ReLU is convex, which enables efficient numerical approximation of smooth functions in shallow networks  \cite{li2017convergence}.  
+~\citet{petersen2018optimal} demonstrated that this single nonlinearity of this activation function
+at $x = 0$ is sufficient to guarantee existence of $\epsilon$ approximation of smooth functions by an ANN composed of sufficiently numerous perceptrons connected by ReLU . In addition, ReLU is convex, which enables efficient numerical approximation of smooth functions in shallow networks ~\citep{li2017convergence}.  
 
 
-% \cite{prakash2018}
-% \cite{szegedy2013}
-% \cite{goodfellow_explaining_2014}
-% \cite{Bishop:2006:PRM:1162264}
-% \cite{mohammad16}
-% \cite{Khoury2018}
-% \cite{inevitable2018}
-% \cite{tsipras2018robustness}
+% ~\cite{prakash2018}
+% ~\cite{szegedy2013}
+% ~\cite{goodfellow_explaining_2014}
+% ~\cite{Bishop:2006:PRM:1162264}
+% ~\cite{mohammad16}
+% ~\cite{khoury2018}
+% ~\cite{inevitable2018}
+% ~\cite{tsipras2018robustness}
 
 % step 1 intro (2 slides) motivating picture and overview
 % step 2 liu key point is that you really don't need to know much
@@ -333,7 +345,10 @@ at $x = 0$ is sufficient to guarantee existence of $\epsilon$ approximation of s
 
 In general ANNs 
 must not be cyclic and, for convenience, are often arranged into
-independent layers. An early roadblock for neural networks was a proof by Minsky \cite{minsky1969perceptrons} that single layers of perceptrons could not encode exclusive-or. Depth, the number of layers in a neural network, is a key factor in its ability to approximate complicated functions including exclusive-or \cite{kak1993training}. For this reason, modern ANNs are usually composed of many layers (3-100). The most common instance of a neural network model is a fully connected \emph{feed forward (FF)} configuration. In this configuration data enters as an input layer which is fed into each of the nodes in the first layer of neurons. Output of the first layer is fed into each of the nodes in the second layer, and so on until the output of the final layer is fed into an output filter which generates the final result of the neural network. 
+independent layers. An early roadblock for neural networks was a proof
+by ~\citet{minsky1969perceptrons} that single layers of perceptrons
+could not encode exclusive-or. ~\citet{kak1993training} demonstrated
+that depth, the number of layers in a neural network, is a key factor in its ability to approximate complicated functions including exclusive-or . For this reason, modern ANNs are usually composed of many layers (3-100). The most common instance of a neural network model is a fully connected \emph{feed forward (FF)} configuration. In this configuration data enters as an input layer which is fed into each of the nodes in the first layer of neurons. Output of the first layer is fed into each of the nodes in the second layer, and so on until the output of the final layer is fed into an output filter which generates the final result of the neural network. 
 
 
 
@@ -347,7 +362,7 @@ represents a perceptron with the ReLU activation function.
 %   \caption{BoxPlot Uncertainty}
 %     \includegraphics[width=12cm]{BoxPlot_Uncertainty.png}
 % \end{figure}
-% \centering \footnotesize{Images produced by Mirzargar et al \cite{Raj2017}}
+% \centering \footnotesize{Images produced by Mirzargar et al ~\cite{Raj2017}}
 
 \scalebox{.9}{
 \begin{tikzpicture}[shorten >=1pt,->,draw=black!50, node distance=\layersep]
@@ -435,23 +450,30 @@ example, we can define the most common classifier, Softmax:
 \[\text{(Output Classification)  }   c_s(\vec x) = \text{argmax}_{i} s_i(\vec{x})\]
 \end{definition}
 % It is important that the classifier admit a directed error function
-During training, the output $y \in \R^n$ from a network can thus be compressed using softmax into $[0,1]^n$ as a surrogate for probability for each possible class or directly into the classes which we can represent as the simplex for the vertices of $[0,1]^n$. 
-
-\cite{Bishop:2006:PRM:1162264}
+During training, the output $y \in \R^n$ from a network can thus be
+compressed using softmax into $[0,1]^n$ as a surrogate for probability
+for each possible class or directly into the classes which we can
+represent as the simplex for the vertices of $[0,1]^n$
+\citep{Bishop:2006:PRM:1162264}. 
 
 \subsubsection{Convolutional Neural Networks (CNNs)}\label{cnn}
 
 Another common type of neural network which is a component in many modern applications including one in the experiments to follow are Convolutional Neural Networks (CNNs). CNNs are fundamentally composed of
 perceptrons, but each layer is not fully connected to the
-next. Instead, layers are arranged spatially and overlapping groups of perceptrons are independently connected to the nodes of the next layer, usually with a nonlinear filter that computes the maximum of all of the incoming nodes to a new node. This structure has been shown to be very effective on problems with spatial information \cite{lecun1995convolutional}. 
+next. Instead, layers are arranged spatially and overlapping groups of
+perceptrons are independently connected to the nodes of the next
+layer, usually with a nonlinear filter that computes the maximum of
+all of the incoming nodes to a new node. This structure has been shown
+(e.g. by ~\citet{lecun1995convolutional})to be very effective on problems with spatial information. 
 
 \subsection{Training ANNs}
 
 Neural networks consist of a very large number of perceptrons with many parameters. Directly solving the system implied by these parameters and the empirical risk minimization problem defined below would be difficult, so we must use a
 modular approach which takes advantage of the simple and regular structure of ANNs.
 
- A breakthrough came with the application of techniques derived from control theory to ANNs in the late 1980s \cite{rumelhart1986learning}, dubbed backpropagation. This technique was refined into its modern form in the thesis and continuing work of Yann LeCun \cite{lecun1988theoretical}. In this method, error is propagated backward taking advantage of the directed structure of the network to compute a gradient for each parameter defining it. Because modern ANNs are usually separated into discrete layers, gradients can be computed in parallel for all perceptrons at the same depth of the network
-\cite{Bishop:2006:PRM:1162264}. Leveraging modern GPUs and parallel computing technologies, these gradients can be computed very quickly. There are a number of important considerations in training. We discuss a few in the following subsections. 
+ A breakthrough came with the application of techniques derived from
+ control theory to ANNs in the late 1980s by ~\citet{rumelhart1986learning}, dubbed backpropagation. This technique was refined into its modern form in the thesis and continuing work of ~\citet{lecun1988theoretical}. In this method, error is propagated backward taking advantage of the directed structure of the network to compute a gradient for each parameter defining it. Because modern ANNs are usually separated into discrete layers, gradients can be computed in parallel for all perceptrons at the same depth of the network
+\citep{Bishop:2006:PRM:1162264}. Leveraging modern GPUs and parallel computing technologies, these gradients can be computed very quickly. There are a number of important considerations in training. We discuss a few in the following subsections. 
 
 \subsubsection{Selection of the Training Set}
 
@@ -460,7 +482,7 @@ The first step in training an ANN is the selection of a training set. ANNs funda
 The most important attributes of a training dataset are the number of
 samples it contains and its density near where the model will be making predictions. According to conventional wisdom, training a neural network with $K$ parameters
 will be very challenging if there are fewer than $K$ training samples
-available. The modular structure of ANNs can be combined with regularization of the weights to overcome these limitations \cite{liu2015very}. 
+available. The modular structure of ANNs can be combined with regularization of the weights to overcome these limitations ~\citep{liu2015very}. 
 In general, we will denote a training set by $(X,Y)$ where $X$ is an indexed set of inputs and $Y$ is a corresponding indexed set of labels. 
 
 \subsubsection{Selecting a Loss Function}
@@ -519,7 +541,10 @@ When the second subscript is omitted, the subscript will only index the node in 
 \end{tikzpicture}
 }
 
-In this diagram, the $W^l$ are matrices composed of the weights indexed as above. Given an activation function for layer $n$ $A^n$ and its element-wise application to a vector $\bar A^n$, we can now write the output $\bar a_n$ for any layer of an arbitrary ANN in two ways \cite{Krause20}. Recursively, we can define
+In this diagram, the $W^l$ are matrices composed of the weights
+indexed as above. Given an activation function for layer $n$ $A^n$ and
+its element-wise application to a vector $\bar A^n$. As demonstrated
+by ~\citet{Krause20}, we can now write the output $\bar a_n$ for any layer of an arbitrary ANN in two ways . Recursively, we can define
 \begin{equation}
     a^n_\lambda = A^n(\sum_\alpha w^n_{\alpha, \lambda} a^{n-1}_\alpha)
 \end{equation}
@@ -565,8 +590,9 @@ of the learning algorithm, we apply a correction so that
     Numerical computation of the gradient requires first evaluating the network forward by computing the output for a given input. The value of every node in the network is saved and these values are used to weight the error as it is propagated backward through the network. Once the gradient is computed, the weights are adjusted according to the step defined above. This process is repeated until convergence is attained to within a tolerance. It should be
 clear from the number of terms in this calculation that the initial
 guess and step size can have significant effect on the eventual trained weights.
-Due to lack of a guarantee for general convexity, poor guesses for such a large number of parameters can lead
-to gradients blowing up or down   \cite{Bishop:2006:PRM:1162264}. 
+Due to lack of a guarantee for general convexity,
+~\citet{Bishop:2006:PRM:1162264} observed that poor guesses for such a large number of parameters can lead
+to gradients blowing up or down. 
 . Due to nonlinearity and the plenitude of local minima in the loss function, classic gradient descent usually does not perform well during ANN training. \\ 
 By far the most common technique for training the weights of neural networks adds noise in the form of random re-orderings of the training data to the general optimization process and is known as stochastic gradient descent. 
 %\begin{tcolorbox}{}
@@ -588,6 +614,6 @@ Given an ANN $N: \R^n \to C$, an initial set of weights for this network $\vec w
 \end{definition}
 %\end{tcolorbox}
 Stochastic gradient descent achieves a smoothing effect on the gradient optimization by only sampling a subset of the training data for each iteration. Miraculously, this smoothing effect not only often achieves faster convergence, the result also generalizes better than solutions using deterministic gradient methods 
-\cite{HardtRS15}. It is for this reason that SGD has been adopted as the de facto standard among ANN training applications.
+\citep{HardtRS15}. It is for this reason that SGD has been adopted as the de facto standard among ANN training applications.
 
 

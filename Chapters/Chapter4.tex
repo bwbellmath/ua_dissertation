@@ -242,8 +242,13 @@ kernel methods and more specifically bilinear map based models
 decompose their predictions into a contribution from each of their
 training data. the Neural Tangent Kernel (NTK) is an interesting tool,
 but predicated on too many approximation assumptions. This exact
-formulation allows a much more solid foundation for geometric
-inferences. 
+formulation allows a much more solid foundation for analyzing neural
+networks and suggests the possibility that predictions can be
+decomposed using this framework. The implementation and application of
+this method to real machine-learning models and tasks demonstrates
+that it is not only a theoretical framework, it is practical! This
+paper was accepted at the Topology Algebra and Geometry (TAG) workshop
+at ICML 2023 (an archival publication).  
 
 \section{Introduction}
 
@@ -674,7 +679,11 @@ w_s(t) &= w_s - t(w_s - w_{s+1})\\
 w_s(t,x) &= \begin{cases} w_s(0), & \text{if } x_I = 1\\ w_s(t), & \text{if } x_I = 0 \end{cases}
 % b &= f_{w_0}(x) 
 \end{align}
-\textbf{Note:} $\phi$ is deciding whether to select a continuously or discrete gradient based on whether the data is from the training or testing copy of the Hilbert space $H$. This is due to the inherent asymmetry that is apparent from the derivation of this kernel (see Appendix section~\ref{proof:eker}). This choice avoids potential discontinuity in the kernel output when a test set happens to contain training points. 
+\textbf{Note:} $\phi$ is deciding whether to select a continuously or
+discrete gradient based on whether the data is from the training or
+testing copy of the Hilbert space $H$. This is due to the inherent
+asymmetry that is apparent from the derivation of this kernel (see
+Appendix section ~\ref{proof:eker}). This choice avoids potential discontinuity in the kernel output when a test set happens to contain training points. 
 \end{definition}
 \begin{restatable}{lemma}{ker}
 The exact path kernel (EPK) is a kernel.
@@ -741,7 +750,7 @@ b &= f_{w_0}(x)
 \end{restatable}
 
 \begin{proof}
-
+\label{proof:eker}
 Let $f_{w}$ be a differentiable function parameterized by parameters $w$ which is trained via $N$ forward Euler steps of fixed step size $\varepsilon$ on a training dataset $X$ with labels $ Y$, with initial parameters $w_0$ so that there is a constant $b$ such that for every $x$, $f_{w_0}(x) = b$, and weights at each step ${w_s : 0 \leq s \leq N}$. Let $x \in X$ be arbitrary and within the domain of $f_w$ for every $w$. For the final trained state of this model $f_{w_N}$, let $y = f_{w_N}(x)$. 
 
 For one step of training, we consider $y_s  = f_{w_s(0)}(x)$ and $y_{s+1} = f_{w_{s+1}}(x)$. We wish to account for the change $y_{s+1} - y_s$ in terms of a gradient flow, so we must compute $\dfrac{\partial y}{dt}$ for a continuously varying parameter $t$. Since $f$ is trained using forward Euler with a step size of $\varepsilon > 0$, this derivative is determined by a step of fixed size of the weights $w_s$ to $w_{s+1}$. We parameterize this step in terms of the weights:
@@ -761,7 +770,7 @@ Applying chain rule and the above substitution, we can write
 &= \sum_{j = 1}^{d} \dfrac{d f_{w_s(t)}(x)}{\partial w_j} \left(-\varepsilon \dfrac{\partial L(f_{w_s(0)}(X_T),  Y_T)}{\partial w_j}\right)\\
 &= \sum_{j = 1}^{d} \dfrac{d f_{w_s(t)}(x)}{\partial w_j} \left(-\varepsilon \sum_{i = 1}^{M}\dfrac{d L(f_{w_s(0)}(x_i),  y_i)}{d f_{w_s(0)}(x_i)}\dfrac{\partial  f_{w_s(0)}(x_i)}{\partial w_j}\right)\\
 &= -\varepsilon \sum_{i = 1}^{M} \dfrac{d L(f_{w_s(0)}(x_i),  y_i)}{d f_{w_s(0)}(x_i)} \sum_{j = 1}^{d} \dfrac{d f_{w_s(t)}(x)}{\partial w_j}  \dfrac{d f_{w_s(0)}(x_i)}{\partial w_j}\\
-&= -\varepsilon \sum_{i = 1}^{M} \dfrac{d L(f_{w_s(0)}(x_i),  y_i)}{d f_{w_s(0)}(x_i)} \nabla_w f_{w_s(t)}(x) \cdot \nabla_w f_{w_s(0)}(x_i)\\
+&= -\varepsilon \sum_{i = 1}^{M} \dfrac{d L(f_{w_s(0)}(x_i),  y_i)}{d f_{w_s(0)}(x_i)} \nabla_w f_{w_s(t)}(x) \cdot \nabla_w f_{w_s(0)}(x_i)\label{eq11}\\
 \end{align}
 Using the fundamental theorem of calculus, we can compute the change in the model's output over step $s$
 \begin{align}
@@ -803,29 +812,15 @@ reducing to the form of a kernel machine in a later theorem
 ~\ref{thm:ekr}. Let us relax this and replace $b$ with
 $f_{w_0(0)}(x)$. We can see that this new representation no longer
 requires assumptions about $f_{w_0(0)}(x)$ which gives us a much more
-general representation which includes most ANNs in practice. 
-For a moment, we can forget about the multitude of training data and
-examine exactly one training input $x_0$ and considering its
-corresponding function:
+general representation which includes most ANNs in practice, 
 \begin{align}
-f_0(x) = f_{w_0(0)}(x) +  -\varepsilon \int_{P_S} \dfrac{d
+f_{w_F(0)}(x) = f_{w_0(0)}(x) +  -\varepsilon \sum_{i=1}^N \sum_s^S \int_{P_S} \dfrac{d
       L(f_{w_s(0)}(x_i),  y_i)}{d f_{w_s(0)}(x_0)}
-      \left(\nabla_w f_{w_s(t)}(x)\right) \cdot \nabla_w
-      f_{w_s(0)}(x_i)\\   \label{eqint}
+      \langle\nabla_w f_{w_s(t)}(x), \nabla_w
+      f_{w_s(0)}(x_i)\rangle dt \label{eqint}.
 \end{align}
 
-We will borrow the semi-inner-product from ~\cite{zhang2009reproducing}
-
-\begin{restatable}{lemma}{rkbs}
-All neural networks can be composed from a sheaf within a reproducing
-kernel Banach space. 
-\end{restatable}
-
-
-The ensemble described above induces a metric, we
-\begin{proof}
-
-\end{proof}
+% TODO ... make sure is clean?
 % \begin{sproof}
 % Assuming the theorem hypothesis, we'll measure the change in model output as we interpolate across each training step $s$ by measuring the change in model state along a linear parametrization $w_s(t) = w_s - t(w_s - w_{s+1})$. We will let $d$ denote the number of parameters of $f_w$. For brevity, we define $L(x_i, y_i)= l(f_{w_s(0)}(x_i),  y_i)$ where $l$ is the loss function used to train the model.
 % \begin{align}
