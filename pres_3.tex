@@ -1,0 +1,691 @@
+\newcommand{\RR}{I\!\!R} %real numbers
+\newcommand{\Nat}{I\!\!N} %natural numbers
+
+% Persistence
+% carefully pose some definitions for adversarial examples
+% develop persistence metric and talk about how it is used
+
+\section{Persistent Classification}
+\label{Chapter3}
+
+% \begin{frame}
+%   \frametitle{Chapter Goals}
+%   \begin{enumerate}
+%     \item Define a spatial metric for classification persistence
+%       according to arbitrary neural networks. 
+%     \item Apply this metric to adversarial examples to show that many
+%       are unstable
+%     \item Examine connection among predictive accuracy, attack
+%       distortion, and persistence.
+%   \item Relate all of these observations to the dimpled manifold
+%     hypothesis for adversarial examples. \end{enumerate}
+% \end{frame}
+        
+
+% Some hypotheses underlying the existence of adversarial examples for classification problems are the high-dimensionality of the data, high codimension in the ambient space of the data manifolds of interest, and/or that the structure of machine learning models may encourage classifiers to develop decision boundaries close to data points. 
+
+% This article proposes a new framework for studying adversarial examples that does not depend directly on the distance to the decision boundary. 
+% Similarly to the smoothed classifier literature, we define a (natural or adversarial) data point to be $(\gamma,\sigma)$-stable if the probability of the same classification is at least $\gamma$ for points sampled in a Gaussian neighborhood of the point with a given standard deviation $\sigma$. 
+% We focus on studying the differences between persistence metrics along interpolants of natural and adversarial points.
+% We show that adversarial examples have significantly lower persistence than natural examples for large neural networks in the context of the MNIST and ImageNet datasets. 
+% We connect this lack of persistence with decision boundary geometry by measuring angles of interpolants with respect to decision boundaries.
+% Finally, we connect this approach with robustness by developing a manifold alignment gradient metric and demonstrating the increase in robustness that can be achieved when training with the addition of this metric. 
+
+% \section{Introduction}
+
+% Deep Neural Networks (DNNs) and their variants are core to the
+% success of modern machine learning ~\citep{prakash2018}, and have
+% dominated competitions in image processing, optical character
+% recognition, object detection, video classification, natural
+% language processing, and many other fields
+% \citep{SCHMIDHUBER201585}. Yet such classifiers are notoriously
+% susceptible to manipulation via adversarial examples
+% ~\citep{szegedy2013}.
+
+\begin{frame}
+  \frametitle{Background}
+
+ Adversarial examples are not just a peculiarity, but seem to occur
+ for most, if not all, DNN classifiers. For example,
+ \citet{inevitable2018} used isoperimetric inequalities on high
+ dimensional spheres and hypercubes to conclude that there is a
+ reasonably high probability that a correctly classified data point
+ has a nearby adversarial example.\\
+
+ This has been reiterated using mixed integer linear programs to rigorously check minimum distances necessary to achieve adversarial conditions ~\citep{tjeng2017evaluating}. \citet{ilyas2019adversarial} showed that adversarial examples can arise from features that are good for classification but not robust to perturbation. 
+\end{frame}
+  
+% There have been many attempts to identify adversarial examples using
+% properties of the decision boundary. \citet{Fawzi2018empirical} found
+% that decision boundaries tend to have highly curved regions, and these
+% regions tend to favor negative curvature, indicating that regions that
+% define classes are highly nonconvex. The purpose of this work is to
+% investigate these geometric properties related to the decision
+% boundaries. We will do this by proposing a notion of stability that is
+% more nuanced than simply measuring distance to the decision boundary,
+% and is also capable of elucidating information about the curvature of
+% the nearby decision boundary.
+
+\begin{frame}
+  \frametitle{Justification}
+  We will develop a statistic extending
+ prior work on smoothed classifiers by \citet{cohen2019certified}. \\
+
+We will be checking some geometric properties related to the alignment of gradients
+  with human perception \citep{ganz2022perceptually,
+    kaur2019perceptually, shah2021input} and with the related
+  underlying manifold \citep{kaur2019perceptually,
+    ilyas2019adversarial} which may imply robustness.\\
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Justifications}
+
+  The main hypothesis we seek to investigate is proposed by
+  ~\citet{shamir2021dimpled} and defines smooth manifold-like
+  structures along which model gradients with respect to input must
+  vary.  For our purposes Manifold Aligned Gradients (MAG) will refer to the property that the gradients of a model with respect to model inputs follow a given data
+  manifold $\mathcal{M}$. \\
+
+ We believe these geometric properties are related
+ to why smoothing methods have been useful in robustness tasks
+ ~\citep{cohen2019certified, lecuyer2019certified, li2019certified}. We propose three approaches in order to connect robustness with geometric properties of the decision boundary learned by ANNs: 
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Contributions}
+ \begin{enumerate}
+     \item We propose and implement two metrics based on the success of smoothed classification techniques:  $(\gamma,\sigma)$-stability and $\gamma$-persistence defined with reference to a classifier and a given point (which can be either a natural or adversarial image, for example) and demonstrate their validity for analyzing adversarial examples. 
+     \item We interpolate across decision boundaries using our persistence metric to demonstrate an inconsistency at the crossing of a decision boundary when interpolating from natural to adversarial examples.
+     \item We demonstrate via direct interpolation across decision boundaries and measurement of angles of interpolating vectors relative to the decision boundary itself that dimensionality is not solely responsible for geometric vulnerability of neural networks to adversarial attack. 
+ \end{enumerate}
+ \end{frame}
+
+% \section{Motivation and related work}
+
+% Our work is intended to shed light on the existence and prevalence of adversarial examples to DNN classifiers. It is closely related to other attempts to characterize robustness to adversarial perturbations, and here we give a detailed comparison.
+
+ \begin{frame}
+   \frametitle{Related Work : Distance-based robustness}
+
+   \begin{itemize}
+     % A typical approach to robustness of a classifier is to consider
+\item  \citet{khoury2018} define a classifier to be robust if the class of
+ each point in the data manifold is contained in a sufficiently large
+ ball that is entirely contained in the same class. Larger minimum
+ radius of this cover means more robust. 
+\item  Robustness by measuring distances from the data manifold to the decision boundary
+ ~\citep{Wang2020Improving, xu2023exploring, he2018decision}.
+
+% The larger the
+% balls, the more robust the classifier. It is then shown that if
+% training sets are sufficiently dense in relation to the reach of the
+% decision axis, the classifier will be robust in the sense that it
+% classifies nearby points correctly. In practice, we do not know that
+% the data is so well-positioned, and it is quite possible, especially
+% in high dimensions,
+ \item Radii in practice can be extremely small, as evidenced by
+ results on the prevalence of adversarial examples, e.g., work by
+ \citet{inevitable2018} and in evaluation of ReLU networks with mixed
+ integer linear programming e.g., work by ~\citet{tjeng2017evaluating}.
+
+\item \citet{tsipras2018robustness} investigated robustness in terms of how
+  small perturbations affect the the average loss of a
+  classifier. They define robust accuracy in terms of how often an
+  adversarially perturbed example classifies correctly.
+
+  \item \citet{gilmer2018adversarial} use the expected distance to
+ the nearest different class (when drawing a data point from the data
+ distribution) to capture robustness
+  %They
+% define standard accuracy of a classifier in terms of how often it
+% classifies correctly, and  It was shown
+% that sometimes accuracy of a classifier can result in poor robust
+% accuracy. , and then show that an accurate
+% classifier can result in a small distance to the nearest different
+% class in high dimensions when the data is drawn from concentric
+% spheres. May recent works ~\citep{he2018decision, chen2023aware,
+%   jin2022roby} have linked robustness with decision boundary dynamics,
+% both by augmenting training with data near decision boundaries, or
+% with dynamics related to distances from decision boundaries. We
+% acknowledge the validity of this work, but will address some of its
+% primary limitations by carefully studying the dynamics and orientation
+% of the decision boundary relative to model data.
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{Related Work : Curvature}
+\begin{itemize}
+\item \citet{roth19aodds} observe that adversarial examples often arise within cones,
+  outside of which images are classified in the original class.
+
+  \item Many theoretical models of
+ adversarial examples, for instance the dimple model developed by
+ \citet{shamir2021}, have high curvature and/or sharp corners as an
+ essential piece of why adversarial examples can exists very close to
+ natural examples.
+ \item Fixed distance based metrics are overly sensitive to sharp
+   curvature and these cones. \textbf{Hypothesis} : a weaker (less
+   strict) distance based metric may help examine the effective
+   curvature around data.
+
+ \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle {Adversarial detection via sampling}
+  \begin{itemize}
+    
+% While adversarial examples often occur, they still may be rare in the
+% sense that most perturbations do not produce adversarial
+% examples.
+    \item \citet{yu2019new} invert the adversarial attack process
+      around a test point to
+      ask how ``easy'' it is to find examples of other classes near
+      that point using gradient descent.
+      \item This method has been generalized with
+ the developing of smoothed classification methods
+ ~\citep{cohen2019certified, lecuyer2019certified, li2019certified}
+ which at varying stages of evaluation add noise to the effect of
+ smoothing output and identifying adversaries due to their higher
+ sensitifity to perturbation.
+ \item These methods suffer from significant
+ computational complexity ~\citep{kumar2020curse} and have been shown
+ to have fundamental limitations in their ability to rigorously certify
+ robustness ~\citep{blum2020random, yang2020randomized}.
+
+ %We will generalize this approach into a metric which will allow us to
+ %directly study these limitations in order to better understand how
+ %geometric properties have given rise to adversarial vulnerabilities.
+ \item In general, the results of \citet{yu2019new} indicate that considering samples of nearby points, which approximate the computation of integrals, is likely to be more successful than methods that consider only distance to the decision boundary.
+ \end{itemize}
+\end{frame}
+
+% \citet{roth19aodds} proposed a statistical method to identify adversarial examples from natural data. Their main idea was to consider how the last layer in the neural network (the logit layer) would behave on small perturbations of a natural example. %, i.e., on $x+\varepsilon n$ where $x$ is a natural example, $\varepsilon>0$ is small, and $n \sim N(0,I)$.  
+% This is then compared to the behavior of a potential adversarial example. 
+
+% It was shown by \citet{hosseini2019odds} that it is possible to produce adversarial examples, for instance using a logit mimicry attack, that instead of perturbing an adversarial example toward the true class, actually perturb to some other background class. In fact, we will see in Section \ref{sec:mnist} that the emergence of a background class, which was observed as well by \citet{roth19aodds}, is quite common. Although many recent approaches have taken advantage of these facts ~\citep{taori2020shifts, lu2022randommasking, Osada_2023_WACV, blau2023classifier} in order to measure and increase robustness, we will leverage these sampling properties to develop a metric directly on decision-boundary dynamics and how they relate to the success of smoothing based robustness. 
+
+% {\bf Manifold Aware Robustness}
+
+% The sensitivity of convolutional neural networks to imperceptible changes in input has thrown into question the true generalization of these models.
+% ~\citet{jo2017measuring} study the generalization performance of CNNs by transforming natural image statistics.  % surface level irregularities
+% Similarly to our MAG approach, they create a new dataset with well-known properties to allow the testing of their hypothesis.
+% They show that CNNs focus on high level image statistics rather than human perceptible features.
+% This problem is made worse by the fact that many saliency methods fail basic sanity checks \citep{adebayo2018sanity, kindermans2019reliability}.
+
+% Until recently, it was unclear whether robustness and manifold alignment were directly linked, as the only method to achieve manifold alignment was adversarial training.
+% Along with the discovery that smoothed classifiers are perceptually
+% aligned, comes the hypothesis that robust models in general share this
+% property put forward by ~\citet{kaur2019perceptually}.
+% This discovery raises the question of whether this relationship is bidirectional.
+
+% ~\citet{khoury2018} study the geometry of natural images, and create a lower bound for the number of data points required to cover the manifold.
+% Unfortunately, they demonstrate that this lower bound is so large as to be intractable.
+% ~\citet{shamir2021dimpled} propose using the tangent space of a
+% generative model as an estimation of this
+% manifold. ~\citet{magai2022topology} thoroughly review certain
+% topological properties to demonstrate that neural networks
+% intrinsically use relatively few dimensions of variation during
+% training and evaluation . ~\citet{vardi2022gradient} demonstrate that even models which satisfy strong conditions related to max margin classifiers are implicitly non-robust. PCA and manifold metrics have been recently used to identify adversarial examples ~\citep{aparne2022pca, nguyen-minh-luu-2022-textual}. We will extend this work to study the relationship between robustness and manifold alignment directly by baking alignment directly into networks and comparing them with another approach to robustness. 
+
+% {\bf Summary.}
+%  In Sections \ref{sec:meth} and \ref{sec:experiments}, we will investigate stability of both natural data and adversarial examples by considering sampling from Gaussian distributions centered at a data point with varying standard deviations. Using the standard deviation as a parameter, we are able to derive a statistic for each point that captures how entrenched it is in its class in a way that is less restrictive than the robustness described by \citet{khoury2018}, takes into account the rareness of adversarial examples described by \citet{yu2019new}, builds on the idea of sampling described by \citet{roth19aodds} and \citet{hosseini2019odds}, and represent curvatures in a sense related to \citet{Fawzi2018empirical}. Furthermore, we will relate these stability studies to direct measurement of interpolation incident angles with decision boundaries in Subsection~\ref{subsec:db} and ~\ref{subsec:dbe} and the effect of reduction of data onto a known lower dimensional manifold in Subsections ~\ref{subsec:ma} and ~\ref{subsec:mae}.  
+
+% \section{Methods} \label{sec:meth} % Stability and Persistence
+
+% In this section we will lay out the theoretical framework for studying stability, persistence, and decision boundary corssing-angles. 
+
+\subsection{Stability and Persistence} \label{subsec:stab}
+% In this section we define a notion of stability of classification of a point under a given classification model. In the following, $X$ represents the ambient space the data is drawn from (typically $\RR^n$) even if the data lives on a submanifold of $X$, and $L$ is a set of labels (often $\{1,\dots,\ell\}$).  Note that points $x\in X$ can be natural or adversarial points.%The following definition complements the definition for adversarial examples by providing a criteria for the local stability of the classifier about a point, which could be an actual test point or an adversarial example: 
+
+\begin{frame}
+  \frametitle{Stability}
+\begin{definition}
+Let $\CC:X\to L$ be a classifier, $x \in X$, $\gamma\in(0,1)$, and $\sigma>0$. We say $x$ is \emph{$(\gamma,\sigma)$-stable} with respect to $\CC$ if $\mathbb{P}[\CC(x')=\CC(x)] \geq \gamma$ for $x' \sim \rho = N(x, \sigma^2 I)$; i.e. $x'$ is drawn from a Gaussian with variance $\sigma^2$ and mean $x$.
+\end{definition}
+
+ In the common setting when $X=\RR^n$, we have
+ \[\mathbb{P}[\CC(x')=\CC(x)] = \int_{\RR^n} \mathbbm{1}_{\CC^{-1}(\CC(x))} (x') d\rho (x') = \rho(\CC^{-1}\CC(x)).\]
+ Note here that $\CC^{-1}$ denotes preimage. %In the case of images drawn from $\RR^n$, we can write this integral precisely as
+% One could substitute various probability measures $\rho$ above with mean $x$ and variance $\sigma^2$ to obtain different measures of stability corresponding to different ways of sampling the neighborhood of a point.  Another natural choice would be sampling the uniform measure on balls of changing radius. Based on the concentration of measure for both of these families of measures we do not anticipate significant qualitative differences in these two approaches. We propose Gaussian sampling because it is also a product measure, which makes it easier to sample and simplifies some other calculations below.
+
+ For the Gaussian measure, the probability above may be written more concretely as
+ \begin{equation}\label{EQN:Gaussian}
+ \frac{1}{\left(\sqrt{2\pi}\sigma\right)^{n}} \int_{\RR^n} \mathbbm{1}_{\CC^{-1}(\CC(x))} (x')e^{-\frac{\norm{x - x'}^2}{2\sigma^2}} dx'.
+ \end{equation}
+\end{frame}
+% In this work,
+\begin{frame}
+  \frametitle{Stability Approximation}
+  We will conduct experiments in which we estimate this stability for fixed $(\gamma,\sigma)$ pairs via a Monte Carlo sampling, in which case the integral \eqref{EQN:Gaussian} is approximated by taking $N$ i.i.d. samples $x_k \sim \rho$ and computing
+ \[
+     \frac{\norm{x_k : \CC(x_k) = \CC(x)}}{N}.
+ \]
+ Note that this quantity converges to the integral \eqref{EQN:Gaussian} as $N\to\infty$ by the Law of Large Numbers.\\
+
+ The ability to adjust the quantity $\gamma$ is important because it is much weaker than a notion of stability that requires a ball that stays away from the decision boundary as by \citet{khoury2018}. By choosing $\gamma$ closer to $1$, we can require the samples to be more within the same class, and by adjusting $\gamma$ to be smaller we can allow more overlap.
+
+\end{frame}
+\begin{frame}
+  \frametitle{Persistence}
+  
+% We also propose a related statistic, \emph{persistence}, by fixing a
+% particular $\gamma$ and adjusting $\sigma$.
+  For any $x\in X$ not on the decision boundary, for any choice of $0<\gamma<1$ there exists a $\sigma_\gamma$ small enough such that if $\sigma < \sigma_\gamma$ then $x$ is $(\gamma,\sigma)$-stable. We can now take the largest such $\sigma_\gamma$ to define persistence.
+
+ \begin{definition}
+     Let $\CC:X\to L$ be a classifier, $x \in X$, and $\gamma\in(0,1)$. Let $\sigma_\gamma^*$ be the maximum $\sigma_\gamma$ such that $x$ is $(\gamma, \sigma)$-stable with respect to $\CC$ for all $\sigma<\sigma_\gamma$. We say that $x$ has \emph{$\gamma$-persistence} $\sigma_\gamma^*$.
+ \end{definition}
+
+The $\gamma$-persistence quantity $\sigma_\gamma^*$ measures the
+stability of the neighborhood of a given $x$ with respect to the
+output classification.
+%Small persistence indicates that the classifier is unstable in a small neighborhood of $x$, whereas large persistence indicates stability of the classifier in a small neighborhood of $x$. In the later experiments, we have generally taken $\gamma = 0.7$. This choice is arbitrary and chosen to fit the problems considered here. In our experiments, we did not see significant change in results with small changes in the choice of $\gamma$.
+\end{frame}
+
+% In our experiments, we numerically estimate $\gamma$-persistence via a bisection algorithm that we term the Bracketing Algorithm.  Briefly, the algorithm first chooses search space bounds $\sigma_{\min}$ and $\sigma_{\max}$ such that $x$ is  $(\gamma,\sigma_{\min})$-stable but is not $(\gamma,\sigma_{\max})$-stable with respect to $\CC$, and then proceeds to evaluate stability by bisection until an approximation of $\sigma_\gamma^*$ is obtained.
+
+% \subsection{Decision Boundaries} \label{subsec:db}
+
+% In order to examine decision boundaries and their properties, we will carefully define the decision boundary in a variety of equivalent formulations. 
+
+\begin{frame}
+  \frametitle{The Argmax Function in Multi-Class Problems}
+
+ A central issue when writing classifiers is mapping from continuous outputs or probabilities to discrete sets of classes. Frequently argmax type functions are used to accomplish this mapping. To discuss decision boundaries, we must precisely define argmax and some of its properties. 
+
+ In practice, argmax is not strictly a function, but rather a mapping from the set of outputs or activations from another model into the power set of a discrete set of classes:
+
+ \begin{equation}
+     \text{argmax} : \R^k \to \mathcal{P}(C)
+ \end{equation}
+
+ % Defined this way,
+ We cannot necessarily consider $\text{argmax}$ to be a function in general as the singleton outputs of argmax overlap in an undefined way with other sets from the power set. However, if we restrict our domain carefully, we can identify certain properties. 
+\end{frame}
+\begin{frame}
+  \frametitle{Argmax Decision Boundaries }
+ \begin{figure}[!ht]
+\begin{center}
+\begin{tikzpicture}
+  \draw[->] (-0.5, 0) -- (3.5, 0) node[right] {$x$};
+  \draw[->] (0, -0.5) -- (0, 3.5) node[above] {$y$};
+  \node at (1, 2) (c1) {Class 1};
+  \node at (2, 1) (c2) {Class 2};
+  \draw[-, fill, blue, opacity=.3] (0, 3) -- (3, 3) -- (0, 0);
+  \draw[-, fill, red, opacity=.3] (3, 0) -- (3, 3) -- (0, 0);
+  \draw[scale=1, domain=0:3, smooth, variable=\x, black, line width=0.45mm] plot ({\x}, {\x});
+  %\draw[scale=0.5, domain=-3:3, smooth, variable=\y, red]  plot ({\y*\y}, {\y});
+\end{tikzpicture}\begin{tikzpicture}
+  \draw[->] (-0.5, 0) -- (3.5, 0) node[right] {$x$};
+  \draw[->] (0, -0.5) -- (0, 3.5) node[above] {$y$};
+  \node at (1, 2) (c1) {Class 1};
+  \node at (2, 1) (c2) {Class 2};
+  \draw[-, fill, blue, opacity=.3] (0, 3) -- (3, 3) -- (0, 0);
+  \draw[-, fill, red, opacity=.3] (3, 0) -- (3, 3) -- (0, 0);
+  \draw[scale=1, domain=0:3, smooth, variable=\x, black, line width=0.45mm] plot ({\x}, {\x});
+  \draw[-, orange, line width=0.45mm] (0,3) -- (3, 0);
+  %\draw[scale=0.5, domain=-3:3, smooth, variable=\y, red]  plot ({\y*\y}, {\y});
+\end{tikzpicture}
+
+
+ \caption{Decision boundary in $[0,1] \times [0,1]$ (left) and decision boundary restricted to probabilities (right) If the output of $F$ are \emph{probabilities} which add to one, then all points of $x$ will map to the orange line on the right side of Figure~\ref{fig:pdb}. }
+ \label{fig:pdb}
+ \end{center}
+ \end{figure}
+\end{frame}
+% Restricting to only the pre-image of the singletons, it should be
+% clear that argmax is constant.  Indeed, restricted to the pre-image of
+% any set in the power-set, argmax is constant and thus
+% continuous. This induces the discrete topology whereby the pre-image
+% of an individual singleton is open. Observe that for any point whose
+% image is a singleton, one element of the domain vector must exceed the 
+% others by $\varepsilon > 0$. We shall use the $\ell^1$ metric for
+% distance, and thus if we restrict ourselves to a ball of radius
+% $\varepsilon$, then all elements inside this ball will have that
+% element still larger than the rest and thus map to the same singleton
+% under argmax. Since the union of infinitely many open sets is open in
+% $\R^k$, the union of all singleton pre-images is an open
+% set. Conveniently this also provides proof that the union of all of
+% the non-singleton sets in $\mathcal{P}(C)$ is a closed set. We will
+% call this closed set the argmax Decision Boundary. We will list two
+% equivalent formulations for this boundary.  
+
+\begin{frame}
+  \frametitle{Decision Boundary Definitions}
+  
+\textbf{Complement Definition}
+\begin{definition}
+ A point $x$ is in the \emph{decision interior} $D_f'$ for a classifier $f: \mathbb{R}^N -> \mathcal{C}$ if there exists $\delta > 0$ such that $\forall \epsilon < \delta$, $|f(B_\epsilon(x))| = 1$. 
+
+ The \emph{decision boundary} of a classifier $f$ is the closure of the complement of the decision interior $\overline{\{x : x \notin D_f'\}}$. 
+\end{definition}
+ \textbf{Level Set Definition}
+
+ \begin{definition}
+   The decision boundary $D$ of a probability valued function $f$ is the pre-image of a union of all level sets of activations $A_c = {c_1, c_2, ..., c_k}$ defined by a constant $c$ such that for some set of indices $L$, we have $c = c_i$ for every $i$ in $L$ and $c > c_j$ for every $j$ not in $L$. The pre-image of each such set are all $x$ such that $f(x) = A_c$ for some $c$. 
+ \end{definition}
+ \end{frame}
+
+
+% \section{Experiments} \label{sec:experiments}
+
+% In this section we investigate the stability and persistence behavior of natural and adversarial examples for MNIST \citep{MNIST} and ImageNet \citep{ILSVRC15} using a variety of different classifiers. For each set of image samples generated for a particular dataset, model, and attack protocol, we study $(\gamma,\sigma)$-stability and $\gamma$-persistence of both natural and adversarial images, and also compute persistence along trajectories from natural to adversarial images. In general, we use $\gamma = 0.7$, and note that the observed behavior does not change significantly for small changes in $\gamma$. While most of the adversarial attacks considered here have a clear target class, the measurement of persistence does not require considering a particular candidate class.  Furthermore, we will evaluate decision boundary incidence angles and apply our conclusions to evaluate models trained with manifold aligned gradients. 
+
+% \subsection{MNIST Experiments}
+
+% Since MNIST is relatively small compared to ImageNet, we trained several classifiers with various architectures and complexities and implemented the adversarial attacks directly. Adversarial examples were generated against each of these models using Iterative Gradient Sign Method (IGSM \citep{kurakin_adversarial_2016}) and Limited-memory Broyden-Fletcher-Goldfarb-Shanno (L-BFGS \citep{liu1989limited}).
+
+% \subsubsection{Investigation of $(\gamma, \sigma)$-stability on MNIST}\label{sec:mnist}
+
+\subsection{Experiments}
+\begin{frame}
+  \frametitle{Experiments : MNIST}
+   We begin by sampling gaussians around test points relative to a fully connected ReLU network with layers of size
+   784, 100, 20, and 10 and small regularization $\lambda = 10^{-7}$
+   which is trained on the standard MNIST training set. \\
+
+   %We then start with a randomly selected MNIST test image $x_1$ from the \texttt{1}'s class and generate adversarial examples $x_0,x_2,\dots,x_9$ using IGSM for each target class other than \texttt{1}. The neighborhoods around each $x_i$ are examined by generating 1000 i.i.d. samples from $N(x_i,\sigma^2I)$ for each of 100 equally spaced standard deviations $\sigma\in(0,1.6)$. Figure \ref{fgsmo} shows the results of the Gaussian perturbations of a natural example $x_1$ of the class labeled \texttt{1} and the results of Gaussian perturbations of the adversarial example $x_0$ targeted at the class labeled \texttt{0}. We provide other examples of $x_2,\ldots,x_9$ in the supplementary materials. Note that the original image is very stable under perturbation, while the adversarial image is not. 
+
+ \begin{figure}[!ht]
+   \includegraphics[width = .49\textwidth]{c3_figures/MNIST1.png}
+   \includegraphics[width = .49\textwidth]{c3_figures/MNIST10.png}
+ \caption{Frequency of each class in Gaussian samples with increasing variance around a natural image of class \texttt{1} (left) and around an adversarial attack of that image targeted at \texttt{0} generated using IGSM (right). The adversarial class (\texttt{0}) is shown as a red curve. The natural image class (\texttt{1}) is shown in black. Bottoms show example sample images at different standard deviations for natural (left) and adversarial (right) examples.}\label{fgsmo}
+\end{figure}
+\end{frame}
+
+% \subsubsection{Persistence of adversarial examples for MNIST}
+
+% To study persistence of adversarial examples on MNIST, we take the same network architecture as in the previous subsection and randomly select 200 MNIST images. For each image, we used IGSM to generate 9 adversarial examples (one for each target class) yielding a total of 1800 adversarial examples. In addition, we randomly sampled 1800 natural MNIST images. For each of the 3600 images, we computed $0.7$-persistence; the results are shown in Figure \ref{fig:IGSMpersistenceMNIST}. One sees that $0.7$-persistence of adversarial examples tends to be significantly smaller than that of natural examples for this classifier, indicating that they are generally less stable than natural images. We will see subsequently that this behavior is typical.
+
+\begin{frame}
+  \frametitle{Experiments : MNIST Persistence}
+ \begin{figure}[!ht]
+ \centering
+ \includegraphics[trim=200 80 100 100, clip,width=.5\textwidth]{c3_figures/original_hist.png}
+ \caption{Histogram of $0.7$-persistence of IGSM-based adversarial examples (red) and natural examples (blue) on MNIST. %The histogram shows that $0.7$-persistence for adversarial examples tends to be smaller than $0.7$-persistence for natural examples.
+ }
+
+ \label{fig:IGSMpersistenceMNIST}
+ \end{figure}
+\end{frame}
+% Next, we investigate the relationship of network complexity and $(\gamma,\sigma)$-stability by revisiting the now classic work of \citet{szegedy2013} on adversarial examples. 
+
+% Table \ref{table1} recreates and adds on to part of \cite[Table 1]{szegedy2013} in which networks of differing complexity are trained and attacked using L-BFGS. The table contains new columns showing the average $0.7$-persistence for both natural and adversarial examples for each network, as well as the average distortion for the adversarial examples. The distortion is the $\ell^2$-norm divided by square root of the dimension $n$. The first networks listed are of the form FC10-k, and are fully connected single layer ReLU networks that map each input vector $x \in \RR^{784}$ to an output vector $y \in \RR^{10}$ with a regularization added to the objective function of the form $\lambda\Norm{w}_2/N$, where $\lambda = 10^{-k}$ and $N$ is the number of parameters in the weight vector $w$ defining the network. The higher values of $\lambda$ indicate more regularization.  
+
+% FC100-100-10 and FC200-200-10 are networks with 2 hidden layers (with 100 and 200 nodes, respectively) with regularization added for each layer of perceptrons with the $\lambda$ for each layer equal to $10^{-5}, 10^{-5}$, and  $10^{-6}$. Training for these networks was conducted with a fixed number of epochs (typically 21). For the bottom half of Table \ref{table1}, we also considered networks with four convolutional layers plus a max-pooling layer connected by ReLU to a fully connected hidden layer with increasing numbers of channels denoted as as ``C-Ch,'' where C reflects that this is a CNN and Ch denotes the number of channels. A more detailed description of these networks can be found in Appendix \ref{appendix:CNNs}.
+
+\begin{frame}
+  \frametitle{Experiments : MNIST Persistence vs Architecture}
+ \begin{table}[ht]
+ \centering
+ \caption{Recreation of ~\citet{szegedy2013intriguing}, Table 1 for the MNIST dataset.  For each network, we show Testing Accuracy (in \%), Average Distortion ($\|x\|_2/\sqrt{n}$) of adversarial examples, and new columns show average $0.7$-persistence values for natural (Nat) and adversarial (Adv) images. 300 natural and 300 adversarial examples generated with L-BFGS were used for each aggregation.}
+ \label{table1}
+ \begin{tabular}{lllll}
+ \toprule
+ Network & Test Acc & Avg Dist & Persist (Nat) & Persist (Adv) \\
+ \midrule
+ FC10-4 & 92.09 & 0.123 & 0.93 & 1.68\\
+ FC10-2 & 90.77 & 0.178 & 1.37 & 4.25\\
+ FC10-0 & 86.89 & 0.278 & 1.92 & 12.22\\
+ FC100-100-10 & 97.31 & 0.086 & 0.65 & 0.56 \\
+ FC200-200-10 & 97.61 & 0.087 & 0.73 & 0.56 \\
+ \midrule
+ C-2 & 95.94 & 0.09 & 3.33 & 0.027 \\
+ C-4 & 97.36 & 0.12 & 0.35 & 0.027 \\
+ C-8 & 98.50 & 0.11 & 0.43  & 0.0517 \\
+ C-16 & 98.90 & 0.11 & 0.53 & 0.0994 \\
+ C-32 & 98.96 & 0.11 & 0.78 & 0.0836 \\
+ C-64 & 99.00 & 0.10 & 0.81 & 0.0865 \\
+ C-128 & 99.17 & 0.11 & 0.77 & 0.0883 \\
+ C-256 & 99.09 & 0.11  & 0.83 & 0.0900 \\
+ C-512 & 99.22 & 0.10 & 0.793 & 0.0929 \\
+
+ \bottomrule
+ \end{tabular}
+ \end{table}
+\end{frame}
+% The main observation from Table \ref{table1} is that for higher complexity networks,
+% adversarial examples tend to have smaller persistence than natural examples. Histograms reflecting these observations can be found in the supplemental material. %This can be seen as well in Figure \ref{fig:FC200-200-10}, which shows the $0.7$-persistence for natural and adversarial examples for the network FC200-200-10. 
+% Another notable takeaway is that for models with fewer effective parameters, the attack distortion necessary to generate a successful attack is so great that the resulting image is often more stable than a natural image under that model, as seen particularly in the FC10 networks. Once there are sufficiently many parameters available in the neural network, we found that both the average distortion of the adversarial examples and the average $0.7$-persistence of the adversarial examples tended to be smaller. This observation is consistent with the idea that networks with more parameters are more likely to exhibit decision boundaries with more curvature.
+
+\begin{frame}
+  \frametitle{Experiments : ImageNet}
+
+For ImageNet \citep{Imagenet-old}, we used pre-trained ImageNet classification models, including alexnet \citep{alexnet} and vgg16 \citep{simonyan2014very}.
+
+% We then generated attacks based on the ILSVRC 2015 \citep{ILSVRC15}
+% validation images for each of these networks using a variety of modern
+% attack protocols, including Fast Gradient Sign Method (FGSM
+% \citep{goodfellow_explaining_2014}), Momentum Iterative FGSM (MIFGSM
+% \citep{dongMIFGSM}), Basic Iterative Method (BIM
+% \citep{kurakin_adversarial_2016}), Projected Gradient Descent (PGD
+% \citep{madry_towards_2017}), Randomized FGSM (R+FGSM
+% \citep{tramer2018ensemble}), and Carlini-Wagner (CW
+% ~\citet{carlini_towards_2016}). These were all generated using the
+% TorchAttacks by \citet{kim2021torchattacks} toolset.
+
+% \subsubsection{Investigation of $(\gamma, \sigma)$-stability on ImageNet}
+
+% In this section, we show the results of Gaussian neighborhood sampling in ImageNet. Figures \ref{fig:imagenet_adv} and \ref{fig:persistent_interpimage} arise from vgg16 and adversarial examples created with BIM; results for other networks and attack strategies are similar, with additional figures in the supplementary material. Figure \ref{fig:imagenet_adv} (left) begins with an image $x$ with label \texttt{goldfinch}. For each equally spaced $\sigma\in(0,2)$, 100 i.i.d. samples were drawn from the Gaussian distribution $N(x,\sigma^2I)$, and the counts of the vgg16 classification for each label are shown. In Figure \ref{fig:imagenet_adv} (right), we see the same plot, but for an adversarial example targeted at the class \texttt{indigo\_bunting}, which is another type of bird, using the BIM attack protocol. %There are similar results with other attack protocols, as described in the supplementary materials.
+
+% The key observation in Figure \ref{fig:imagenet_adv} is that the frequency of the class of the adversarial example (\texttt{indigo\_bunting}, shown in red) falls off much quicker than the class for the natural example (\texttt{goldfinch}, shown in black). In this particular example, the original class appears again after the adversarial class becomes less prevalent, but only for a short period of $\sigma$, after which other classes begin to dominate. In some examples the original class does not dominate at all after the decline of the adversarial class. The adversarial class almost never dominates for a long period of $\sigma$. 
+
+
+ \begin{figure}[ht]
+ \centering
+ \includegraphics[width = .49\textwidth]{./c3_figures/ILSVRC2012_val_00001274-vgg16-sampling.png}
+ \includegraphics[width = .49\textwidth]{./c3_figures/IMNET-class-11-vgg16-BIM-48-attack_data-023.png}
+
+ \caption{Frequency of each class in Gaussian samples with increasing variance around a \texttt{goldfinch} image (left) and an adversarial example of that image targeted at the \texttt{indigo\_bunting} class and calculated using the BIM attack (right). Bottoms show example sample images at different standard deviations for natural (left) and adversarial (right) examples.}
+ \label{fig:imagenet_adv}
+ \end{figure}
+\end{frame}
+
+% \subsubsection{Persistence of adversarial examples on ImageNet}
+
+% Figure \ref{fig:persistent_interpimage} shows a plot of the $0.7$-persistence along the straight-line path between a natural example and adversarial example as parametrized between $0$ and $1$. It can be seen that the dropoff of persistence occurs precisely around the decision boundary. This indicates some sort of curvature favoring the class of the natural example, since otherwise the persistence would be roughly the same as the decision boundary is crossed.
+
+\begin{frame}
+  \frametitle{Experiments : ImageNet Persistence}
+ \begin{figure}[ht]
+ \centering
+ \includegraphics[width = \textwidth]
+ {c3_figures/persistence_interpolation-IMNET-class-11-vgg16-BIM-48-attack_data-001.png}
+ \caption{The $0.7$-persistence of images along the straight line path from an image in class \texttt{goldfinch} (11) to an adversarial image generated with BIM in the class \texttt{indigo\_bunting} (14) on a vgg16 classifier. The classification of each image on the straight line is listed as a number so that it is possible to see the transition from one class to another. The vertical axis is $0.7$-persistence and the horizontal axis is progress towards the adversarial image.}\label{fig:persistent_interpimage}
+ \end{figure}
+\end{frame}
+% An aggregation of persistence for many randomly selected images from the \texttt{goldfinch} class in the validation set for Imagenet are presented in Table \ref{TAB:PersistenceAlexVGG}. 
+% \begin{table}[!ht]
+% \centering
+
+% \begin{tabular}{llll}
+% \toprule
+% Network/Method & Avg Dist & Persist (Nat) & Persist (Adv) \\
+% \midrule
+% alexnet (total) & 0.0194 & 0.0155 & 0.0049 \\ 
+% \:\: BIM        & 0.0188 & 0.0162 & 0.0050 \\ 
+% \:\: MIFGSM     & 0.0240 & 0.0159 & 0.0053 \\ 
+% \:\: PGD        & 0.0188 & 0.0162 & 0.0050 \\ 
+% \midrule
+% vgg16   (total) & 0.0154 & 0.0146 & 0.0011 \\ 
+% \:\: BIM        & 0.0181 & 0.0145 & 0.0012 \\ 
+% \:\: MIFGSM     & 0.0238 & 0.0149 & 0.0018 \\ 
+% \:\: PGD        & 0.0181 & 0.0145 & 0.0012 \\ 
+% \bottomrule
+% \end{tabular}
+% \caption{The $0.7$-persistence values for natural (Nat) and
+%   adversarial (Adv) images along with average distortion for
+%   adversarial images of alexnet and vgg16 for attacks generated with
+%   BIM, MIFGSM, and PGD on images from class \texttt{goldfinch}
+%   targeted toward other classes from the ILSVRC 2015 classification
+%   labels.} \label{TAB:PersistenceAlexVGG}%\label{table:attack_pers} 
+% \end{table}
+% For each image of a \texttt{goldfinch} and for each network of alexnet and vgg16, attacks were prepared to a variety of 28 randomly selected targets using a BIM, MIFGSM, PGD, FGSM, R+FGSM, and CW attack strategies. The successful attacks were aggregated and their $0.7$-persistences were computed using the Bracketing Algorithm along with the $0.7$-persistences of the original images from which each attack was generated. Each attack strategy had a slightly different mixture of which source image and attack target combinations resulted in successful attacks. The overall rates for each are listed, as well as particular results on the most successful attack strategies in our experiments, BIM, MIFGSM, and PGD. The results indicate that adversarial images generated for these networks (alexnet and vgg16) using these attacks were less persistent, and hence less stable, than natural images for the same models. 
+
+% \subsection{Decision Boundary Interpolation and Angle Measurement} \label{subsec:dbe}
+
+
+\begin{frame}
+  \frametitle{Experiments : Decision Boundary Angles}
+
+ \begin{figure}[!ht]
+ \centering\includegraphics[width=0.50\linewidth, trim=1.5cm 1.5cm 2cm 2cm, clip]{c3_figures/stab-mnist-C32-100-100-10-0.001-200-eval-1e-06-db_interp-angles-1stquadall199.png}\includegraphics[width=0.50\linewidth, trim=1.5cm 1.5cm 2cm 2cm, clip]{c3_figures/stab-mnist-C32-100-100-10-0.001-200-eval-1e-06-attack-db_interp-angles-1stquadall199.png}
+
+ \caption{Decision boundary incident angles between test and test images (left) and between test and adversarial images (right). Angles (plotted Top) are referenced to decision boundary so $\pi/2$ radians (right limit of plots) corresponds with perfect orthogoonality to decision boundary. Lines and histograms measure angles of training gradients (Blue) linear interpolant (Black) and adversarial gradients (Red)}
+ \label{fig:dba}
+ \end{figure}
+\end{frame}
+
+% In order to understand this sudden drop in persistence across the decision boundary observed in Figure ~\ref{fig:persistent_interpimage}, we will investigate incident angle of the interpolation with the decision boundary. In order to measure these angles, we must first interpolate along the decision boundary between two points. We will do this for pairs of test and test and pairs of test and adversary. In both cases, we will use a bracketing algorithm along the interpolation from candidate points to identify a point within machine-precision of the decision boundary $x_b$. 
+
+% Next, we will take 5000 samples from a Gaussian centered at this point with small standard deviation $\sigma = 10^{-6}$. Next, for each sample, we will perform an adversarial attack in order to produce a corresponding point on the opposite side of the decision boundary. Now for this new pair (sample and attacked sample), we will repeat the interpolation bracketing procedure in order to obtain the projection of this sample onto the decision boundary along the attack trajectory. Next, we will use singular value decomposition (SVD) on the differences between the projected samples and our decision boundary point $x_b$  to compute singular values and vectors from these projected samples. We will use the right singular vector corresponding with the smallest singular value as an approximation of a normal vector to the decision boundary at $x_b$. This point is difficult to compute due to degeneracy of SVD for small singular values, however in our tests, this value could be computed to a precision of 0.003. We will see that this level of precision exceeds exceeds that needed for the angles computed with respect to this normal vector sufficiently. 
+
+% From Figure~\ref{fig:dba} we notice that neither training gradients nor adversarial gradients are orthogonal to the decision boundary. From a theory perspective, this is possible because this problem has more than 2 classes, so that the decision boundary includes $(0.34, 0.34, 0.32)$ and $(0.4, 0.4, 0.2)$. That is to say that the level set definition of the decision boundary has degrees of freedom that do not require orthogonality of gradients. More interestingly, both natural and adversarial linear interpolants tend to cross at acute angles with respect to the decision boundary, with adversarial attacks tending to be less acute. This suggests that adversaries are exploiting the obliqueness of the decision boundary with respect to test points. We will leverage this understanding with manifold alignment to see if constraining gradients to a lower dimensional manifold, and thus increasing orthogonality of gradients will increase robustness. 
+
+% \subsection{Manifold Alignment on MNIST via PCA} \label{subsec:mae}
+
+% In order to provide an empirical measure of alignment, we first require a well defined image manifold.
+% The task of discovering the true structure of \textit{k}-dimensional manifolds in $\mathds{R}^d$ given a set of points sampled on the manifold has been studied previously \citep{khoury2018}.
+% Many algorithms produce solutions which are provably accurate under data density constraints.
+% Unfortunately, these algorithms have difficulty extending to domains with large $d$ due to the curse of dimensionality.
+% Our solution to this fundamental problem is to sidestep it entirely by redefining our dataset.
+% We begin by projecting our data onto a well known low dimensional manifold, which we can then measure with certainty.
+% \begin{figure}[h]
+% \begin{center}
+%     % \fbox{\rule[-.5cm]{0cm}{4cm} \rule[-.5cm]{4cm}{0cm}}
+
+%     \includegraphics[width=0.8\linewidth]{c3_figures/manifold_model_cosine_hist.png}
+%     \includegraphics[width=0.8\linewidth]{c3_figures/robust_model_cosine_hist.png}
+% \end{center}
+%     \caption{Comparison of on-manifold components between baseline network, robust trained models, and manifold optimized models. Large values indicate higher similarity to the manifold. Both robust and manifold optimized models are more 'on-manifold' than the baseline, with adversarial training being slightly less so.}
+%     \label{fig:hist_cosine}
+% \end{figure}
+
+% \begin{figure}[h]
+%     \centering
+%     \includegraphics[width=0.8\linewidth]{c3_figures/FGSM_attacks_accuracy_known_manifold.png}
+%     \includegraphics[width=0.8\linewidth]{c3_figures/PGD_attacks_accuracy_known_manifold.png}
+%     \caption{Comparison of adversarial robustness for PMNIST models under various training conditions. For both FGSM and PGD, we see a slight increase in robustness from using manifold optimization. Adversarial training still improves performance significantly more than manifold optimization. Another observation to note is that when both the manifold, and adversarial objective were optimized, increased robustness against FGSM attacks was observed. All robust models were trained using the $l_\infty$ norm at epsilon = 0.1.}
+%     \label{fig:model_robustness}
+% \end{figure}
+
+% We first fit a PCA model on all training data, using $k$ components for each class, where $k << d$.
+% Given the original dataset $X$, we create a new dataset $X_{\mathcal{M}} := \{x \times \textbf{W}^T \times \textbf{W} : x \in X \}$.
+% We will refer to this set of component vectors as $\textbf{W}$.
+% Because the rank of the linear transformation matrix, $k$, is defined lower than the dimension of the input space, $d$, this creates a dataset which lies on a linear subspace of $\mathds{R}^d$.
+% This subspace is defined by the span of $X \times \textbf{W}^T$ and any vector in $\mathds{R}^d$ can be projected onto it.
+% Any data point drawn from $\{z \times \textbf{W}^T : z \in \mathds{R}^k \}$ is considered a valid datapoint.
+% This gives us a continuous linear subspace which can be used as a data manifold.
+
+% Given that it our goal to study the simplest possible case, we chose MNIST as the dataset to be projected and selected $k = 28$ components.
+% We refer to this new dataset as Projected MNIST (PMNIST).
+% The true rank of PMNIST is lower than that of the original MNIST data, meaning there was information lost in this projection.
+% The remaining information we found is sufficient to achieve 92\% accuracy using a baseline Multylayer Perceptron (MLP), and the resulting images retain their semantic properties as shown in Figure \ref{fig:perception}.
+
+% \begin{figure*}
+%     \centering
+%     \includegraphics[width=0.25\linewidth]{c3_figures/pag_0.png}
+%     \includegraphics[width=0.25\linewidth]{c3_figures/pag_1.png}
+%     \includegraphics[width=0.25\linewidth]{c3_figures/pag_2.png}
+%     \caption{Visual example of manifold optimized model transforming 2 into 3. Original PMNIST image on left, center image is center point between original and attacked, on right is the attacked image. Transformation performed using PGD using the $l_\infty$ norm. Visual evidence of manifold alignment is often subjective and difficult to quantify. This example is provided as a baseline to substantiate our claim that our empirical measurements of alignment are valid.}
+%     \label{fig:perception}
+% \end{figure*}
+
+% Where $L(\theta, x, y)$ represents our classification loss term and $\alpha$ is a hyper parameter determining the weight of the manifold loss term.
+
+% \subsection{Manifold Aligned Gradients} \label{subsec:ma}
+
+% Component vectors extracted from the original dataset are used to project gradient examples onto our pre-defined image manifold.
+
+% Given a gradient example $\nabla_x = \frac{\partial f_\theta(x, y)}{\partial x}$ where $f_\theta$ represents a neural network parameterized by weights $\theta$. $\nabla_x$ is transformed using the coefficient vectors \textbf{W}.
+
+% \begin{equation}
+%     \rho_x = \nabla_x \times \textbf{W}^T \times \textbf{W}    
+% \end{equation}
+% The projection of the original vector onto this new transformed vector we will refer to as $P_{\mathcal{M}}$.
+% The norm of this projection gives a metric of manifold alignment.
+% \begin{equation}
+%     \frac{|| \nabla_x || }{||P_{\mathcal{M}}(\nabla_x )||}
+%   \label{equ:ratio}
+% \end{equation}
+% This gives us a way of measuring the ratio between on-manifold and off-manifold components of the gradient.
+% Additionally, both cosine similarity and the vector rejection were also tested but the norm ratio we found to be the most stable in training.
+% We use this measure as both a metric and a loss, allowing us to optimize the following objective.
+% \begin{equation}
+%   \mathds{E}_{(x,y) \sim \mathcal{D}} \left[ L(\theta, x,y)  + \alpha \frac{|| \nabla_x || }{||P_{\mathcal{M}}(\nabla_x )||} \right]
+%   \label{equ:loss}
+% \end{equation}
+
+% \subsection{Manifold Alignment Robustness Results}
+
+% All models were two layer MLPs with 1568 nodes in each hidden layer.
+% The hidden layer size was chosen as twice the input size.
+% This arrangement was chosen to maintain the simplest possible case.
+
+% Two types of attacks were leveraged in this study: fast gradient sign method (FGSM) \citep{goodfellow_explaining_2014} and projected gradient descent (PGD) \citep{madry_towards_2017}.
+% A total of four models were trained and evaluated on these attacks: Baseline, Robust, Manifold and Manifold Robust.
+% All models, including the baseline, were trained on PMNIST.
+% ``Robust" in our case refers to adversarial training.
+% All robust models were trained using the $l_\infty$ norm at $\epsilon = 0.1$.
+% Manifold Robust refers to both optimizing our manifold objective and robust training simultaneously.
+
+% Figure \ref{fig:hist_cosine} shows the cosine similarity on the testing set of PMNIST for both the Manifold model and Robust model.
+% Higher values indicate the model is more aligned with the manifold.
+% Both models here are shown to be more on manifold than the Baseline.
+% This demonstrates that our metric for alignment is being optimized as a consequence of adversarial training.
+
+% Figure \ref{fig:model_robustness} shows the adversarial robustness of each model.
+% In both cases, aligning the model to the manifold shows an increase in robustness over the baseline.
+% However, we do not consider the performance boost against PGD to be significant enough to call these models robust against PGD attacks.
+% Another point of interest that while using both our manifold alignment metric and adversarial training, we see an even greater improvement against FGSM attacks.
+
+% The fact that this performance increase is not shared by PGD training may indicate a relationship between these methods.
+% Our current hypothesis is that a linear representation of the image manifold is sufficient to defend against linear attacks such as FGSM, but cannot defend against a non-linear adversary.
+
+% \section{Conclusion}
+
+% In order to better understand the observed tendency for points near natural data to be classified similarly and points near
+% adversarial examples to be classified differently, we defined a notion of $(\gamma,\sigma)$-stability which is easily estimated by Monte Carlo sampling. For any data point $x$, we then define the $\gamma$-persistence to to be the smallest $\sigma_\gamma$ such that the probability of similarly classified data is at least $\gamma$ when sampling from Gaussian distributions with mean $x$ and standard deviation less than $\sigma_\gamma$. The persistence value can be quickly estimated by a Bracketing Algorithm. These two measures were considered with regard to both the MNIST and ImageNet datasets and with respect to a variety of classifiers and adversarial attacks. We found that adversarial examples were much less stable than natural examples in that the $0.7$-persistence for natural data was usually significantly larger than the $0.7$-persistence for adversarial examples. We also saw that the dropoff of the persistence tends to happen precisely near the decision boundary. Each of these observations is strong evidence toward the hypothesis that adversarial examples exploit oblique structure of overlapping decision boundaries around the adversarial class, whereas natural images lie outside such regions.In addition, we found that some adversarial examples may be more stable than others, and a more detailed probing using the concept of $(\gamma,\sigma)$-stability and the $\gamma$-persistence statistic may be able to help with a more nuanced understanding of the geometry and obliqueness of the boundary.
+
+% We reinforced this obliqueness hypothesis by computing angles of linear interpolants with respect to the decision boundary, showing that most interpolants cross the decision boundary between classes at very shallow angles. Furthermore, adversarial interpolants tend to cross at less shallow, but still acute angles. Furthermore, we present the simplest possible case of our hypothesis that manifold alignment implies adversarial robustness.
+% Extending this to show results on more complex models and datasets is left to future work.
+% In this early work, we only test against a linear manifold and show that it provides robustness against FGSM.
+% We conclude that training a model to be aligned with a low dimensional manifold on which your data lies is related to robust training.
+% While this model shows some properties of adversarial robustness, it is still vulnerable to PGD attacks.
+% Additionally, a model trained to be robust using adversarial training shows manifold alignment under our definition.
+
+% \nocite{langley00}
+
+
+% \section{Conclusion}
+
+% In order to better understand the observed tendency for points near natural data to be classified similarly and points near
+% adversarial examples to be classified differently, we defined a notion of $(\gamma,\sigma)$-stability which is easily estimated by Monte Carlo sampling. For any data point $x$, we then define the $\gamma$-persistence to to be the smallest $\sigma_\gamma$ such that the probability of similarly classified data is at least $\gamma$ when sampling from Gaussian distributions with mean $x$ and standard deviation less than $\sigma_\gamma$. The persistence value can be quickly estimated by a Bracketing Algorithm. These two measures were considered with regard to both the MNIST and ImageNet datasets and with respect to a variety of classifiers and adversarial attacks. We found that adversarial examples were much less stable than natural examples in that the $0.7$-persistence for natural data was usually significantly larger than the $0.7$-persistence for adversarial examples. We also saw that the dropoff of the persistence tends to happen precisely near the decision boundary. Each of these observations is strong evidence toward the hypothesis that adversarial examples arise inside cones or high curvature regions in the adversarial class, whereas natural images lie outside such regions.
+
+% We also found that often the most likely class for perturbations of an adversarial examples is a class other than the class of the original natural example used to generate the adversarial example; instead, some other background class is favored. In addition, we found that some adversarial examples may be more stable than others, and a more detailed probing using the concept of $(\gamma,\sigma)$-stability and the $\gamma$-persistence statistic may be able to help with a more nuanced understanding of the geometry and curvature of the decision boundary. Although not pursued here, the observations and statistics used in this paper could potentially be used to develop methods to detect adversarial examples as in \citep{crecchi2019,frosst2018,hosseini2019odds,Lee2018ASU,qin2020,roth19aodds} and others. As with other methods of detection, this may be susceptible to adaptive attacks as discussed by ~\citet{tramer2020adaptive}. 
+
+\begin{frame}
+  \frametitle{Conclusions}
+  \begin{itemize}
+    \item Geometric properties including curvature and alignment to
+      decision boundaries seem to be related with robustness.
+      \item Direct computation of these geometric properties is
+        expensive and at odds with the fact that much greater scale is
+        needed to understand these properties in practice.
+        \item We could benefit from faster methods to analyze
+          geometric properties from models -- Monte Carlo is what you
+          do when you can't solve your differential equations by
+          faster means!
+          \item Decision boundaries are askew from interpolation
+            between natural images!
+          \end{itemize}
+        \end{frame}
+
+  % Persistence
+% carefully pose some definitions for adversarial examples
+% develop persistence metric and talk about how it is used

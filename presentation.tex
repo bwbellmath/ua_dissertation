@@ -7,6 +7,8 @@
 \usepackage{graphicx}
 \usepackage{mathrsfs}
 \usepackage{multirow}
+\usepackage{longtable}
+\usepackage{booktabs}       % professional-quality tables
 \usepackage{hhline}
 \usepackage{pbox}
 \usepackage{hyperref}
@@ -19,8 +21,38 @@
 \usepackage{amsmath,amssymb,amsthm,esint}
 \usepackage{longtable}
 \usepackage{tikz}
-\usepackage{float}
 \usepackage{pgfplots}
+\tikzset{>=latex} % for LaTeX arrow head
+
+\usetikzlibrary{fadings}
+\usetikzlibrary{arrows.meta}
+\tikzset{arl/.style={line width=4pt, {-Latex[left]}, #1}}
+\tikzset{arr/.style={line width=4pt, {-Latex[right]}, #1}}
+
+\colorlet{veccol}{green!70!black}
+\colorlet{vcol}{green!70!black}
+\colorlet{xcol}{blue!85!black}
+\colorlet{projcol}{xcol!60}
+\colorlet{unitcol}{xcol!60!black!85}
+\colorlet{myblue}{blue!70!black}
+\colorlet{myred}{red!90!black}
+\colorlet{ntk}{red!90!white}
+\colorlet{dpk}{blue!70!white}
+\colorlet{epkt}{green!40!black}
+\colorlet{diffpk}{orange}
+\colorlet{epk}{black!70!gray}
+\colorlet{mypurple}{blue!50!red!80!black!80}
+\tikzstyle{vector}=[->,line width=0.65mm, xcol]
+\usetikzlibrary{intersections, pgfplots.fillbetween}
+\newcounter{remcounter}
+%\setcounter{remcounter}{-1}
+\newcommand*{\remlabel}[1]{\refstepcounter{remcounter}\theremcounter\label{#1}}
+\newcommand*{\remref}[1]{\ref{#1}}
+
+\usepgfplotslibrary{fillbetween}
+
+\usepackage{float}
+
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{empheq}
@@ -66,6 +98,7 @@
 \newcommand{\ib}[1]{\item \textbf{#1}}
 \newcommand{\B}{\mathcal{B}}
 \newcommand{\R}{\mathbb{R}}
+\usepackage{bbm}
 \newcommand{\re}{\text{Re}}
 %\newcommand{\Z}{\mathbb{Z}}
 \newcommand{\TT}{\mathbb{T}}
@@ -149,8 +182,8 @@
 }
 
 %%%%%%%%%%%%%%%% Table of Contents Stuff %%%%%%%%%%%%%%%%
-\setcounter{secnumdepth}{3} % if set to -1 only chapter and sections will be numbered
-\setcounter{tocdepth}{4}
+%\setcounter{secnumdepth}{3} % if set to -1 only chapter and sections will be numbered
+%\setcounter{tocdepth}{4}
 
 %%%%%%%%%%%%%%%% Hyper Ref Stuff %%%%%%%%%%%%%%%%
 		% set up reference style
@@ -333,11 +366,12 @@ segmentation style={right color=white,left color=white}
 % main takeaways all (most networks) have these vulnerabilities)
 %      and adversraial examples are hard to define (separate
 %adversarial from perplexing (other term?))
-\include{pres_2}
+%\include{pres_2}
 
 % Persistence
 % carefully pose some definitions for adversarial examples
 % develop persistence metric and talk about how it is used
+%\include{pres_3}
 
 % EPK
 % carefully walk through EPK definition and proof
@@ -347,6 +381,10 @@ segmentation style={right color=white,left color=white}
 %and understand the geometry.
 % many remarks
 
+%\include{pres_4}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % GEPK/OOD
 % focus on decomposition part of EPK
 % generalize
@@ -355,6 +393,7 @@ segmentation style={right color=white,left color=white}
 %sense of point topology/tangent space)
 % main takeaways decompositions are not only possible but useful,
 %still lots of meat on the bone.  
+\include{pres_5}
 
 % Conclusions
 % adversarial examples still need further study
@@ -513,7 +552,8 @@ segmentation style={right color=white,left color=white}
 % \end{definition}
 
 % \begin{definition}{We can define a classifier which picks the class corresponding with the largest output element from Softmax: }
-% \[\text{(Output Classification)  }   c_s(\vec x) = \text{argmax}_{i} s_i(\vec{x})\]
+% \[\text{(Output Classification)  }   c_s(\vec x) = \text{argmax}_{i}
+% s_i(\vec{x})\]
 % \end{definition}
     
 % \end{frame}
@@ -1038,14 +1078,13 @@ segmentation style={right color=white,left color=white}
 \frametitle{Citations}
 \small{
 \bibliographystyle{apalike}
-%\bibliography{"\string~/Google Drive/dropbox/Dropbox/UOFA/0-research/bibfile"}
+%\bibliography{"\string~/Google
+%Drive/dropbox/Dropbox/UOFA/0-research/bibfile"}
 %\bibliography{'../bibfile'}{}
 \bibliography{example}
 }
 \end{frame}
 
-
 \end{document}
-
 
 % TODO add in the papers from this semester for Thursday
