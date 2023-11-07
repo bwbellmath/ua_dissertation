@@ -187,34 +187,34 @@ f(x; \theta_S) = f(x; \theta_0) + \sum_{i=1}^N \sum_{s=1}^S \varepsilon \left(\i
 % \section{
 % \label{sec:ood}
 
-\begin{frame}
-  \frametitle{OOD with Parameter Gradient Subspace}
- One natural application of the gEPK is the separation of predictions into vectors corresponding with the test gradient $\varphi_{s,t}(x)$ for a given test point $x$ and each training vector  weighted by its loss gradient $\dfrac{dL(\hat y_i, y_i)}{d\hat y_i} \varphi_{s, 0}(x_i)$. While the test vector depends on the choice of test point $x$, the subspace of training gradient vectors is fixed. By the linear nature of this inner product, it is clear that no variation in test data which is orthogonal to the training vector space can be reflected in a model's prediction. We can say that 
- \begin{align}
-     \left\{\dfrac{dL(\hat y_i, y_i)}{d\hat y_i} \varphi_{s, 0}(x_i); i \in \{1,...,N\}, s \in \{1,...,S\}\right\}
- \end{align}
- spans the subspace in which all model predictions can vary.
-\end{frame}
- %Empirically, we compute the SVD of these training parameter gradients summing over classes in Fig.~\ref{fig:rank}. This shows that the space does most of its variation is within only a few dimensions for each test point. Additionally, this corresponds with the well-established notion that the latent dimension of data is much smaller than its ambient dimension. It is by analyzing spectra of this subspace that we may accomplish out-of-distribution (OOD) detection, and, in fact, we will demonstrate that this is how most cutting-edge OOD methods discriminate in practice. 
+% \begin{frame}
+%   \frametitle{OOD with Parameter Gradient Subspace}
+%  One natural application of the gEPK is the separation of predictions into vectors corresponding with the test gradient $\varphi_{s,t}(x)$ for a given test point $x$ and each training vector  weighted by its loss gradient $\dfrac{dL(\hat y_i, y_i)}{d\hat y_i} \varphi_{s, 0}(x_i)$. While the test vector depends on the choice of test point $x$, the subspace of training gradient vectors is fixed. By the linear nature of this inner product, it is clear that no variation in test data which is orthogonal to the training vector space can be reflected in a model's prediction. We can say that 
+%  \begin{align}
+%      \left\{\dfrac{dL(\hat y_i, y_i)}{d\hat y_i} \varphi_{s, 0}(x_i); i \in \{1,...,N\}, s \in \{1,...,S\}\right\}
+%  \end{align}
+%  spans the subspace in which all model predictions can vary.
+% \end{frame}
+%  %Empirically, we compute the SVD of these training parameter gradients summing over classes in Fig.~\ref{fig:rank}. This shows that the space does most of its variation is within only a few dimensions for each test point. Additionally, this corresponds with the well-established notion that the latent dimension of data is much smaller than its ambient dimension. It is by analyzing spectra of this subspace that we may accomplish out-of-distribution (OOD) detection, and, in fact, we will demonstrate that this is how most cutting-edge OOD methods discriminate in practice. 
 
-% \subsection{Expressing Prior OOD Methods with the gEPK}
+% % \subsection{Expressing Prior OOD Methods with the gEPK}
 
-%  We will now establish that most gradient based methods for OOD and some methods which do not explicitly rely on gradients can be written as projections onto subsets of this span. 
+% %  We will now establish that most gradient based methods for OOD and some methods which do not explicitly rely on gradients can be written as projections onto subsets of this span. 
 
 
-\subsection{Examining Cutting Edge OOD with gEPK}
+% \subsection{Examining Cutting Edge OOD with gEPK}
 
-\begin{frame}
-  \frametitle{Examining Cutting Edge OOD with gEPK}
-  \textbf{GradNorm} : 
-computes the gradient of Kullback–Leibler divergence with respect to model parameters:
-\begin{align}
-    \dfrac{1}{C} \sum_i^C \dfrac{\partial L_{CE}(f(x; \theta), i)}{\partial\hat y}\nabla_\theta f(x; \theta)
-\end{align}
-This represents an average across a truncation of the left side of the
-inner product from the gEPK, later methods perform better using a more
-complete basis. \\
-\end{frame}
+% \begin{frame}
+%   \frametitle{Examining Cutting Edge OOD with gEPK}
+%   \textbf{GradNorm} : 
+% computes the gradient of Kullback–Leibler divergence with respect to model parameters:
+% \begin{align}
+%     \dfrac{1}{C} \sum_i^C \dfrac{\partial L_{CE}(f(x; \theta), i)}{\partial\hat y}\nabla_\theta f(x; \theta)
+% \end{align}
+% This represents an average across a truncation of the left side of the
+% inner product from the gEPK, later methods perform better using a more
+% complete basis. \\
+% \end{frame}
 
 % % % \subsection{GradNorm}
 % \begin{frame}
@@ -445,17 +445,17 @@ We can see that these gradients will be zero except when $i = j$, thus we may su
 % It is likely that different training techniques will provide significantly different signal manifolds and consequently different numbers of components.
 % Examining these effects may lead to deeper understanding of optimization techniques.
 
-\begin{frame}
-  \frametitle{Measuring Dimensionality}
+% \begin{frame}
+%   \frametitle{Measuring Dimensionality}
 
-\begin{figure}[t]
-    \centering
-    \includegraphics[width=.45\textwidth]{c4a_figures/dimension_change_weightspace.pdf}
-    \includegraphics[width=.45\textwidth]{c4a_figures/dimension_change.pdf}
-    \caption{Differences between observing gradients in input space vs. weight space. Left: CDF of explained variation parameter space. Right: CDF of explained variation input space. Red solid line indicates a model at random initialization while the blue solid line represents the fully trained state. From random initialization, the number of principal components required to achieve 95\% explained variation decreases in both cases. Note that at random initialization, the weight space gradients already have only a few directions accounting for significant variation. Disentangling the data dimension using weight space gradients is less effective than doing so in input space \citep{shamir2021dimpled}.}
-    \label{fig:compare}
-\end{figure}
-\end{frame}
+% \begin{figure}[t]
+%     \centering
+%     \includegraphics[width=.45\textwidth]{c4a_figures/dimension_change_weightspace.pdf}
+%     \includegraphics[width=.45\textwidth]{c4a_figures/dimension_change.pdf}
+%     \caption{Differences between observing gradients in input space vs. weight space. Left: CDF of explained variation parameter space. Right: CDF of explained variation input space. Red solid line indicates a model at random initialization while the blue solid line represents the fully trained state. From random initialization, the number of principal components required to achieve 95\% explained variation decreases in both cases. Note that at random initialization, the weight space gradients already have only a few directions accounting for significant variation. Disentangling the data dimension using weight space gradients is less effective than doing so in input space \citep{shamir2021dimpled}.}
+%     \label{fig:compare}
+% \end{figure}
+% \end{frame}
 % % Exploring the dimension of data using 
 
 % % The EPK formulation allows for calculation of test point sensitivity to the training set $\frac{\partial f(x, \theta_{trained})}{\partial x_{train}}$.
