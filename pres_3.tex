@@ -66,33 +66,33 @@
 % and is also capable of elucidating information about the curvature of
 % the nearby decision boundary.
 
-\begin{frame}
-  \frametitle{Justification}
-  We will develop a statistic extending
- prior work on smoothed classifiers by \citet{cohen2019certified}. \\
+% \begin{frame}
+%   \frametitle{Justification}
+%   We will develop a statistic extending
+%  prior work on smoothed classifiers by \citet{cohen2019certified}. \\
 
-We will be checking some geometric properties related to the alignment of gradients
-  with human perception \citep{ganz2022perceptually,
-    kaur2019perceptually, shah2021input} and with the related
-  underlying manifold \citep{kaur2019perceptually,
-    ilyas2019adversarial} which may imply robustness.\\
+% We will be checking some geometric properties related to the alignment of gradients
+%   with human perception \citep{ganz2022perceptually,
+%     kaur2019perceptually, shah2021input} and with the related
+%   underlying manifold \citep{kaur2019perceptually,
+%     ilyas2019adversarial} which may imply robustness.\\
 
-\end{frame}
+% \end{frame}
 
-\begin{frame}
-  \frametitle{Justifications}
+% \begin{frame}
+%   \frametitle{Justifications}
 
-  The main hypothesis we seek to investigate is proposed by
-  ~\citet{shamir2021dimpled} and defines smooth manifold-like
-  structures along which model gradients with respect to input must
-  vary.  For our purposes Manifold Aligned Gradients (MAG) will refer to the property that the gradients of a model with respect to model inputs follow a given data
-  manifold $\mathcal{M}$. \\
+%   The main hypothesis we seek to investigate is proposed by
+%   ~\citet{shamir2021dimpled} and defines smooth manifold-like
+%   structures along which model gradients with respect to input must
+%   vary.  For our purposes Manifold Aligned Gradients (MAG) will refer to the property that the gradients of a model with respect to model inputs follow a given data
+%   manifold $\mathcal{M}$. \\
 
- We believe these geometric properties are related
- to why smoothing methods have been useful in robustness tasks
- ~\citep{cohen2019certified, lecuyer2019certified, li2019certified}. We propose three approaches in order to connect robustness with geometric properties of the decision boundary learned by ANNs: 
+%  We believe these geometric properties are related
+%  to why smoothing methods have been useful in robustness tasks
+%  ~\citep{cohen2019certified, lecuyer2019certified, li2019certified}. We propose three approaches in order to connect robustness with geometric properties of the decision boundary learned by ANNs: 
 
-\end{frame}
+% \end{frame}
 
 \begin{frame}
   \frametitle{Contributions}
@@ -155,54 +155,54 @@ We will be checking some geometric properties related to the alignment of gradie
 % of the decision boundary relative to model data.
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{Related Work : Curvature}
-\begin{itemize}
-\item \citet{roth19aodds} observe that adversarial examples often arise within cones,
-  outside of which images are classified in the original class.
+% \begin{frame}
+% \frametitle{Related Work : Curvature}
+% \begin{itemize}
+% \item \citet{roth19aodds} observe that adversarial examples often arise within cones,
+%   outside of which images are classified in the original class.
 
-  \item Many theoretical models of
- adversarial examples, for instance the dimple model developed by
- \citet{shamir2021}, have high curvature and/or sharp corners as an
- essential piece of why adversarial examples can exists very close to
- natural examples.
- \item Fixed distance based metrics are overly sensitive to sharp
-   curvature and these cones. \textbf{Hypothesis} : a weaker (less
-   strict) distance based metric may help examine the effective
-   curvature around data.
+%   \item Many theoretical models of
+%  adversarial examples, for instance the dimple model developed by
+%  \citet{shamir2021}, have high curvature and/or sharp corners as an
+%  essential piece of why adversarial examples can exists very close to
+%  natural examples.
+%  \item Fixed distance based metrics are overly sensitive to sharp
+%    curvature and these cones. \textbf{Hypothesis} : a weaker (less
+%    strict) distance based metric may help examine the effective
+%    curvature around data.
 
- \end{itemize}
-\end{frame}
+%  \end{itemize}
+% \end{frame}
 
 
-\begin{frame}
-  \frametitle {Adversarial detection via sampling}
-  \begin{itemize}
+% \begin{frame}
+%   \frametitle {Adversarial detection via sampling}
+%   \begin{itemize}
     
-% While adversarial examples often occur, they still may be rare in the
-% sense that most perturbations do not produce adversarial
-% examples.
-    \item \citet{yu2019new} invert the adversarial attack process
-      around a test point to
-      ask how ``easy'' it is to find examples of other classes near
-      that point using gradient descent.
-      \item This method has been generalized with
- the developing of smoothed classification methods
- ~\citep{cohen2019certified, lecuyer2019certified, li2019certified}
- which at varying stages of evaluation add noise to the effect of
- smoothing output and identifying adversaries due to their higher
- sensitifity to perturbation.
- \item These methods suffer from significant
- computational complexity ~\citep{kumar2020curse} and have been shown
- to have fundamental limitations in their ability to rigorously certify
- robustness ~\citep{blum2020random, yang2020randomized}.
+% % While adversarial examples often occur, they still may be rare in the
+% % sense that most perturbations do not produce adversarial
+% % examples.
+%     \item \citet{yu2019new} invert the adversarial attack process
+%       around a test point to
+%       ask how ``easy'' it is to find examples of other classes near
+%       that point using gradient descent.
+%       \item This method has been generalized with
+%  the developing of smoothed classification methods
+%  ~\citep{cohen2019certified, lecuyer2019certified, li2019certified}
+%  which at varying stages of evaluation add noise to the effect of
+%  smoothing output and identifying adversaries due to their higher
+%  sensitifity to perturbation.
+%  \item These methods suffer from significant
+%  computational complexity ~\citep{kumar2020curse} and have been shown
+%  to have fundamental limitations in their ability to rigorously certify
+%  robustness ~\citep{blum2020random, yang2020randomized}.
 
- %We will generalize this approach into a metric which will allow us to
- %directly study these limitations in order to better understand how
- %geometric properties have given rise to adversarial vulnerabilities.
- \item In general, the results of \citet{yu2019new} indicate that considering samples of nearby points, which approximate the computation of integrals, is likely to be more successful than methods that consider only distance to the decision boundary.
- \end{itemize}
-\end{frame}
+%  %We will generalize this approach into a metric which will allow us to
+%  %directly study these limitations in order to better understand how
+%  %geometric properties have given rise to adversarial vulnerabilities.
+%  \item In general, the results of \citet{yu2019new} indicate that considering samples of nearby points, which approximate the computation of integrals, is likely to be more successful than methods that consider only distance to the decision boundary.
+%  \end{itemize}
+% \end{frame}
 
 % \citet{roth19aodds} proposed a statistical method to identify adversarial examples from natural data. Their main idea was to consider how the last layer in the neural network (the logit layer) would behave on small perturbations of a natural example. %, i.e., on $x+\varepsilon n$ where $x$ is a natural example, $\varepsilon>0$ is small, and $n \sim N(0,I)$.  
 % This is then compared to the behavior of a potential adversarial example. 
@@ -293,20 +293,21 @@ output classification.
 
 % In order to examine decision boundaries and their properties, we will carefully define the decision boundary in a variety of equivalent formulations. 
 
-\begin{frame}
-  \frametitle{The Argmax Function in Multi-Class Problems}
+% \begin{frame}
+%   \frametitle{The Argmax Function in Multi-Class Problems}
 
- A central issue when writing classifiers is mapping from continuous outputs or probabilities to discrete sets of classes. Frequently argmax type functions are used to accomplish this mapping. To discuss decision boundaries, we must precisely define argmax and some of its properties. 
+%  A central issue when writing classifiers is mapping from continuous outputs or probabilities to discrete sets of classes. Frequently argmax type functions are used to accomplish this mapping. To discuss decision boundaries, we must precisely define argmax and some of its properties. 
 
- In practice, argmax is not strictly a function, but rather a mapping from the set of outputs or activations from another model into the power set of a discrete set of classes:
+%  In practice, argmax is not strictly a function, but rather a mapping from the set of outputs or activations from another model into the power set of a discrete set of classes:
 
- \begin{equation}
-     \text{argmax} : \R^k \to \mathcal{P}(C)
- \end{equation}
+%  \begin{equation}
+%      \text{argmax} : \R^k \to \mathcal{P}(C)
+%  \end{equation}
 
- % Defined this way,
- We cannot necessarily consider $\text{argmax}$ to be a function in general as the singleton outputs of argmax overlap in an undefined way with other sets from the power set. However, if we restrict our domain carefully, we can identify certain properties. 
-\end{frame}
+%  % Defined this way,
+%  We cannot necessarily consider $\text{argmax}$ to be a function in general as the singleton outputs of argmax overlap in an undefined way with other sets from the power set. However, if we restrict our domain carefully, we can identify certain properties. 
+% \end{frame}
+
 \begin{frame}
   \frametitle{Argmax Decision Boundaries }
  \begin{figure}[!ht]
