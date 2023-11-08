@@ -23,12 +23,26 @@ Let $f : \R^m \to \{1,...,k\}$ be a classifier and assume $f$ has an associated 
 % \includegraphics[width=7cm]{2019-04-10-adverse/imnet_examples/vgg16-ILSVRC2012_val_00035978-O803-A353-attack_summary.png}
 % \includegraphics[width=7cm]{2019-04-10-adverse/imnet_examples/ILSVRC2012_val_00000886-Otensor([940])-A684-attack_summary.png}
 \end{figure}   
-
 % \begin{figure}[H]
 %     \centering
 % \includegraphics[width=4.5cm]{szegedy/negative1.png}\includegraphics[width=5.5cm]{szegedy/negative2.png}
 % \end{figure}
 \end{frame}
+\begin{frame}
+  \frametitle{Context}
+  \begin{itemize}
+    \item 2014-2017 : ~3,000 papers total referring to adversarial attacks on
+      neural networks
+    \item 2023 : 20,000 papers, >3,000 papers submitted to each of the
+      major conferences (NeurIPS, ICML, ICLR)
+      \item No definitive consensus about why adversarial examples
+        exist.
+        \item Best robust models are still produced by adding
+          adversarial examples into training data which comes with significant
+          accuracy penalty 
+\end{itemize} \includegraphics[width=0.45\textwidth]{s1.png}\includegraphics[width=0.45\textwidth]{s2.png}
+  \end{frame}
+
 % \begin{frame}{Attacks : L-BFGS : MNIST}
 %     \begin{figure}[H]
 % \label{lbfgsa}

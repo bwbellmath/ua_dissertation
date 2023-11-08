@@ -63,7 +63,8 @@
     % \item Shed light on test time sensitivity of model predictions to training data using input gradients which are comparable across models the relationship between sensitivity tarnsfer and adversarial attack transfer.
 
 \end{itemize}
-The primary contributions of this paper are theoretical in nature: establishing the exact representation theorem in Section~\ref{sec:gepk} and writing several leading OOD detection methods in terms of this representation. The preliminary experimental results also support practical tasks of out-of-distribution (OOD) detection and estimating signal manifold dimension. 
+The primary contributions of this paper are theoretical in nature:
+establishing the exact representation theorem in Theorem~\ref{thm:ekr} and writing several leading OOD detection methods in terms of this representation. The preliminary experimental results also support practical tasks of out-of-distribution (OOD) detection and estimating signal manifold dimension. 
       \end{frame}
 \label{sec:input}
 
@@ -127,7 +128,8 @@ The primary contributions of this paper are theoretical in nature: establishing 
 
 \begin{frame}
   \frametitle{Generalized Exact Path Kernel (gEPK)}
-      
+
+
 \begin{theorem}[Generalized Exact Path Kernel (gEPK)]
 \label{thm:ekr}
 Suppose $f(\cdot; \theta)$ is a differentiable parametric model with parameters $\theta \in \mathbb{R}^M$ and $L$ is a loss function. Furthermore, suppose that $f$ has been trained by a series $\{\theta_s\}_{s=0}^S$ of discrete steps composed from a sum of loss gradients for the training set $ \sum_{i}^N \varepsilon \nabla_\theta L(f(x_i), y_i)$ on $N$ training data $X_T$ starting from $\theta_0$. Then for an arbitrary test point $x$, the trained model prediction $f(x; \theta_S)$ can be written:
