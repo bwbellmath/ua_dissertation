@@ -232,23 +232,49 @@
 % %\printAffiliationsAndNotice{}  % leave blank if no need to mention equal contribution
 % \printAffiliationsAndNotice{\icmlEqualContribution} % otherwise use the standard text.
 
-This paper proposes the first exact path kernel representation for
-general gradient trained classifiers. The primary derivation and proof
-was written by Brian Bell and the supporting impoementation and work
-were mostly conducted by Michael Geyer. The central focus of the paper
-is on the derivation and demonstration that this method works in
-practice. The interest that gave rise for this approach comes from the fact that
-kernel methods and more specifically bilinear map based models
-decompose their predictions into a contribution from each of their
-training data. the Neural Tangent Kernel (NTK) is an interesting tool,
-but predicated on too many approximation assumptions. This exact
-formulation allows a much more solid foundation for analyzing neural
-networks and suggests the possibility that predictions can be
-decomposed using this framework. The implementation and application of
-this method to real machine-learning models and tasks demonstrates
-that it is not only a theoretical framework, it is practical! This
-paper was accepted at the Topology Algebra and Geometry (TAG) workshop
-at ICML 2023 (an archival publication).  
+In the process of trying to understand adversarial examples in a
+geometric sense, a question arises: How can we directly extract
+geometric properties from machine-learning models. In this line of
+thought, kernel methods are particularly appealing because they
+implicitly define a spatial transform which is used to make
+predictions. The kernel, a symmetric positive-definite bilinear map,
+at the core of all kernel methods can be written as an inner-product
+in an appropriate Hilbert space for all problems. This is a spatial
+metric! Furthermore, kernel methods make predictions by comparing a
+test point (using the kernel) with all known training points:
+
+\begin{align}
+  P(x) = b + \sum_i K(x, x_i)
+\end{align}
+
+Any prediction can be decomposed into the \emph{spatial}
+contribution from each training point. This would be an incredible way
+to interpret machine-learning predictions including adversarial
+examples. My gut told me that connections here would be both possible
+and useful, leading to my careful review of the Neural-Tangent-Kernel
+and related literature eventually leading to an unpublished arxiv
+paper by ~\citet{domingos2020every}. 
+
+The resulting paper which is presented here exactly as accepted to the
+archival proceedings track of the Topology, Algebra, and Geometry
+Workshop at ICML 2023 proposes the first exact path kernel
+representation for general gradient trained classifiers. The primary
+derivation and proof was written by Brian Bell and the supporting
+impoementation and work were mostly conducted by Michael Geyer. The
+central focus of the paper is on the derivation and demonstration that
+this method works in practice. The interest that gave rise for this
+approach comes from the fact that kernel methods and more specifically
+bilinear map based models decompose their predictions into a
+contribution from each of their training data. the Neural Tangent
+Kernel (NTK) is an interesting tool, but predicated on too many
+approximation assumptions. This exact formulation allows a much more
+solid foundation for analyzing neural networks and suggests the
+possibility that predictions can be decomposed using this
+framework. The implementation and application of this method to real
+machine-learning models and tasks demonstrates that it is not only a
+theoretical framework, it is practical! As stated above, this paper
+was accepted for archival publication at the Topology Algebra and
+Geometry (TAG) workshop at ICML 2023 in Honolulu, Hawaii.
 
 \section{Introduction}
 

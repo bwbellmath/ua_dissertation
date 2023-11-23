@@ -45,14 +45,20 @@
 \begin{frame}
   \frametitle{Background}
 
- Adversarial examples are not just a peculiarity, but seem to occur
- for most, if not all, DNN classifiers. For example,
- \citet{inevitable2018} used isoperimetric inequalities on high
+  \begin{itemize}
+    \item Adversarial examples are not just a peculiarity, but seem to occur
+      for most, if not all, DNN classifiers.
+      \item \citet{inevitable2018} used isoperimetric inequalities on high
  dimensional spheres and hypercubes to conclude that there is a
  reasonably high probability that a correctly classified data point
- has a nearby adversarial example.\\
-
- This has been reiterated using mixed integer linear programs to rigorously check minimum distances necessary to achieve adversarial conditions ~\citep{tjeng2017evaluating}. \citet{ilyas2019adversarial} showed that adversarial examples can arise from features that are good for classification but not robust to perturbation. 
+ has a nearby adversarial example.
+ \item Mixed integer linear programs have rigorously checked minimum
+   distances necessary to achieve adversarial conditions
+   ~\citep{tjeng2017evaluating}.
+   \item \citet{ilyas2019adversarial} showed that adversarial examples
+     can arise from features that are good for classification but not
+     robust to perturbation.
+     \end{itemize}
 \end{frame}
   
 % There have been many attempts to identify adversarial examples using
@@ -265,10 +271,16 @@ Let $\CC:X\to L$ be a classifier, $x \in X$, $\gamma\in(0,1)$, and $\sigma>0$. W
  \[
      \frac{\norm{x_k : \CC(x_k) = \CC(x)}}{N}.
  \]
- Note that this quantity converges to the integral \eqref{EQN:Gaussian} as $N\to\infty$ by the Law of Large Numbers.\\
+\begin{itemize}
+\item This quantity converges to the integral \eqref{EQN:Gaussian} as $N\to\infty$ by the Law of Large Numbers.\\
 
- The ability to adjust the quantity $\gamma$ is important because it is much weaker than a notion of stability that requires a ball that stays away from the decision boundary as by \citet{khoury2018}. By choosing $\gamma$ closer to $1$, we can require the samples to be more within the same class, and by adjusting $\gamma$ to be smaller we can allow more overlap.
-
+\item The ability to adjust the quantity $\gamma$ is weaker than a hard ball
+  that stays away from the decision boundary. 
+  \citet{khoury2018}.
+  \item By choosing $\gamma$ closer to $1$, we can require the samples
+    to be more within the same class, and by adjusting $\gamma$ to be
+    smaller we can allow greater sensitivity to macro scale geometric features.
+\end{itemize}
 \end{frame}
 \begin{frame}
   \frametitle{Persistence}
