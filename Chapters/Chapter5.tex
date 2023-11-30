@@ -33,7 +33,40 @@ We can summarize the first 3 chapters as posing some fundamental
 geometric questions related to machine-learning robustness. 
 Chapters 4 and 5 as propose a new framework for analyzing geometric
 properties and demonstrating that this framework can be applied very
-generally. From here, there are several important directions for
+generally. As usual in mathematics, trying to solve a specific problem
+about geometric causes for adversarial examples has led to a very
+general result in a totally different field. Although chapters 4 and 5
+represent significant progress in understanding ANNs mathematically,
+they do not directly address the core question that arose within the
+first three chapters: Is relative dimension and curvature a primary
+cause of adversarial vulnerability. 
+
+Based on this work, we can now make some supportable conjectures:
+
+\begin{enumerate}
+  \item Modern neural network architectures learn decision boundaries
+    that are askew from many interpolations among training and testing
+    data.
+  \item Non-orthogonal decision boundary crossings indicate that
+    ``sharp'' corners in the decision space learned by ANN models lead
+    to adversarial examples.
+  \item Bilinear map based representations allow decomposition of
+    predictions based on training inputs. These show that models
+    implicitly use a lower dimensional implicit representation of data
+    to make predictions.
+  \item Combining these notions, we have a clear path forward:
+    Decompose adversarial attacks using a bilinear map
+    representation and then compare these signatures of variation with
+    typical modes of variation within training data.
+  \item Likely this will show that adversarial attacks are arising
+    from sharp corners in decision space, some of which can be
+    mitigated by making models more aware of the properties of the
+    decision space they have learned, some of which cannot be
+    mitigated because training data are insufficient to fully
+    constrain decision surfaces. 
+\end{enumerate}
+
+From here, there are several important directions for
 future research. First is the application of these methods directly to
 the adversarial robustness questions from Chapters 1-3. Second is the
 complete generalization of this new framework including conditions
@@ -93,7 +126,43 @@ initial gradient plus a component from each training input,
 \end{align}
 From this decomposition, we can also replace the individual training
 data with an orthogonal basis by choosing vectors as in
-~\citet{halko2011finding}, solving SVD for each step, or more
+~\citet{halko2011finding}, solving SVD for each step:
+    Take a model, $f(x, \theta)$, which satisfies the necessary conditions for expression as:
+ \begin{align}
+     f(x, \theta_\text{tr}) &= f(x, \theta_0(0)) +  \sum_s
+\int_0^1                                  \left\langle 
+                                   \varphi_{s,t}(x) , \sum_i
+                                   \left(L'(x_i, y_i) \varphi_{s,
+                                   0}(x_i)\right) \right \rangle dt\\
+     \varphi_{s,t}(x) &= \nabla_\theta f(x, \theta_s(t))
+ \end{align}
+
+
+Then we will let the RHS be rows of a matrix $L \cdot A$ where $X$ is a vector with elements $\varphi_{s,t}(x)$, $L =
+$diag($L'(x_i, y_i))$ (size is $[N, N]$), and each row $A_i
+= \varphi_{s,0}(x_i)$ so that $A$ has size $[N, P]$. Then we can compute $U\Sigma V^T =
+A$ ($U$ of size $[N, P]$, $\sigma$ of size $[N, N]$, and $V^T$ of size $[P, P]$. Let's first try projecting each $A_i$ onto the row space of $V$ so that 
+\begin{align}
+    A_i &= \sum_k A_i V_k^T V_k \\
+    \sum_i L_i A_i &= \sum_i \sum_k L_i A_i V_k^T V_k\\
+    \sum_i L_i A_i &= \sum_k \left(\sum_i L_i A_i V_k^T\right) V_k\\
+    \sum_i L_i A_i &= \sum_k \left((\vec 1 L A V^T)_k\right) V_k\\
+\end{align}
+
+If we truncate  $V$ down to $K$ dimensions, then we have $B = \vec 1 L A (V^K)^T$ with sizes $[1,N], [N,N][N,P],[P,K]$ and I can rewrite the truncated representation:
+
+\begin{align}
+    \sum_i L_i A_i &= \sum_k \left((\vec 1 L A (V^K)^T)_k\right) V^K_k\\
+    &= \sum_k B_k V^K_k\\
+\end{align}
+
+Now, we can rewrite our original expression:
+\begin{align}
+     f(x, \theta_\text{tr}) &= f(x, \theta_0(0)) +  \sum_s
+\int_0^1                                  \left\langle 
+                                   \varphi_{s,t}(x) ,  \sum_k B_k V^K_k \right \rangle dt
+ \end{align}
+More
 generally, we can define spectral components across all training steps
 and perform more general spectral decomposition with further
 efficiency reduction as in ~\citet{tancik2020fourierfeatures}. The path kernel
