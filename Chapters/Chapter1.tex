@@ -2,43 +2,46 @@
 \chapter{Introduction} % Main chapter title
 \label{Chapter1} % For referencing the chapter elsewhere, use \ref{Chapter1} 
 
-The intention of this work is to understand the intriguing vulnerability
-observed by ~\citet{szegedy2013} within artificial neural
-networks. These models models chronically admit inputs which might be
-very geometrically close and also usually indistinguishable according
-to users from natural data and yet which produce significant changes
-in output. In recent years, the usage of such models has expanded
-widely into applications across every scientific, industrial, and
-personal application. Despite this wide and growing usage,
-the impact of adversarial vulnerability on security, reliability, and
-safety in machine-learning are very poorly understood. In order to
-rigorously examine this topic, a robust theory and a rigorous
-mathematical framework for it to rest upon is necessary. We will build
-this frame-work from the ground up leveraging high dimensional
-geometry tools related to curvature, implicit representations drawn
-from functional analysis and theory of hilbert spaces, optimization,
-and vigorous experimentation. Our goal is to build out theory which
-can support increasingly sophisticated conjecture about adversarial
-attacks with a particular focus on the so called ``Dimpled Manifold
-Hypothesis'' by ~\citet{shamir2021dimpled}.
+% The intention of this work is to understand the intriguing vulnerability
+% observed by ~\citet{szegedy2013} within artificial neural
+% networks. These models models chronically admit inputs which might be
+% very geometrically close, and also usually indistinguishable according
+% to users, from natural data and yet which produce significant changes
+% in output. In recent years, the usage of such models has expanded
+% widely into applications across scientific, industrial, and
+% personal applications. Despite this wide and growing usage,
+% the impact of adversarial vulnerability on security, reliability, and
+% safety in machine-learning are very poorly understood. In order to
+% rigorously examine this topic, a robust theory and a rigorous
+% mathematical framework for it to rest upon is necessary. We will build
+% this frame-work from the ground up leveraging high dimensional
+% geometry tools related to curvature, implicit representations drawn
+% from functional analysis and theory of hilbert spaces, optimization,
+% and vigorous experimentation. Our goal is to build theory to
+% support increasingly sophisticated conjecture about adversarial
+% attacks with a particular focus on the so called ``Dimpled Manifold
+% Hypothesis'' by ~\citet{shamir2021dimpled}.
 
-Chapter One will cover the history and architecture of neural network
-architecture. This will include a brief description of the surprising
-theoretical and experimental results upon which modern
-machine-learning has been built. In combination with these theoretical
-results, a brief rigorous introduction to the practical components of
-a neural network model, its training objective, and training
-considerations are presented. Chapter Two is focused on the background
-of adversarial vulnerability. Starting from the seminal paper by
-~\citet{szegedy2013} we will develop the theory of adversarial
-perturbation and attack. We will consider both the theoretical and
-practical objectives and optimization problems related to creating
-adversarial examples, however we will put a particular emphasis to
-build up careful definitions for what ``adversarial'' means in context
-of modern machine learning.
+% Chapter One will cover the history and architecture of neural network
+% architecture. This will include a brief description of the surprising
+% theoretical and experimental results upon which modern
+% machine-learning has been built. In combination with these theoretical
+% results, a brief rigorous introduction to the practical components of
+% a neural network model, its training objective, and training
+% considerations are presented. Chapter Two is focused on the background
+% of adversarial vulnerability. Starting from the seminal paper by
+% ~\citet{szegedy2013} we will develop the theory of adversarial
+% perturbation and attack. We will consider both the theoretical and
+% practical objectives and optimization problems related to creating
+% adversarial examples, however we will put a particular emphasis to
+% build up careful definitions for what ``adversarial'' means in context
+% of modern machine learning.
 
-Chapter Three is where the fun begins,
-following the outline of a paper which is currently under submission
+The primary aim of this study is to comprehend the perplexing vulnerability identified by \citet{szegedy2013} within artificial neural networks. These models consistently admit inputs that may be geometrically close and often indistinguishable, according to users, from natural data, yet they lead to substantial changes in output. In recent years, the utilization of such models has proliferated across scientific, industrial, and personal applications. Despite their widespread and growing use, the impact of adversarial vulnerability on security, reliability, and safety in machine learning remains poorly understood. To systematically investigate this phenomenon, a robust theory and a rigorous mathematical framework are essential. We intend to construct this framework from the ground up, leveraging high-dimensional geometry tools related to curvature, implicit representations drawn from functional analysis and the theory of Hilbert spaces, optimization, and rigorous experimentation. Our overarching goal is to develop a theoretical foundation that can support increasingly sophisticated conjectures about adversarial attacks, with a particular focus on the "Dimpled Manifold Hypothesis" proposed by \citet{shamir2021dimpled}.
+
+Chapter One will delve into the history and architecture of neural networks. This section will provide a brief overview of the surprising theoretical and experimental results that underpin modern machine learning. Alongside these theoretical foundations, a concise yet rigorous introduction to the practical components of a neural network model, including its training objective and considerations, will be presented. Chapter Two will concentrate on the background of adversarial vulnerability. Commencing with the seminal paper by \citet{szegedy2013}, we will develop the theory of adversarial perturbation and attack. This chapter will explore both the theoretical and practical objectives and optimization problems related to creating adversarial examples. However, we will emphasize the establishment of careful definitions for what constitutes an "adversarial" scenario in the context of modern machine learning.
+
+Chapter Three follows the outline of a paper which is currently under submission
 on the topic of measuring geometric properties in order to understand
 adversarial examples, and to identify certain classes of attack when
 they are performed. This chapter will build a theory of persistence
@@ -53,15 +56,15 @@ attacks with properties of the decision boundary defined by an
 arbitrary model. 
 
 Chapter Four starts
-from a recent theory of the neural tangent kernel. By a clever
-re-ordering of a gradient formulation for the steps taken during
-optimization of a model for a given loss function, a representation
-can be obtained as the inner product of the model gradient for a test
-point with the sum over the model gradients for a query point. This
-inner product formulation is colloquially termed a ``kernel method''
-or a ``kernel machine'' which has some clearer mathematical properties
-than artificial neural networks do. Well known work has demonstrated
-that his representation is exact for infinite-width neural networks,
+from a recent theory of the neural tangent kernel. By a re-ordering of
+a gradient formulation for the steps taken during optimization of a
+model for a given loss function, a representation can be obtained as
+the inner product of the model gradient for a test point with the sum
+over the model gradients for a query point. This inner product
+formulation is colloquially termed a ``kernel method'' or a ``kernel
+machine'' which has some clearer mathematical properties than
+artificial neural networks do. Well-known work has demonstrated 
+that this representation is exact for infinite-width neural networks,
 but has significant shortcomings for practical finite models. This
 chapter outlines a recently accepted paper ~\citep{bell2023} in
 which this kernel method is extended by careful integration along the
@@ -78,7 +81,7 @@ within the first parts of this work, we will paint an actionable
 geometric picture for how adversarial examples come about and the
 properties of both the data and models used within modern
 machine-learning applications. This work will be collected into a
-forthcoming submission to ICLR. 
+forthcoming submission to ICLR (International Conference on Learning Representations). 
 
 % TODO paper connecting the kernel work directly with the RKBS/RKHS
 % and write that ensemble result which is generally true. 
@@ -106,7 +109,7 @@ properties of the learning models from which they arise.
 
 %\subsection{A Brief History of Neural Networks (NNs)}
 
-The history of Neural Networks begins very gradually in the field of Theoretical
+The history of Neural Networks (NNs) begins very gradually in the field of Theoretical
 Neuropsychology with a much-cited paper by McCulloch and Pitts in
 which the mechanics of cognition are described in the context of
 computation by ~\citet{mcculloch1943logical}. This initial framework for
@@ -145,7 +148,7 @@ backpropagation computations at a given layer to be done in
 parallel. This key insight, indeed the core of much of modern
 computing, was a description of parallel and distributed processing in
 the context of cognition by 
-~\citet{mcclelland1986parallel} 1986 with an astonishing 22,453 citations (a
+~\citet{mcclelland1986parallel} with an astonishing 22,453 citations (a
 number that grows nearly every day). With these pieces in place, the
 world was ready for someone to finally apply neural network models to
 a relevant problem. In 1989, Yann LeCun and a group at Bell Labs
@@ -159,8 +162,7 @@ to recognize hand-written numbers ~\citep{lecun1998gradient}.
 
 It is worth noting a couple of key ingredients that led to LeCun's
 success. First, the problem context itself was both simple and
-extremely rich in training data. Second, bank checks are protected from
-both by customers' desire to write correct checks, and their
+extremely rich in training data. Second, bank checks are protected both by customers' desire to write correct checks, and their
 consistent formatting. Finally, the computing resources needed had only just
 reached sufficient specifications and indeed, LeCun's team had rare
 access to this level of resources. This combination along with the
@@ -185,14 +187,14 @@ them as toy models inferior to traditional modeling,  the
 industrial success of these models was beginning to fuel a new wave of
 serious theoretical and practical work in the field. A generation of
 household names including Collobert, Hinton, Bengio, and Schmidhuber
-came to distinguish themselves alongside LeCun. 
+came to distinguish themselves alongside LeCun
 ~\citep{coates2011analysis,
 vincent2010stacked,
 boureau2010learning,
 hinton2010practical,
 glorot2010understanding,
 erhan2010does,
-bengio2009learning}
+bengio2009learning}.
 With this expansion in theory came a boom in the ability to
 practically implement more structured and capable neural networks: recurrent networks ~\citep{mikolov2010recurrent},
 convolutional neural networks ~\citep{lee2009convolutional}, natural
@@ -212,7 +214,7 @@ Rectified Linear Units (ReLUs) could also solve the vanishing gradient
 problem allowed for much deeper and more sophisticated neural networks
 to be implemented than ever before. 
 
-In step With this growing theoretical interest came inexorable expansion of
+In step with this growing theoretical interest came expansion of
 well-maintained libraries for working with neural networks including
 the very early creation of the now famous Torch
 ~\citep{Collobert2002TorchAM} and its python interface that still
@@ -224,7 +226,7 @@ While neural networks had still not breached the mainstream of pop
 culture, they had carved out an undeniable niche by 2009. The
 field of computer science was ready to test what they could
 do. With all of the ingredients in place, 2009-2010 saw competitions
-across ML tasks go viral. The ImageNet Large Scale Visual Recognition
+across Machine Learning (ML) tasks go viral. The ImageNet Large Scale Visual Recognition
 Challenge (ILSVRC) \url{http:/image-net.org/challenges/LSVRC/}), Segmentation of Neuronal Structures in Electron
 Microscopy Stacks, Traffic sign recognition (IJCNN2012) and more. The
 era became defined by these competitions which served to not only gain 
@@ -236,16 +238,16 @@ many of these competitions. The cutting-edge became represented by
 networks like Inception v4 designed by Google for image classification
 which contains approximately 43 million parameters
 ~\citep{szegedy2013}. Early versions of this network took 1-2 million
-dollars worth of compute-time to train. ANNs now appear in nearly
-every industry from devices which use ANNs to intelligently adapt
-their performance, to the sciences which rely on ANNs to eliminate
-tedious sorting and identification of data that previously had to be
-relegated to humans. Recently natural language processing has received
-its own renaissance, led by Chat-Bots based on the popular transformer
-architecture proposed by  ~\citet{vaswani2017attention}. Neural
-network based models are here to stay, but as these tools expand so
-wildly in application, we must begin to ask hard questions about their
-limitations and implications. 
+dollars worth of compute-time to train. Artificial Neural Networks
+(ANNs) now appear in nearly every industry from devices which use ANNs
+to intelligently adapt their performance, to the sciences which rely
+on ANNs to eliminate tedious sorting and identification of data that
+previously had to be relegated to humans. Recently natural language
+processing has received its own renaissance, led by Chat-Bots based on
+the popular transformer architecture proposed by
+~\citet{vaswani2017attention}. Neural network based models are here to
+stay, but as these tools expand so wildly in application, we must
+begin to ask hard questions about their limitations and implications. 
 
 \subsection{Structure}
 In this subsection we give a mathematical description of artificial neural networks. 
@@ -257,12 +259,12 @@ A \emph{neuron} is a nonlinear operator that takes input in $\R^n$ to $\R$, hist
 
 The fundamental building blocks of most ANNs are artificial neurons which we will refer to as \emph{perceptrons}.
 
-\begin{definition}{A \textbf{Perceptron} is  }
+\begin{definition}{A \textbf{perceptron} is  }
 \label{perceptron}
 a function $P_{\vec w}: \R^n \to \R$ which has \emph{weights} $\vec
 w \in \R^n$ corresponding with each element of an input vector $\vec
 x\in \R^n$ and a bias $b \in \R$:
-\[P_{\vec w}(\vec x) = f(\left(\ip{\vec w,\vec x} + b\right)\]
+\[P_{\vec w}(\vec x) = f\left(\ip{\vec w,\vec x} + b\right)\]
 \[P_{\vec w}(\vec x) = f\left(b + \sum_{i = 1}^n w_i x_i\right)\]
 where $f: \R \to \R$ is continuous. The function $f$ is called the \textbf{activation function} for $P$. 
 \end{definition}
@@ -348,7 +350,7 @@ must not be cyclic and, for convenience, are often arranged into
 independent layers. An early roadblock for neural networks was a proof
 by ~\citet{minsky1969perceptrons} that single layers of perceptrons
 could not encode exclusive-or. ~\citet{kak1993training} demonstrated
-that depth, the number of layers in a neural network, is a key factor in its ability to approximate complicated functions including exclusive-or . For this reason, modern ANNs are usually composed of many layers (3-100). The most common instance of a neural network model is a fully connected \emph{feed forward (FF)} configuration. In this configuration data enters as an input layer which is fed into each of the nodes in the first layer of neurons. Output of the first layer is fed into each of the nodes in the second layer, and so on until the output of the final layer is fed into an output filter which generates the final result of the neural network. 
+that depth, the number of layers in a neural network, is a key factor in its ability to approximate complicated functions including exclusive-or. For this reason, modern ANNs are usually composed of many layers (3-100). The most common instance of a neural network model is a fully connected \emph{feed forward (FF)} configuration. In this configuration data enters as an input layer which is fed into each of the nodes in the first layer of neurons. Output of the first layer is fed into each of the nodes in the second layer, and so on until the output of the final layer is fed into an output filter which generates the final result of the neural network. 
 
 
 
@@ -357,7 +359,7 @@ In this example of a FF network, an input vector in $\R^7$ is mapped to a
 an output in $\R^3$ which is fed into a classifier. Each blue circle
 represents a perceptron with the ReLU activation function. 
 
-% \begin{figure}[H]
+% \begin{figure}[ht]
 %   \centering
 %   \caption{BoxPlot Uncertainty}
 %     \includegraphics[width=12cm]{BoxPlot_Uncertainty.png}
@@ -464,7 +466,7 @@ next. Instead, layers are arranged spatially and overlapping groups of
 perceptrons are independently connected to the nodes of the next
 layer, usually with a nonlinear filter that computes the maximum of
 all of the incoming nodes to a new node. This structure has been shown
-(e.g. by ~\citet{lecun1995convolutional})to be very effective on problems with spatial information. 
+(e.g. by ~\citet{lecun1995convolutional}) to be very effective on problems with spatial information. 
 
 \subsection{Training ANNs}
 
@@ -497,7 +499,7 @@ Other commonly used loss functions include $L^1$ loss (also referred to as Mean 
 
 To set up the optimization, the loss for each training example must be aggregated. Generally, ANN training is conducted via Empirical Risk Minimization where Empirical Risk is defined for a given loss function $L$ as follows:
 \begin{definition}{Given a loss function $L$, the Empirical Risk over a training dataset $(X,Y)$ of size $N$ is }
-\[R_{\text{emp}}(P_{\vec w}(x) = \dfrac{1}{N} \sum_{(x,y) \in (X,Y)} L(P_{\vec w}(x)), y).\]
+\[R_{\text{emp}}(P_{\vec w}(x)) = \dfrac{1}{N} \sum_{(x,y) \in (X,Y)} L(P_{\vec w}(x)), y).\]
 \end{definition}
 We seek parameters $\vec w$ which will minimize $R_{\text{emp}}(P_{w}(x))$. This will be done with gradient-based optimization. 
 
@@ -542,9 +544,9 @@ When the second subscript is omitted, the subscript will only index the node in 
 }
 
 In this diagram, the $W^l$ are matrices composed of the weights
-indexed as above. Given an activation function for layer $n$ $A^n$ and
+indexed as above. Given an activation function for layer $n$, $A^n$ and
 its element-wise application to a vector $\bar A^n$. As demonstrated
-by ~\citet{Krause20}, we can now write the output $\bar a_n$ for any layer of an arbitrary ANN in two ways . Recursively, we can define
+by ~\citet{Krause20}, we can now write the output $\bar a^n$ for any layer of an arbitrary ANN in two ways . Recursively, we can define
 \begin{equation}
     a^n_\lambda = A^n(\sum_\alpha w^n_{\alpha, \lambda} a^{n-1}_\alpha)
 \end{equation}
@@ -559,22 +561,22 @@ The matrix form makes it easier to write out a closed form for the output of the
 
 Now, given a loss function $L = \sum_{i} \ell_i(a^n_i)$ where each $\ell_i$ is a loss function on the $i^{\text{th}}$ element of the output, we wish to compute the derivatives $\dfrac{\partial L}{\partial_{w^l_{i,j}}}$ for every $l, i,$ and $j$ which compose the gradient $\nabla L$. Using the diagram above, we can compute this directly for each weight using chain rule:
 \begin{align*}
-    \dfrac{\partial L}{\partial w^3_{\lambda,\alpha}} &= \dfrac{\partial L}{\partial a^3_{\lambda}} \dfrac{\partial a^3_{\lambda}}{\partial w^3_{\lambda,\alpha}} = \sum_{\lambda=1}^n \ell'_\lambda( a^3_\lambda) A'^3 (\sum_{\alpha=1}^n w^3_{\alpha, \lambda} a_\alpha^2) a^2_\alpha\\    
+    \dfrac{\partial L}{\partial w^3_{\lambda,\alpha}} &= \dfrac{\partial L}{\partial a^3_{\lambda}} \dfrac{\partial a^3_{\lambda}}{\partial w^3_{\lambda,\alpha}} = \sum_{\lambda=1}^n \ell'_\lambda( a^3_\lambda) (A^3)' (\sum_{\alpha=1}^n w^3_{\alpha, \lambda} a_\alpha^2) a^2_\alpha.    
     %\dfrac{\partial L}{\partial w^2_{\alpha,i} } &= \sum_{\lambda} \dfrac{\partial L}{\partial a^3_{\lambda}} \dfrac{\partial a^3_{\lambda} }{\partial w^3_{\lambda,\alpha}} \dfrac{\partial a^2_\alpha }{ w^2_{\alpha,i}}\\
 \end{align*}
 Many of the terms of this gradient (e.g. the activations $a^n_i$ and the sums $\sum_{i} w^n_{i,j} a_i$) are computed during forward propagation when using the network to generate output. 
-We will store such values during the forward pass and use a backward pass to fill in the rest of the gradient. Furthermore, notice that $\ell'_\lambda$ and $A'^n$ are well understood functions 
+We will store such values during the forward pass and use a backward pass to fill in the rest of the gradient. Furthermore, notice that $\ell'_\lambda$ and $(A^n)'$ are well understood functions 
 whose derivatives can be computed analytically almost everywhere. We can see that all of the partials will be of the form 
 $\dfrac{\partial L}{\partial w^l_{n, i}} = \delta^l_n a^l_i$ where $\delta^l_n$  will contain terms which are either pre-computed or can be computed analytically. Conveniently, we can define this error signal recursively: 
 \[
 \delta^l_n = A'^l (a^l_{n}) \sum_{i = 1}^n w^{l+1}_{i, n} \delta^{l+1}_i
 \]
 In matrix form, we have
-\[\bar \delta^l = \bar A'^l(W^l \bar a^l) \odot ((W^{l+1})^T \bar \delta^{l+1}\]
+\[\bar \delta^l = \bar A'^l(W^l \bar a^l) \odot ((W^{l+1})^T \bar \delta^{l+1}\])
 Where $\odot$ signifies element-wise multiplication. 
 
 Then we can compute the gradient with respect to each layer's matrix $W^l$ as an outer product: 
-\[\nabla_{W^l} L = \bar \delta^l \bar a^{(l-1)T}\]
+\[\nabla_{W^l} L = \bar \delta^l \bar a^{(l-1)T}.\]
 Since this recursion for layer $n$ only requires information from layer $n+1$, this allows us to propagate the error signals that we compute backwards through the network. 
 
 
@@ -591,9 +593,11 @@ of the learning algorithm, we apply a correction so that
 clear from the number of terms in this calculation that the initial
 guess and step size can have significant effect on the eventual trained weights.
 Due to lack of a guarantee for general convexity,
-~\citet{Bishop:2006:PRM:1162264} observed that poor guesses for such a large number of parameters can lead
-to gradients blowing up or down. 
-. Due to nonlinearity and the plenitude of local minima in the loss function, classic gradient descent usually does not perform well during ANN training. \\ 
+~\citet{Bishop:2006:PRM:1162264} observed that poor guesses for such a
+large number of parameters can lead to gradients blowing up or
+down. Due to non-linearity and the plenitude of local minima in the
+loss function, classic gradient descent usually does not perform well
+during ANN training. \\  
 By far the most common technique for training the weights of neural networks adds noise in the form of random re-orderings of the training data to the general optimization process and is known as stochastic gradient descent. 
 %\begin{tcolorbox}{}
 \begin{definition}{Stochastic Gradient Descent (SGD)}
@@ -602,7 +606,7 @@ Given an ANN $N: \R^n \to C$, an initial set of weights for this network $\vec w
 
 \begin{algorithm}
 \caption*{Batch Stochastic Gradient Descent}\label{sgd}
-\begin{algorithmic}[H]
+\begin{algorithmic}[ht]
 \State $w = w_0$
 \While{$E(\hat Y, P_w(X))$ (cumulative loss) is still improving} \Comment{ (the stopping condition may require that the weight change by less than $\e$ for some number of iterations or could be a fixed number of steps)}
 \State Randomly shuffle $(X,Y)$
