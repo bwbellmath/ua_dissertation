@@ -20,7 +20,7 @@
 
 
  % Attempt to make hyperref and algorithmic work together better:
-%\newcommand{\theHalgorithm}{\arabic{algorithm}}
+%\newcommand{\theHalgorithm}{\arabic{algorithm}}os
 
 % % Use the following line for the initial blind version submitted for review:
 % %\usepackage{icml2023}
@@ -234,7 +234,7 @@
 
 In the process of trying to understand adversarial examples in a
 geometric sense, a question arises: How can we directly extract
-geometric properties from machine-learning models. In this line of
+geometric properties from machine learning models. In this line of
 thought, kernel methods are particularly appealing because they
 implicitly define a spatial transform which is used to make
 predictions. The kernel, a symmetric positive-definite bilinear map,
@@ -249,7 +249,7 @@ test point (using the kernel) with all known training points:
 
 Any prediction can be decomposed into the \emph{spatial}
 contribution from each training point. This would be an incredible way
-to interpret machine-learning predictions including adversarial
+to interpret machine learning predictions including adversarial
 examples. My gut told me that connections here would be both possible
 and useful, leading to my careful review of the Neural-Tangent-Kernel
 and related literature eventually leading to an unpublished arxiv
@@ -257,10 +257,11 @@ paper by ~\citet{domingos2020every}.
 
 The resulting paper which is presented here exactly as accepted to the
 archival proceedings track of the Topology, Algebra, and Geometry
-Workshop at ICML 2023 proposes the first exact path kernel
+Workshop at the International Conference on Machine Learning (ICML)
+2023 proposes the first exact path kernel
 representation for general gradient trained classifiers. The primary
 derivation and proof was written by Brian Bell and the supporting
-impoementation and work were mostly conducted by Michael Geyer. The
+implementation and work were mostly conducted by Michael Geyer. The
 central focus of the paper is on the derivation and demonstration that
 this method works in practice. The interest that gave rise for this
 approach comes from the fact that kernel methods and more specifically
@@ -271,8 +272,8 @@ approximation assumptions. This exact formulation allows a much more
 solid foundation for analyzing neural networks and suggests the
 possibility that predictions can be decomposed using this
 framework. The implementation and application of this method to real
-machine-learning models and tasks demonstrates that it is not only a
-theoretical framework, it is practical! As stated above, this paper
+machine learning models and tasks demonstrates that it is not only a
+theoretical framework; it is practical! As stated above, this paper
 was accepted for archival publication at the Topology Algebra and
 Geometry (TAG) workshop at ICML 2023 in Honolulu, Hawaii.
 
@@ -571,22 +572,22 @@ This study investigates the relationship between kernel methods and finite param
         \label{fig:error}
 \end{figure}
 
-There has recently been a surge of interest in the connection between neural networks and kernel methods~\cite{bietti2019bias, du2019graphntk, tancik2020fourierfeatures, abdar2021uq, geifman2020similarity, chen2020generalized, alemohammad2021recurrent}. Much of this work has been motivated by the the neural tangent kernel (NTK), which describes the training dynamics of neural networks in the infinite limit of network width~\cite{jacot2018neural}.
-We argue that many intriguing behaviors arise in the \emph{finite} parameter regime~\cite{DBLP:conf/nips/BubeckS21}. 
+There has recently been a surge of interest in the connection between neural networks and kernel methods ~\citep{bietti2019bias, du2019graphntk, tancik2020fourierfeatures, abdar2021uq, geifman2020similarity, chen2020generalized, alemohammad2021recurrent}. Much of this work has been motivated by the neural tangent kernel (NTK), which describes the training dynamics of neural networks in the infinite limit of network width ~\citep{jacot2018neural}.
+We argue that many intriguing behaviors arise in the \emph{finite} parameter regime which should, for example, satisfy the universal law of robustness proposed by ~\citet{DBLP:conf/nips/BubeckS21}. 
 All prior works, to the best of our knowledge, appeal to discrete approximations of the kernel corresponding to a neural network. 
 Specifically, prior approaches are derived under the assumption that training step size is small enough to guarantee close approximation of a gradient flow
 %. These approximations have been speculated to open up parametric models trained with gradient descent, including artificial neural networks (ANNs), to many theoretical tools available to kernel methods
-~\cite{ghojogh2021, shawe2004kernel, zhao2005extracting}.
+~\citep{ghojogh2021, shawe2004kernel, zhao2005extracting}.
 
-In this work, we show that the simplifying assumptions used in prior works (i.e. infinite network width and infinitesimal gradient descent steps) are not necessary. Our \textbf{Exact Path Kernel (EPK)} provides the first, exact method to study the behavior of finite-sized neural networks used for classification.
-Previous results are limited in application ~\cite{incudini2022quantum} due to dependence of the kernel on test data unless strong conditions are imposed on the training process as by ~\cite{chen2021equivalence}. We show, however, that the training step sizes used in practice do not closely follow this gradient flow, introducing significant error into all prior approaches (Figure~\ref{fig:error}).
+In this work, we show that the simplifying assumptions used in prior works (i.e. infinite network width and infinitesimal gradient descent steps) are not necessary. Our \textbf{Exact Path Kernel (EPK)} provides the first exact method to study the behavior of finite-sized neural networks used for classification.
+Previous results are limited in application ~\citep{incudini2022quantum} due to dependence of the kernel on test data unless strong conditions are imposed on the training process as by ~\citet{chen2021equivalence}. We show, however, that the training step sizes used in practice do not closely follow this gradient flow, introducing significant error into all prior approaches (Figure~\ref{fig:error}).
 %use of such tools is highly dependent on the assumption that ANN training is a faithful discrete approximation of the smooth path kernel at practical step sizes. The accuracy of this assumption depends on difficult measurements of convergence and error.
 
-Our experimental results build on prior studies attempting to evaluate empirical properties of the kernels corresponding to finite neural networks ~\cite{DBLP:conf/iclr/LeeBNSPS18, chen2021equivalence}. While the properties of infinite neural networks are fairly well understood~\cite{neal1996priors}, we find that the kernels learned by finite neural networks have non-intuitive properties that may explain the failures of modern neural networks on important tasks such as robust classification and calibration on out-of-distribution data.
+Our experimental results build on prior studies attempting to evaluate empirical properties of the kernels corresponding to finite neural networks ~\citep{DBLP:conf/iclr/LeeBNSPS18, chen2021equivalence}. While the properties of infinite neural networks are fairly well understood ~\citep{neal1996priors}, we find that the kernels learned by finite neural networks have non-intuitive properties that may explain the failures of modern neural networks on important tasks such as robust classification and calibration on out-of-distribution data.
 
 This paper makes the following significant theoretical and experimental contributions:
 \begin{enumerate}
-    \item We prove that finite-sized neural networks trained with finite-sized gradient descent steps and cross-entropy loss can be exactly represented as kernel machines using the EPK. Our derivation incorporates a previously-proposed path kernel, but extends this method to account for practical training procedures~\cite{domingos2020every, chen2021equivalence}.
+    \item We prove that finite-sized neural networks trained with finite-sized gradient descent steps and cross-entropy loss can be exactly represented as kernel machines using the EPK. Our derivation incorporates a previously-proposed path kernel, but extends this method to account for practical training procedures ~\citep{domingos2020every, chen2021equivalence}.
   
     \item We demonstrate that it is computationally tractable to estimate the kernel underlying a neural network classifier, including for small convolutional computer vision models.
     % \item We estimate a kernel corresponding to both a toy-sized neural network and a convolutional classifier on MNIST up to machine precision.
@@ -599,19 +600,18 @@ This paper makes the following significant theoretical and experimental contribu
 
 % The neural tangent kernel (NTK) ~\cite{he2020bayesian} has received significant attention recently in light of a growing body of work relating parametric gradient models in infinite width with Gaussian processes (GPs) and also the NTK. 
 Fundamentally, the neural tangent kernel (NTK) is rooted in the concept that all information necessary to represent a parametric model is stored in the Hilbert space occupied by the model's weight gradients up to a constant factor. 
-This is very well supported in infinite width ~\cite{jacot2018neural}. 
-In this setting, it has been shown that neural networks are equivalent to support vector machines, drawing a connection to maximum margin classifiers ~\cite{chen2021equivalence, chizat2020maxmargin}.
-Similarly, Shah et al. demonstrate that this maximum margin classifier exists in Wasserstien space; however, they also show that model gradients may not contain the required information to represent this ~\cite{shah2021input}.
+This is very well supported in infinite width ~\citep{jacot2018neural}. 
+In this setting, it has been shown that neural networks are equivalent to support vector machines, drawing a connection to maximum margin classifiers ~\citep{chen2021equivalence, chizat2020maxmargin}. ~\citet{shah2021input} demonstrate that this maximum margin classifier exists in Wasserstien space; however, they also show that model gradients may not contain the required information to represent this.
 % However, discrete approximation of an infinite-width kernel is very limiting.
 
 % This formulation derives a kernel for finite-parametric models however it relies on a continuous integration over a gradient flow, while real-world models are trained by discrete Forward Euler steps through a gradient field.
 % The exploration of discrete approximations has been a key focus in addressing the challenges associated with neural networks. 
 The correspondence between kernel machines and parametric models trained by gradient descent has been previously developed in the case of a continuous training path (i.e. the limit as gradient descent step size $\varepsilon \to 0$)
 % One notable approach is the formulation of the continuous path kernel, which aims to derive a kernel for finite-parametric models
-~\cite{domingos2020}. We will refer to the previous finite approximation of this kernel as the Discrete Path Kernel (DPK).
+~\citep{domingos2020}. We will refer to the previous finite approximation of this kernel as the Discrete Path Kernel (DPK).
 However, a limitation of this formulation is its reliance on a continuous integration over a gradient flow, which differs from the discrete forward Euler steps employed in real-world model training. 
-This discrepancy raises concerns regarding the applicability of the continuous path kernel to practical scenarios ~\cite{incudini2022quantum}.
-Moreover, the formulation of the sample weights and bias term in the DPK depends on its test points. Chen et al. propose that this can be addressed, in part, by imposing restrictions on the loss function used for training, but did not entirely disentangle the kernel formulation from sample importance weights on training points ~\cite{chen2021equivalence}.
+This discrepancy raises concerns regarding the applicability of the continuous path kernel to practical scenarios ~\citep{incudini2022quantum}.
+Moreover, the formulation of the sample weights and bias term in the DPK depends on its test points. ~\citet{chen2021equivalence} propose that this can be addressed, in part, by imposing restrictions on the loss function used for training, but did not entirely disentangle the kernel formulation from sample importance weights on training points ~\citep{chen2021equivalence}.
 
 We address the limitations of \citet{domingos2020} and \citet{chen2021equivalence} in Subsection %~\remref{rem5}
 ~\ref{subsec:disc}. By default, their approach produces a system which can be viewed as an ensemble of kernel machines, but without a single aggregated kernel which can be analyzed directly. ~\citet{chen2021equivalence} propose that the resulting sum over kernel machines can be formulated as a kernel machine so long as the sign of the gradient of the loss stays constant through training; however, we show that this is not necessarily a sufficient restriction. Instead, their formulation leads to one of several non-symmetric functions which can serve as a surrogate to replicate a given models behavior, but without retaining properties of a kernel.
@@ -643,25 +643,25 @@ A {kernel} is a function of two variables which is symmetric and positive semi-d
 \end{definition}
 
 \begin{definition}
-Given a Hilbert space $X$, a test point $x \in X$, and a training set $X_T = \{x_1,x_2,...x_n\} \subset X$ indexed by $I$, a \emph{Kernel Machine} is a model characterized by 
+Given a Hilbert space $X$, a test point $x \in X$, and a training set $X_T = \{x_1,x_2,...,x_n\} \subset X$ indexed by $I$, a \emph{Kernel Machine} is a model characterized by 
 \begin{align}
-    \text{K}(x) = b + \sum_{i\in I} a_i k(x,x_i)
+    \text{K}(x) = b + \sum_{i=1}^n a_i k(x,x_i)
 \end{align}
-where the $a_i \in \mathbb{R}$ do not depend on $x$, $b \in \mathbb{R}$ is a constant, and $k$ is a kernel. ~\cite{rasmussen2006gaussian}
+where the $a_i \in \mathbb{R}$ do not depend on $x$, $b \in \mathbb{R}$ is a constant, and $k$ is a kernel ~\citep{rasmussen2006gaussian}.
+\end{definition}
 
-By Mercer's theorem ~\cite{ghojogh2021} a kernel can be produced by composing an inner product on a Hilbert space with a mapping $\phi$ from the space of data into the chosen Hilbert space.
+By Mercer's Theorem ~\citep{ghojogh2021} a kernel can be produced by composing an inner product on a Hilbert space with a mapping $\phi$ from the space of data into the chosen Hilbert space.
 We use this property to construct a kernel machine of the following form.
 \begin{align}
     \text{K}(x) = b + \sum_{i\in I} a_i \langle \phi(x), \phi(x_i) \rangle
 \end{align}
-\end{definition}
 Where $\phi$ is a function mapping input data into the weight space via gradients. Our $\phi$ will additionally differentiate between test and training points to resolve a discontinuity that arises under discrete training. 
 
 \subsection{Exact Path Kernels}
 
  We first derive a kernel which is an exact representation of the change in model output over one training step, and then compose our final representation by summing along the finitely many steps.
 Models trained by gradient descent can be characterized by a discrete set of intermediate states in the space of their parameters.
-These discrete states are often considered to be an estimation of the gradient flow, however in practical settings where $\epsilon \not \rightarrow 0$ these discrete states differ from the true gradient flow.
+These discrete states are often considered to be an estimation of the gradient flow, however in practical settings where $\epsilon > 0$ these discrete states differ from the true gradient flow.
 Our primary theoretical contribution is an algorithm which accounts for this difference by observing the true path the model followed during training.
 Here we consider the training dynamics of practical gradient descent steps by integrating a discrete path for weights whose states differ from the gradient flow induced by the training set.
 % As such, the model's training dynamics do not exactly follow the the gradient flow defined by the model's loss function (i.e. the $\epsilon \rightarrow 0$ limit in forward Euler). 
@@ -686,7 +686,7 @@ To account for this asymmetry in representation, we will redefine our data using
 \begin{definition}
 \label{fpm}
 Let $X$ be two copies of a Hilbert space $H$ with indices $0$ and $1$ so that $X = H \times \{0,1\}$. We will write $x \in H \times \{0,1\}$ so that $x = (x_H, x_I)$ (For brevity, we will omit writing $_H$ and assume each of the following functions defined on $H$ will use $x_H$ and $x_I$ will be a hidden indicator).
-Let $ f_{w}$ be a differentiable function on $H$ parameterized by $w \in \mathbb{R}^d$. Let $X_T = \{(x_i, 1)\}_{i=1}^M$ be a finite subset of $X$ of size $M$ with corresponding observations $Y_T = \{y_{x_i}\}_{i=1}^M$ with initial parameters $w_0$ so that there is a constant $b \in \mathbb{R}$ such that for all $x$, $ f_{w_0}(x) = b$. Let $L$ be a differentiable loss function of two values which maps $(f(x), y_x)$ into the positive real numbers. Starting with $f_{w_0}$, let $\{w_s\}$ be the sequence of points attained by $N$ forward Euler steps of fixed size $\varepsilon$ so that $w_{s+1} = w_{s} - \varepsilon \nabla L(f(X_T), Y_T)$. Let $x \in H \times \{0\}$ be arbitrary and within the domain of $f_w$ for every $w$. Then $f_{w_s(t)}$ is a \emph{finite parametric gradient model (FPGM)}. 
+Let $ f_{w}$ be a differentiable function on $H$ parameterized by $w \in \mathbb{R}^d$. Let $X_T = \{(x_i, 1)\}_{i=1}^M$ be a finite subset of $X$ of size $M$ with corresponding observations $Y_T = \{y_{x_i}\}_{i=1}^M$ with initial parameters $w_0$ so that there is a constant $b \in \mathbb{R}$ such that for all $x$, $ f_{w_0}(x) = b$. Let $L$ be a differentiable loss function of two values which maps $(f(x), y_x)$ into the positive real numbers. Starting with $f_{w_0}$, let $\{w_s\}$ be the sequence of points attained by $N$ forward Euler steps of fixed size $\varepsilon$ so that $w_{s+1} = w_{s} - \varepsilon \nabla L(f(X_T), Y_T)$. Let $w_s(t) = w_s + t(w_{s+1}-w_s)$. Let $x \in H \times \{0\}$ be arbitrary and within the domain of $f_w$ for every $w$. Then $f_{w_s(t)}$ is a \emph{finite parametric gradient model (FPGM)}. 
 \end{definition}
 
 \begin{definition}
@@ -724,13 +724,15 @@ To see that $K_{\text{EPK}}$ is \textbf{Positive Semi-Definite}, let $\alpha = (
 
 \begin{align}
 \alpha^\top K_{\text{EPK}} \alpha &= \sum_{i=1}^n \sum_{j=1}^n \alpha_i \alpha_j \int_0^1 \langle \phi_{s,t}(x_i), \phi_{s,t}(x_j)\rangle dt \\
-&= \sum_{i=1}^n \sum_{j=1}^n \alpha_i \alpha_j \int_0^1 \langle \nabla_{w}\hat{y}_{w_s(t,x_i)}, \nabla_{w}\hat{y}_{w_s(t,x_j)}\rangle dt \\
-&= \int_0^1 \sum_{i=1}^n \sum_{j=1}^n \alpha_i \alpha_j \langle \nabla_{w}\hat{y}_{w_s(t,x_i)}, \nabla_{w}\hat{y}_{w_s(t,x_j)}\rangle dt \\
-&= \int_0^1 \sum_{i=1}^n \sum_{j=1}^n  \langle \alpha_i \nabla_{w}\hat{y}_{w_s(t,x_i)}, \alpha_j \nabla_{w}\hat{y}_{w_s(t,x_j)}\rangle dt \\
-&= \int_0^1    \langle \sum_{i=1}^n \alpha_i \nabla_{w}\hat{y}_{w_s(t,x_i)}, \sum_{j=1}^n \alpha_j \nabla_{w}\hat{y}_{w_s(t,x_j)}\rangle dt \\
+&=   \int_0^1 \left\langle \sum_{i=1}^n \alpha_i \phi_{s,t}(x_i), \sum_{j=1}^n \alpha_j \phi_{s,t}(x_j)\right\rangle dt \\
+% &= \sum_{i=1}^n \sum_{j=1}^n \alpha_i \alpha_j \int_0^1 \langle \nabla_{w}\hat{y}_{w_s(t,x_i)}, \nabla_{w}\hat{y}_{w_s(t,x_j)}\rangle dt \\
+% &= \int_0^1 \sum_{i=1}^n \sum_{j=1}^n \alpha_i \alpha_j \langle \nabla_{w}\hat{y}_{w_s(t,x_i)}, \nabla_{w}\hat{y}_{w_s(t,x_j)}\rangle dt \\
+% &= \int_0^1 \sum_{i=1}^n \sum_{j=1}^n  \langle \alpha_i \nabla_{w}\hat{y}_{w_s(t,x_i)}, \alpha_j \nabla_{w}\hat{y}_{w_s(t,x_j)}\rangle dt \\
+% &= \int_0^1    \langle \sum_{i=1}^n \alpha_i \nabla_{w}\hat{y}_{w_s(t,x_i)}, \sum_{j=1}^n \alpha_j \nabla_{w}\hat{y}_{w_s(t,x_j)}\rangle dt \\
 & \text{Re-ordering the sums so that their indices match, we have}\\
-&= \int_0^1 \left\lVert \sum_{i=1}^n \alpha_i \nabla_{w}\hat{y}_{w_s(t,x_i)}\right\rVert^2 dt \\
-&\geq 0,
+&=   \int_0^1 \left\lvert \sum_{i=1}^n \alpha_i \phi_{s,t}(x_i)\right\rvert dt \\
+%&= \int_0^1 \left\lVert \sum_{i=1}^n \alpha_i \nabla_{w}\hat{y}_{w_s(t,x_i)}\right\rVert^2 dt \\
+&\geq 0.
 \end{align}
 
 Note that this reordering does not depend on the continuity of our mapping function $\phi_{s,t}(x_i)$.
@@ -761,7 +763,7 @@ Note that this reordering does not depend on the continuity of our mapping funct
 \label{thm:eker}
 A model $f_{w_N}$ trained using discrete steps matching the conditions of the exact path kernel has the following exact representation as an ensemble of $N$ kernel machines:
 \begin{equation}
-f_{w_N} = \text{KE}(x) :=  \sum_{s = 1}^N \sum_{i = 1}^{M} a_{i,s} K_{\text{EPK}}(x, x', s) + b
+f_{w_N} = \text{KE}(x) :=  \sum_{s = 1}^N \sum_{i = 1}^{M} a_{i,s} K_{\text{EPK}}(x, x_i, s) + b
 \label{ensemble}
 \end{equation}
 where
@@ -783,36 +785,35 @@ For one step of training, we consider $y_s  = f_{w_s(0)}(x)$ and $y_{s+1} = f_{w
 
 \begin{align}
     \dfrac{d w_s(t)}{dt} &= (w_{s+1} - w_s)\\   
-    \int \dfrac{d w_s(t)}{dt} dt &= \int (w_{s+1} - w_s)dt\\
-    w_s(t) &= w_s + t(w_{s+1} - w_s)\\
+    \int_0^T \dfrac{d w_s(t)}{dt} dt &= \int_0^T (w_{s+1} - w_s)dt
+    %w_s(T) &= w_s + T(w_{s+1} - w_s)
 \end{align}
 Since $f$ is being trained using forward Euler, across the entire training set $X$ we can write:
 \begin{align}
-    \dfrac{d w_s(t)}{dt} &= -\varepsilon \nabla_w L(f_{w_s(0)}(X), y_i) = -\varepsilon \sum_{j = 1}^{d} \sum_{i=1}^M  \dfrac{\partial L(f_{w_s(0)}(x_i),  y_i)}{\partial w_j} \label{eq10}
+    \dfrac{d w_s(t)}{dt} &= -\varepsilon \nabla_w L(f_{w_s(0)}(X), y_i) = -\varepsilon  \sum_{i=1}^M  \dfrac{\partial L(f_{w_s(0)}(x_i),  y_i)}{\partial w} \label{eq10}
 \end{align}
-Applying chain rule and the above substitution, we can write
+For the loss function $L(y, y')$ we will define its derivative with respect to $y$ as $L'(y, y')$. Applying chain rule with this notation and the above substitution, we can write
 \begin{align}
-    \dfrac{d \hat y}{dt} = \dfrac{d f_{w_s(t)}}{dt} &= \sum_{j = 1}^{d} \dfrac{d f}{\partial w_j} \dfrac{\partial w_j}{dt}\\
-&= \sum_{j = 1}^{d} \dfrac{d f_{w_s(t)}(x)}{\partial w_j} \left(-\varepsilon \dfrac{\partial L(f_{w_s(0)}(X_T),  Y_T)}{\partial w_j}\right)\\
-&= \sum_{j = 1}^{d} \dfrac{d f_{w_s(t)}(x)}{\partial w_j} \left(-\varepsilon \sum_{i = 1}^{M}\dfrac{d L(f_{w_s(0)}(x_i),  y_i)}{d f_{w_s(0)}(x_i)}\dfrac{\partial  f_{w_s(0)}(x_i)}{\partial w_j}\right)\\
-&= -\varepsilon \sum_{i = 1}^{M} \dfrac{d L(f_{w_s(0)}(x_i),  y_i)}{d f_{w_s(0)}(x_i)} \sum_{j = 1}^{d} \dfrac{d f_{w_s(t)}(x)}{\partial w_j}  \dfrac{d f_{w_s(0)}(x_i)}{\partial w_j}\\
-&= -\varepsilon \sum_{i = 1}^{M} \dfrac{d L(f_{w_s(0)}(x_i),  y_i)}{d f_{w_s(0)}(x_i)} \nabla_w f_{w_s(t)}(x) \cdot \nabla_w f_{w_s(0)}(x_i)\label{eq11}\\
+    \dfrac{d \hat y}{dt} = \dfrac{d f_{w_s(t)}(x)}{dt} &= \sum_{j = 1}^{d} \dfrac{\partial f}{\partial w_j} \dfrac{d w_j}{dt}\\
+&= \sum_{j = 1}^{d} \dfrac{\partial f_{w_s(t)}(x)}{\partial w_j} \left(-\varepsilon \dfrac{\partial L(f_{w_s(0)}(X_T),  Y_T)}{\partial w_j}\right)\\
+&= \sum_{j = 1}^{d} \dfrac{\partial f_{w_s(t)}(x)}{\partial w_j} \left(-\varepsilon \sum_{i = 1}^{M}L'(f_{w_s(0)}(x_i),  y_i) \dfrac{\partial  f_{w_s(0)}(x_i)}{\partial w_j}\right)\\
+&= -\varepsilon \sum_{i = 1}^{M} L'(f_{w_s(0)}(x_i),  y_i) \sum_{j = 1}^{d} \dfrac{d f_{w_s(t)}(x)}{\partial w_j}  \dfrac{d f_{w_s(0)}(x_i)}{\partial w_j}\\
+&= -\varepsilon \sum_{i = 1}^{M} L'(f_{w_s(0)}(x_i),  y_i) \nabla_w f_{w_s(t)}(x) \cdot \nabla_w f_{w_s(0)}(x_i)\label{eq11}\\
 \end{align}
 Using the fundamental theorem of calculus, we can compute the change in the model's output over step $s$
 \begin{align}
-    y_{s+1} - y_s &= \int_0^1 -\varepsilon \sum_{i = 1}^{M} \dfrac{d L(f_{w_s(0)}(x_i),  y_i)}{d f_{w_s(0)}(x_i)}  \nabla_w f_{w_s(t)}(x) \cdot \nabla_w f_{w_s(0)}(x_i)dt\\
- &=  -\varepsilon \sum_{i = 1}^{M} \dfrac{d L(f_{w_s(0)}(x_i),  y_i)}{d f_{w_s(0)}(x_i)}  \left(\int_0^1\nabla_w f_{w_s(t)}(x)dt\right) \cdot \nabla_w f_{w_s(0)}(x_i)\\
+    y_{s+1} - y_s &= \int_0^1 -\varepsilon \sum_{i = 1}^{M} L'(f_{w_s(0)}(x_i),  y_i)  \nabla_w f_{w_s(t)}(x) \cdot \nabla_w f_{w_s(0)}(x_i)dt\\
+ &=  -\varepsilon \sum_{i = 1}^{M} L'(f_{w_s(0)}(x_i),  y_i) \left(\int_0^1\nabla_w f_{w_s(t)}(x)dt\right) \cdot \nabla_w f_{w_s(0)}(x_i)\\
 \end{align}
 For all $N$ training steps, we have
 \begin{align*}
 y_N &= b + \sum_{s=1}^N y_{s+1} - y_s\\
-y_N &= b + \sum_{s = 1}^N -\varepsilon \sum_{i = 1}^{M} \dfrac{d
-      L(f_{w_s(0)}(x_i),  y_i)}{d f_{w_s(0)}(x_i)}
+y_N &= b + \sum_{s = 1}^N -\varepsilon \sum_{i = 1}^{M} L'(f_{w_s(0)}(x_i),  y_i)
       \left(\int_0^1\nabla_w f_{w_s(t)}(x)dt\right) \cdot \nabla_w
       f_{w_s(0)}(x_i)\\   \label{eqint}
 % &= \sum_{i = 1}^{M}\sum_{s = 1}^N -\varepsilon  \dfrac{\partial L(f_{w_s(0)}(x_i),  y_i)}{\partial f_i}  \left(\int_0^1\nabla_w f_{w_s(t)}(x)dt\right) \cdot \nabla_w f_{w_s(0)}(x_i)\\
 % &= \sum_{i = 1}^{M}\sum_{s = 1}^N -\varepsilon  \dfrac{\partial L(f_{w_s(0)}(x_i),  y_i)}{\partial f_i}  \int_0^1\left\langle \nabla_w f_{w_s(t)}(x), \nabla_w f_{w_s(0)}(x_i) \right\rangle dt\\ 
-&= b + \sum_{i = 1}^{M}\sum_{s = 1}^N -\varepsilon  \dfrac{d L(f_{w_s(0)}(x_i),  y_i)}{d f_{w_s(0)}(x_i)}  \int_0^1\left\langle \nabla_w f_{w_s(t,x)}(x), \nabla_w f_{w_s(t,x_i)}(x_i) \right\rangle dt\\ 
+&= b + \sum_{i = 1}^{M}\sum_{s = 1}^N -\varepsilon  L'(f_{w_s(0)}(x_i),  y_i)  \int_0^1\left\langle \nabla_w f_{w_s(t,x)}(x), \nabla_w f_{w_s(t,x_i)}(x_i) \right\rangle dt\\ 
 &= b + \sum_{i = 1}^{M}\sum_{s = 1}^N a_{i, s}  \int_0^1 \left\langle \phi_{s,t}(x), \phi_{s,t}(x_i)\right\rangle dt
 \end{align*}
 Since an integral of a symmetric positive semi-definite function is still symmetric and positive-definite, each step is thus represented by a kernel machine. 
@@ -825,8 +826,8 @@ steps end-to-end. We can rewrite ~\ref{eqint} by combining $\sum_{s =
   1}^S$ and $\int_0^1 dt$ into a single integral $\int_{P_S}$:
 
 \begin{align}
-y_N &= b +  -\varepsilon \sum_{i = 1}^{M} \int_{P_S} \dfrac{d
-      L(f_{w_s(0)}(x_i),  y_i)}{d f_{w_s(0)}(x_i)}
+y_N &= b +  -\varepsilon \sum_{i = 1}^{M} \int_{P_S} 
+      L'(f_{w_s(0)}(x_i),  y_i)
       \left(\nabla_w f_{w_s(t)}(x)\right) \cdot \nabla_w
       f_{w_s(0)}(x_i)\\   \label{eqint}
 \end{align}
@@ -840,8 +841,7 @@ $f_{w_0(0)}(x)$. We can see that this new representation no longer
 requires assumptions about $f_{w_0(0)}(x)$ which gives us a much more
 general representation which includes most ANNs in practice, 
 \begin{align}
-f_{w_F(0)}(x) = f_{w_0(0)}(x) +  -\varepsilon \sum_{i=1}^N \sum_s^S \int_{P_S} \dfrac{d
-      L(f_{w_s(0)}(x_i),  y_i)}{d f_{w_s(0)}(x_0)}
+f_{w_F(0)}(x) = f_{w_0(0)}(x) +  -\varepsilon \sum_{i=1}^N \sum_s^S \int_{P_S} L'(f_{w_s(0)}(x_i),  y_i)
       \langle\nabla_w f_{w_s(t)}(x), \nabla_w
       f_{w_s(0)}(x_i)\rangle dt \label{eqint}.
 \end{align}
@@ -969,26 +969,26 @@ See Appendix~\ref{proof:ekmr} for full proof. By combining theorems ~\ref{thm:ek
 
 
 %\textbf{Remark \remlabel{rem1}} 
-$\phi_{s,t}(x)$ depends on both $s$ and $t$, which is non-standard but valid, however an important consequence of this mapping is that the output of this representation is not guaranteed to be continuous. This discontinuity is exactly measuring the error between the model along the exact path compared with the gradient flow for each step. 
+The map $\phi_{s,t}(x)$ depends on both $s$ and $t$, which is non-standard but valid, however an important consequence of this formulation is that the output of this representation is not guaranteed to be continuous. This discontinuity is exactly measuring the error between the model along the exact path compared with the gradient flow for each step. 
 
 We can write another function $k'$ which is continuous but not symmetric, yet still produces an exact representation:
 \begin{align}
-k'(x, x') = \langle \nabla_w f_{w_s(t)}(x), \nabla_w f_{w_s(0)}(x')\rangle
+k'(x, x') = \langle \nabla_w f_{w_s(t)}(x), \nabla_w f_{w_s(0)}(x')\rangle.
 \end{align}
 The resulting function is a valid kernel if and only if for every $s$ and every $x$, 
 \begin{align}
 \label{eq:cond}
-    \int_0^1 \nabla_w f_{w_s(t)}(x)dt = \nabla_w f_{w_s(0)}(x)
+    \int_0^1 \nabla_w f_{w_s(t)}(x)dt = \nabla_w f_{w_s(0)}(x).
 \end{align}
 
 %\textbf{Remark \remlabel{rem3}} 
 We note that since $f$ is being trained using forward Euler, we can write:
 \begin{align}
-    \dfrac{\partial w_s(t)}{dt} &= -\varepsilon \nabla_w L(f_{w_s(0)}(x_i), y_i) \label{dstep}% = -\varepsilon \sum_{j = 1}^{d} \dfrac{\partial L(f_{w_s(0)}(x_i),  y_i)}{\partial w_j} \label{rem3}
+    \dfrac{d w_s(t)}{dt} &= -\varepsilon \nabla_w L(f_{w_s(0)}(x_i), y_i). \label{dstep}% = -\varepsilon \sum_{j = 1}^{d} \dfrac{\partial L(f_{w_s(0)}(x_i),  y_i)}{\partial w_j} \label{rem3}
 \end{align}
 In other words, our parameterization of this step depends on the step size $\varepsilon$ and as $\varepsilon \to 0$, we have 
 \begin{align}
-    \int_0^1 \nabla_w f_{w_{s}(t)}(x)dt \approx \nabla_w f_{w_s(0)}(x)
+    \int_0^1 \nabla_w f_{w_{s}(t)}(x)dt \approx \nabla_w f_{w_s(0)}(x).
 \end{align}
 In particular, given a model $f$ that admits a Lipshitz constant $K$ this approximation has error bounded by $\varepsilon K$ and a proof of this convergence is direct. 
 This demonstrates that the asymmetry of this function is exactly measuring the disagreement between the discrete steps taken during training with the gradient field. 
@@ -1018,11 +1018,11 @@ A sufficient condition for this reduction is that the gradient of the loss funct
 \subsection{Prior Work}
 \label{subsec:disc}
 %\textbf{Remark \remlabel{rem5}} 
-Constant sign loss functions have been previously studied by Chen et al. ~\cite{chen2021equivalence}, however the kernel that they derive for a finite-width case is of the form
+Constant sign loss functions have been previously studied by ~\citet{chen2021equivalence}, however the kernel that they derive for a finite-width case is of the form
 \begin{align}
     K(x,x_i) =  \int_0^T |\nabla_f L(f_t(x_i), y_i)| \langle \nabla_w f_t(x), \nabla_w f_t(x_i) \rangle dt
 \end{align}
-The summation across these terms satisfies the positive semi-definite requirement of a kernel, however the weight $|\nabla L(f_t(x_i), y_i)|$ depends on $x_i$ which is one of the two inputs. This makes the resulting function $K(x,x_i)$ asymmetric and therefore not a kernel.
+The summation across these terms satisfies the positive semi-definite requirement of a kernel. However the weight $|\nabla L(f_t(x_i), y_i)|$ depends on $x_i$ which is one of the two inputs. This makes the resulting function $K(x,x_i)$ asymmetric and therefore not a kernel.
 % In this formulation, weight $|\nabla L(f_t(x_i), y_i)|$ depends on $x_i$ which is one of the two inputs. This makes the resulting function $k$ asymmetric and therefore not a kernel.
 
 %\textbf{Remark \remlabel{rem6}} 
@@ -1166,7 +1166,7 @@ A small test data set within 100 dimensions is created by generating 1000 random
 
 
 \subsection{Kernel Analysis}
-Having established the efficacy of this kernel for model representation, the next step is to analyze this kernel to understand how it may inform us about the properties of the corresponding model. In practice, it becomes immediately apparent that this kernel lacks typical properties preferred when humans select kernels. Fig.~\ref{fig:svm} show that the weights of this kernel are non-stationary on our toy problem, with very stable model predictions far away from training data. Next, we use this kernel to estimate uncertainty. Consistent with many other research works on Gaussian processes for classification ~\cite{rasmussen2006gaussian} we use a GP to regress to logits. We then use Monte-Carlo to estimate posteriors with respect to probabilities (post-soft-max) for each prediction across a grid spanning the training points of our toy problem. The result is shown on the right-hand column of Fig.~\ref{fig:cov}. We can see that the kernel values are more confident (lower standard deviation) and more stable (higher kernel values) the farther they get from the training data in most directions. 
+Having established the efficacy of this kernel for model representation, the next step is to analyze this kernel to understand how it may inform us about the properties of the corresponding model. In practice, it becomes immediately apparent that this kernel lacks typical properties preferred when humans select kernels. Fig.~\ref{fig:svm} show that the weights of this kernel are non-stationary on our toy problem, with very stable model predictions far away from training data. Next, we use this kernel to estimate uncertainty. Consistent with many other research works on Gaussian processes for classification (e.g. ~\citet{rasmussen2006gaussian}) we use a GP to regress to logits. We then use Monte-Carlo to estimate posteriors with respect to probabilities (post-soft-max) for each prediction across a grid spanning the training points of our toy problem. The result is shown on the right-hand column of Fig.~\ref{fig:cov}. We can see that the kernel values are more confident (lower standard deviation) and more stable (higher kernel values) the farther they get from the training data in most directions. 
 
 % show kernel values or mean prediction with variances from GP
     \begin{figure}[h]
@@ -1179,7 +1179,7 @@ Having established the efficacy of this kernel for model representation, the nex
 In order to further understand how these strange kernel properties come about, we exercise another advantage of a kernel by analyzing the points that are contributing to the kernel value for a variety of test points. 
 In Fig.~\ref{fig:points} we examine the kernel values for each of the training points during evaluation of three points chosen as the mean of the generating distribution for each class. 
 The most striking property of these kernel point values is the fact that they are not proportional to the euclidean distance from the test point.
-This appears to indicate a set of basis vectors relative to each test point learned by the model based on the training data which are used to spatially transform the data in preparation for classification. This may relate to the correspondence between neural networks and maximum margin classifiers discussed in related work (~\cite{chizat2020maxmargin} ~\cite{shah2021input}). 
+This appears to indicate a set of basis vectors relative to each test point learned by the model based on the training data which are used to spatially transform the data in preparation for classification. This may relate to the correspondence between neural networks and maximum margin classifiers discussed in related work ~\citep{chizat2020maxmargin, shah2021input}. 
 % In aggregate, the data are imposing a spatial transform on the test point and this transform is represented in the kernel weights by a smooth variation in the weights orthogonal to the basis function of this transform. 
 % Our toy problem primarily varies in only 2 dimensions so these basis functions correspond with only normal vectors in 2 dimensions. 
 Another more subtle property is that some individual data points, mostly close to decision boundaries are slightly over-weighted compared to the other points in their class. 
@@ -1212,9 +1212,9 @@ This latter property points to the fact that during the latter period of trainin
 
 \subsection{Extending To Image Data}
     We perform experiments on MNIST to demonstrate the applicability to image data. 
-    This kernel representation was generated for convolutional ReLU Network with the categorical cross-entropy loss function, using Pytorch ~\cite{pytorch2019}. 
+    This kernel representation was generated for convolutional ReLU Network with the categorical cross-entropy loss function, using Pytorch ~\citep{pytorch2019}. 
     The model was trained using forward Euler (gradient descent) using gradients generated as a sum over all training data for each step. 
-    The state of the model was saved for every training step. In order to compute the per-training-point gradients needed for the kernel representation, the per-input jacobians are computed at execution time in the representation by loading the model for each training step $i$, computing the jacobians for each training input to compute $\nabla_w f_{w_s(0)}(x_i)$, and then repeating this procedure for 200 $t$ values between 0 and 1 in order to approximate $\int_0^1 f_{w_s(t)}(x)$. For MNIST, the resulting prediction is very sensitive to the accuracy of this integral approximation, as shown in Fig.~\ref{fig:mnist}. The top plot shows approximation of the above integral with only one step, which corresponds to the DPK from previous work (~\cite{chen2021equivalence}, ~\cite{domingos2020}, ~\cite{incudini2022quantum}) and as we can see, careful approximation of this integral is necessary to achieve an accurate match between the model and kernel. 
+    The state of the model was saved for every training step. In order to compute the per-training-point gradients needed for the kernel representation, the per-input jacobians are computed at execution time in the representation by loading the model for each training step $i$, computing the jacobians for each training input to compute $\nabla_w f_{w_s(0)}(x_i)$, and then repeating this procedure for 200 $t$ values between 0 and 1 in order to approximate $\int_0^1 f_{w_s(t)}(x)$. For MNIST, the resulting prediction is very sensitive to the accuracy of this integral approximation, as shown in Fig.~\ref{fig:mnist}. The top plot shows approximation of the above integral with only one step, which corresponds to the DPK from previous work ~\citep{chen2021equivalence, domingos2020, incudini2022quantum} and as we can see, careful approximation of this integral is necessary to achieve an accurate match between the model and kernel. 
 
 \begin{figure}[!h]
     \centering
@@ -1229,13 +1229,13 @@ This latter property points to the fact that during the latter period of trainin
     \vspace{-9mm}
     
     \includegraphics[width=0.95\linewidth]{c4_figures/mnist_model_kernel_compare_200_steps.pdf}
-    \caption{Experiment demonstrating the relationship between model predictions and kernel predictions for varying precision of the integrated path kernel. The top figure shows the integral estimated using only a single step. This is equivalent to the discrete path kernel (DPK) of previous work ~\cite{domingos2020every, chen2021equivalence}. The middle figure shows the kernel evaluated using 10 integral steps. The final figure shows the path kernel evaluated using 200 integral steps.}
+    \caption{Experiment demonstrating the relationship between model predictions and kernel predictions for varying precision of the integrated path kernel. The top figure shows the integral estimated using only a single step. This is equivalent to the discrete path kernel (DPK) of previous work ~\citep{domingos2020every, chen2021equivalence}. The middle figure shows the kernel evaluated using 10 integral steps. The final figure shows the path kernel evaluated using 200 integral steps.}
     \label{fig:mnist}
 \end{figure}
 %I will leave it to michael to add any out-of-sample plots and plots related to $a_{i,s}$ weights and such. 
 \section{Conclusion and Outlook} % confusion and onset
-The implications of a practical and finite kernel representation for the study of neural networks are profound and yet importantly limited by the networks that they are built from. For most gradient trained models, there is a disconnect between the input space (e.g. images) and the parameter space of a network. Parameters are intrinsically difficult to interpret and much work has been spent building approximate mappings that convert model understanding back into the input space in order to interpret features, sample importance, and other details ~\cite{simonyan2013deep, lundberg2017unified, Selvaraju_2019}. The EPK is composed of a direct mapping from the input space into parameter space. This mapping allows for a much deeper understanding of gradient trained models because the internal state of the method has an exact representation mapped from the input space. As we have shown in Fig.~\ref{fig:points}, kernel values derived from gradient methods tell an odd story. We have observed a kernel that picks inputs near decision boundaries to emphasize and derives a spatial transform whose basis vectors depend neither uniformly nor continuously on training points. Although kernel values are linked to sample importance, we have shown that most contributions to the kernel's prediction for a given point are measuring an overall change in the network's internal representation. This supports the notion that most of what a network is doing is fitting a spatial transform based on a wide aggregation of data, and only doing a trivial calculation to the data once this spatial transform has been determined ~\cite{chizat2020maxmargin}. 
-As stated in previous work ~\cite{domingos2020}, this representation has strong implications about the structure of gradient trained models and how they can understand the problems that they solve. Since the kernel weights in this representation are fixed derivatives with respect to the loss function $L$, $a_{i, s} = -\varepsilon  \dfrac{\partial L(f_{w_s(0)}(x_i),  y_i)}{\partial f_i}$, nearly all of the information used by the network is represented by the kernel mapping function and inner product. Inner products are not just measures of distance, they also measure angle. In fact, figure \ref{fig:grad} shows that for a typical training example, the $L_2$ norm of the weights changes monotonically by only 20-30\% during training. This means that the "learning" of a gradient trained model is dominated by change in angle, which is predicted for kernel methods in high dimensions ~\cite{hardle2004nonparametric}.
+The implications of a practical and finite kernel representation for the study of neural networks are profound and yet importantly limited by the networks that they are built from. For most gradient trained models, there is a disconnect between the input space (e.g. images) and the parameter space of a network. Parameters are intrinsically difficult to interpret and much work has been spent building approximate mappings that convert model understanding back into the input space in order to interpret features, sample importance, and other details ~\citep{simonyan2013deep, lundberg2017unified, Selvaraju_2019}. The EPK is composed of a direct mapping from the input space into parameter space. This mapping allows for a much deeper understanding of gradient trained models because the internal state of the method has an exact representation mapped from the input space. As we have shown in Fig.~\ref{fig:points}, kernel values derived from gradient methods tell an odd story. We have observed a kernel that picks inputs near decision boundaries to emphasize and derives a spatial transform whose basis vectors depend neither uniformly nor continuously on training points. Although kernel values are linked to sample importance, we have shown that most contributions to the kernel's prediction for a given point are measuring an overall change in the network's internal representation. This supports the notion that most of what a network is doing is fitting a spatial transform based on a wide aggregation of data, and only doing a trivial calculation to the data once this spatial transform has been determined ~\citep{chizat2020maxmargin}. 
+As stated in previous work by ~\citet{domingos2020}, this representation has strong implications about the structure of gradient trained models and how they can understand the problems that they solve. Since the kernel weights in this representation are fixed derivatives with respect to the loss function $L$, $a_{i, s} = -\varepsilon  L'(f_{w_s(0)}(x_i),  y_i)$, nearly all of the information used by the network is represented by the kernel mapping function and inner product. Inner products are not just measures of distance, they also measure angle. In fact, figure \ref{fig:grad} shows that for a typical training example, the $L_2$ norm of the weights changes monotonically by only 20-30\% during training. This means that the "learning" of a gradient trained model is dominated by change in angle, which is predicted for kernel methods in high dimensions ~\citep{hardle2004nonparametric}.
 
 \begin{figure}[h]
 \centering
@@ -1246,12 +1246,12 @@ As stated in previous work ~\cite{domingos2020}, this representation has strong 
 
 % Perhaps the most significant advantage for gradient trained models of an exact kernel representation is that the combination of kernel and kernel weights provides a spatial representation of the model's understanding relative to the training data. In previous work (~\cite{gillette2022data} ~\cite{yousefzadeh2021deep} it has been shown that image classification can be represented by projection onto the convex hull of training data. This projection is computationally infeasible, but it provides a geometric gold-standard classifier in the native image space. Recent work ~\cite{chizat2020maxmargin} indicates that neural networks are in fact max margin classifiers in a metric space defined by their approximation of the wasserstein metric. Since kernel methods provide a spatial representation of their prediction which can be directly compared to the spatial classifier in image space, it can be used to analyze properties of the spatial transform that converts the computationally intractable convex hull in image space, to the computationally tractable approximated Wasserstein metric space. We can see the consequence of this in Fig.~\ref{fig:points}. 
 
-For kernel methods, our result also represents a new direction. Despite their firm mathematical foundations, kernel methods have lost ground since the early 2000s because the features implicitly learned by deep neural networks yield better accuracy than any known hand-crafted kernels for complex high-dimensional problems ~\cite{NIPS2005_663772ea}. 
-We're hopeful about the scalability of learned kernels based on recent results in scaling kernel methods  ~\cite{snelson2005sparse}. 
+For kernel methods, our result also represents a new direction. Despite their firm mathematical foundations, kernel methods have lost ground since the early 2000s because the features implicitly learned by deep neural networks yield better accuracy than any known hand-crafted kernels for complex high-dimensional problems ~\citep{NIPS2005_663772ea}. 
+We're hopeful about the scalability of learned kernels based on recent results in scaling kernel methods ~\citep{snelson2005sparse}. 
 Exact kernel equivalence could allow the use of neural networks to implicitly construct a kernel. 
 This could allow kernel based classifiers to approach the performance of neural networks on complex data. 
 Kernels built in this way may be used with Gaussian processes to allow meaningful direct uncertainty measurement. 
-This would allow for much more significant analysis for out-of-distribution samples including adversarial attacks ~\cite{szegedy2013intriguing, ilyas2019adversarial}. 
+This would allow for much more significant analysis for out-of-distribution samples including adversarial attacks ~\citep{szegedy2013intriguing, ilyas2019adversarial}. 
 There is significant work to be done in improving the properties of the kernels learned by neural networks for these tools to be used in practice.
 We are confident that this direct connection between practical neural networks and kernels is a strong first step towards achieving this goal.
 % Although this does not provide a "free lunch" on its own, it may open the door for composite kernels based on neural network representation which can retain performance while gaining desirable properties like stationarity ~\cite{tancik2020fourierfeatures}. 
