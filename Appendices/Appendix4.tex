@@ -73,120 +73,120 @@
 % Since an integral of a symmetric positive semi-definite function is still symmetric and positive-definite, each step is thus represented by a kernel machine. 
 
 % \end{proof}
-\subsection{When is an Ensemble of Kernel Machines itself a Kernel Machine?}
-\label{proof:ekmr}
-Here we investigate when our derived ensemble of kernel machines composes to a single kernel machine.
-In order to show that a linear combination of kernels also equates to a kernel it is sufficient to show that $a_{i,s} = a_{i,0}$ for all $a_{i,s}$.
-The $a_{i}$ terms in our kernel machine are determined by the gradient the training loss function.
-This statement then implies that the gradient of the loss term must be constant throughout training in order to form a kernel.
-Here we show that this is the case when we consider a log softmax activation on the final layer and a negative log likelihood loss function.
-% In this case it is possible to let the sample weights of our final kernel machine equal $a_{i,0}$.
-% In order to show this, we impose some structure on the loss function and network.
-% Here we show this is the case for binary crossentropy on a network with sigmoid activations on the logits.
-% (TODO: More argument here using mercer's theorem. All positive linear combinations of kernels are kernels. There are cases where some negative coefficients are allowed but that's going to take a lot more thought. How do we extend this to say $aKa > 0$ for all $a$?)
+% \subsection{When is an Ensemble of Kernel Machines itself a Kernel Machine?}
+% \label{proof:ekmr}
+% Here we investigate when our derived ensemble of kernel machines composes to a single kernel machine.
+% In order to show that a linear combination of kernels also equates to a kernel it is sufficient to show that $a_{i,s} = a_{i,0}$ for all $a_{i,s}$.
+% The $a_{i}$ terms in our kernel machine are determined by the gradient the training loss function.
+% This statement then implies that the gradient of the loss term must be constant throughout training in order to form a kernel.
+% Here we show that this is the case when we consider a log softmax activation on the final layer and a negative log likelihood loss function.
+% % In this case it is possible to let the sample weights of our final kernel machine equal $a_{i,0}$.
+% % In order to show this, we impose some structure on the loss function and network.
+% % Here we show this is the case for binary crossentropy on a network with sigmoid activations on the logits.
+% % (TODO: More argument here using mercer's theorem. All positive linear combinations of kernels are kernels. There are cases where some negative coefficients are allowed but that's going to take a lot more thought. How do we extend this to say $aKa > 0$ for all $a$?)
 
-\begin{proof}
-Assume a two class problem. In the case of a function with multiple outputs, we consider each output to be a kernel. We define our network output $\hat y_i$ as all layers up to and including the log softmax and $y_i$ is a one-hot encoded vector. 
+% \begin{proof}
+% Assume a two class problem. In the case of a function with multiple outputs, we consider each output to be a kernel. We define our network output $\hat y_i$ as all layers up to and including the log softmax and $y_i$ is a one-hot encoded vector. 
 
-\begin{align}
-    L(\hat y_i,  y_i)
-    &=  \sum_{k=1}^K -y_i^k(\hat y_i^k) \\
-    % \dfrac{\partial L(\hat y_i,  y_i)}{\partial \hat y_i} &= -y_i - (1-y_i)\\
-    % &= -1
-\end{align}
-For a given output indexed by $k$, if $y_i^k = 1$ then we have
-\begin{align}
-    L(\hat y_i,  y_i)
-    &=  -1(\hat y_i^k) \\
-    \dfrac{\partial L(\hat y_i,  y_i)}{\partial \hat y_i} &= -1\\
-\end{align}
-If $y_i^k = 0$ then we have
-\begin{align}
-    L(\hat y_i,  y_i)
-    &=  0(\hat y_i^k) \\
-    \dfrac{\partial L(\hat y_i,  y_i)}{\partial \hat y_i} &= 0\\
-\end{align}
-% Here we can see that the gradient of the loss value is fixed for all weight states, therefore 
+% \begin{align}
+%     L(\hat y_i,  y_i)
+%     &=  \sum_{k=1}^K -y_i^k(\hat y_i^k) \\
+%     % \dfrac{\partial L(\hat y_i,  y_i)}{\partial \hat y_i} &= -y_i - (1-y_i)\\
+%     % &= -1
+% \end{align}
+% For a given output indexed by $k$, if $y_i^k = 1$ then we have
+% \begin{align}
+%     L(\hat y_i,  y_i)
+%     &=  -1(\hat y_i^k) \\
+%     \dfrac{\partial L(\hat y_i,  y_i)}{\partial \hat y_i} &= -1\\
+% \end{align}
+% If $y_i^k = 0$ then we have
+% \begin{align}
+%     L(\hat y_i,  y_i)
+%     &=  0(\hat y_i^k) \\
+%     \dfrac{\partial L(\hat y_i,  y_i)}{\partial \hat y_i} &= 0\\
+% \end{align}
+% % Here we can see that the gradient of the loss value is fixed for all weight states, therefore 
 
-% For a binary classification problem it is standard to have $y_i \in \{0, 1\}$ and using a sigmoid activation on the final layer we have $f_i \in (0, 1)$. \\
+% % For a binary classification problem it is standard to have $y_i \in \{0, 1\}$ and using a sigmoid activation on the final layer we have $f_i \in (0, 1)$. \\
 
-% \begin{center}
+% % \begin{center}
     
-% \begin{minipage}{0.45\textwidth}
-% Assume $y_i = 0$.
+% % \begin{minipage}{0.45\textwidth}
+% % Assume $y_i = 0$.
+% % \begin{align}
+% %     \dfrac{\partial L(\hat y_i,  y_i)}{\partial \hat y_i} &= \dfrac{0 - \hat y_i}{(\hat y_i - 1) \hat y_i}\\
+% %     &= \dfrac{-1}{\hat y_i - 1}\\
+% %     &= \dfrac{1}{|\hat y_i - 1|}
+% % \end{align}
+% % The last equality relies on the fact that $\hat y_i < 1$.
+% % \begin{equation}
+% %     y_i = 0 \implies \dfrac{\partial L(\hat y_i,  y_i)}{\partial \hat y_i} > 0
+% % \end{equation}
+% % \end{minipage}
+% % \hspace{0.04\textwidth}
+% % \begin{minipage}{0.45\textwidth}
+% % Assume $y_i = 1$.
+% % \begin{align}
+% %     \dfrac{\partial L(\hat y_i,  y_i)}{\partial \hat y_i} &= \dfrac{1 - \hat y_i}{(\hat y_i - 1) \hat y_i}\\
+% %     &= \dfrac{1 - \hat y_i}{-(1-\hat y_i) \hat y_i}\\
+% %     &= -\dfrac{1}{\hat y_i}
+% % \end{align}
+% % Because $\hat y_i > 0$.
+% % \begin{equation}
+% %     y_i = 1 \implies \dfrac{\partial L(\hat y_i,  y_i)}{\partial \hat y_i} < 0
+% % \end{equation}
+% % \end{minipage}
+% % \end{center}
+
+% In this case, since the loss is scaled directly by the output, and the only other term is an indicator function deciding which class label to take, we get a constant gradient.
+% This shows that the gradient of the loss function does not depend on $\hat y_i$. 
+% Therefore:
 % \begin{align}
-%     \dfrac{\partial L(\hat y_i,  y_i)}{\partial \hat y_i} &= \dfrac{0 - \hat y_i}{(\hat y_i - 1) \hat y_i}\\
-%     &= \dfrac{-1}{\hat y_i - 1}\\
-%     &= \dfrac{1}{|\hat y_i - 1|}
+%     y &= b - \varepsilon \sum_{i = 1}^{N}\sum_{s = 1}^S a_{i, s}  \int_0^1 \left\langle \phi_{s,t}(x), \phi_{s,t}(x_i)\right\rangle dt\\
+%      &= b - \varepsilon \sum_{i = 1}^{N} a_{i, 0} \sum_{s = 1}^S  \int_0^1 \left\langle \phi_{s,t}(x), \phi_{s,t}(x_i)\right\rangle dt
 % \end{align}
-% The last equality relies on the fact that $\hat y_i < 1$.
-% \begin{equation}
-%     y_i = 0 \implies \dfrac{\partial L(\hat y_i,  y_i)}{\partial \hat y_i} > 0
-% \end{equation}
-% \end{minipage}
-% \hspace{0.04\textwidth}
-% \begin{minipage}{0.45\textwidth}
-% Assume $y_i = 1$.
+% This formulates a kernel machine where
 % \begin{align}
-%     \dfrac{\partial L(\hat y_i,  y_i)}{\partial \hat y_i} &= \dfrac{1 - \hat y_i}{(\hat y_i - 1) \hat y_i}\\
-%     &= \dfrac{1 - \hat y_i}{-(1-\hat y_i) \hat y_i}\\
-%     &= -\dfrac{1}{\hat y_i}
+% a_{i, 0} &= \dfrac{\partial L(f_{w_0}(x_i),  y_i)}{\partial f_i} \\
+% K(x, x_i) &= \sum_{s = 1}^S \int_0^1 \left\langle \phi_{s,t}(x), \phi_{s,t}(x_i)\right\rangle dt \\
+% \phi_{s,t}(x) &=  \nabla_w f_{w_s(t,x)} (x)\\
+% w_s(t,x) &= \begin{cases} w_s, x \in X_T\\ w_s(t), x \notin X_T \end{cases}\\
+% b &= 0
 % \end{align}
-% Because $\hat y_i > 0$.
-% \begin{equation}
-%     y_i = 1 \implies \dfrac{\partial L(\hat y_i,  y_i)}{\partial \hat y_i} < 0
-% \end{equation}
-% \end{minipage}
-% \end{center}
+% \end{proof}
 
-In this case, since the loss is scaled directly by the output, and the only other term is an indicator function deciding which class label to take, we get a constant gradient.
-This shows that the gradient of the loss function does not depend on $\hat y_i$. 
-Therefore:
-\begin{align}
-    y &= b - \varepsilon \sum_{i = 1}^{N}\sum_{s = 1}^S a_{i, s}  \int_0^1 \left\langle \phi_{s,t}(x), \phi_{s,t}(x_i)\right\rangle dt\\
-     &= b - \varepsilon \sum_{i = 1}^{N} a_{i, 0} \sum_{s = 1}^S  \int_0^1 \left\langle \phi_{s,t}(x), \phi_{s,t}(x_i)\right\rangle dt
-\end{align}
-This formulates a kernel machine where
-\begin{align}
-a_{i, 0} &= \dfrac{\partial L(f_{w_0}(x_i),  y_i)}{\partial f_i} \\
-K(x, x_i) &= \sum_{s = 1}^S \int_0^1 \left\langle \phi_{s,t}(x), \phi_{s,t}(x_i)\right\rangle dt \\
-\phi_{s,t}(x) &=  \nabla_w f_{w_s(t,x)} (x)\\
-w_s(t,x) &= \begin{cases} w_s, x \in X_T\\ w_s(t), x \notin X_T \end{cases}\\
-b &= 0
-\end{align}
-\end{proof}
+% It is important to note that this does not hold up if we consider the log softmax function to be part of the loss instead of the network.
+% In addition, there are loss structures which can not be rearranged to allow this property.
+% In the simple case of linear regression, we can not disentangle the loss gradients from the kernel formulation, preventing the construction of a valid kernel. 
+% For example assume our loss is instead squared error. Our labels are continuous on $\mathds{R}$ and our activation is the identity function.
+% \begin{align}
+%     L(f_i,  y_i) 
+%     &= (y_i - f_{i, s})^2 \\
+%     \dfrac{\partial L(f_i,  y_i)}{\partial f_i} &= 2(y_i- f_{i, s})
+% \end{align}
 
-It is important to note that this does not hold up if we consider the log softmax function to be part of the loss instead of the network.
-In addition, there are loss structures which can not be rearranged to allow this property.
-In the simple case of linear regression, we can not disentangle the loss gradients from the kernel formulation, preventing the construction of a valid kernel. 
-For example assume our loss is instead squared error. Our labels are continuous on $\mathds{R}$ and our activation is the identity function.
-\begin{align}
-    L(f_i,  y_i) 
-    &= (y_i - f_{i, s})^2 \\
-    \dfrac{\partial L(f_i,  y_i)}{\partial f_i} &= 2(y_i- f_{i, s})
-\end{align}
+% This quantity is dependent on $f_i$ and its value is changing throughout training. %(TODO: Make this more formal and rigorous)
 
-This quantity is dependent on $f_i$ and its value is changing throughout training. %(TODO: Make this more formal and rigorous)
+% In order for 
+% \begin{align}
+%     \sum_{s=1}^S a_{i,s} \int_0^1 \langle \phi_{s,t}(x), \phi_{s,t}(x_i)\rangle dt
+% \end{align}
+% to be a kernel on its own, we need it to be a positive (or negative) definite operator and symetric. In the specific case of our practical path kernel, i.e. that in $K(x,x')$ if $x'$ happens to be equal to $x_i$, then positive semi-definiteness can be accounted for:
+% \begin{align}
+%     &= \sum_{s=1}^S 2(y_i- f_{i, s}) \int_0^1 \langle \phi_{s,t}(x), \phi_{s,t}(x_i)\rangle dt\\
+%     &= \sum_{s=1}^S 2(y_i- f_{i, s}) \int_0^1 \langle \nabla_w f_{w_s(t))} (x), \nabla_w f_{w_s(0)} (x_i)\rangle dt\\
+%     &= \sum_{s=1}^S 2 \left(y_i \cdot \int_0^1 \langle \nabla_w f_{w_s(t))} (x), \nabla_w f_{w_s(0)} (x_i)\rangle dt - f_{i, s} \int_0^1 \langle \nabla_w f_{w_s(t))} (x), \nabla_w f_{w_s(0)} (x_i)\rangle dt \right)\\
+%     &= \sum_{s=1}^S 2 \left(y_i \cdot \int_0^1 \langle \nabla_w f_{w_s(t))} (x), \nabla_w f_{w_s(0)} (x_i)\rangle dt -  \int_0^1 \langle \nabla_w f_{w_s(t))} (x), f_{i, s} \nabla_w f_{w_s(0)} (x_i)\rangle dt \right)\\
+%     &= \sum_{s=1}^S 2 \left(y_i \cdot \int_0^1 \langle \nabla_w f_{w_s(t))} (x), \nabla_w f_{w_s(0)} (x_i)\rangle dt -  \int_0^1 \langle \nabla_w f_{w_s(t))} (x), \dfrac{1}{2}\nabla_w (f_{w_s(0)} (x_i))^2\rangle dt \right)\\
+% \end{align}
+% Otherwise, we get the usual 
+% \begin{align}
+%         &= \sum_{s=1}^S 2(y_i- f_{i, s}) \int_0^1 \langle \nabla_w f_{w_s(t,x))} (x), \nabla_w f_{w_s(t,x)} (x')\rangle dt\\
+% \end{align}
+% The question is two fold. One, in general theory (i.e. the lower example), can we contrive two pairs $(x_1,x'_1)$ and $(x_2,x'_2)$ that don't necessarily need to be training or test images for which this sum is positive for $1$ and negative for $2$. Second, in the case that we are always comparing against training images, do we get something more predictable since there is greater dependence on $x_i$ and we get the above way of re-writing  using the gradient of the square of $f(x_i)$. 
 
-In order for 
-\begin{align}
-    \sum_{s=1}^S a_{i,s} \int_0^1 \langle \phi_{s,t}(x), \phi_{s,t}(x_i)\rangle dt
-\end{align}
-to be a kernel on its own, we need it to be a positive (or negative) definite operator and symetric. In the specific case of our practical path kernel, i.e. that in $K(x,x')$ if $x'$ happens to be equal to $x_i$, then positive semi-definiteness can be accounted for:
-\begin{align}
-    &= \sum_{s=1}^S 2(y_i- f_{i, s}) \int_0^1 \langle \phi_{s,t}(x), \phi_{s,t}(x_i)\rangle dt\\
-    &= \sum_{s=1}^S 2(y_i- f_{i, s}) \int_0^1 \langle \nabla_w f_{w_s(t))} (x), \nabla_w f_{w_s(0)} (x_i)\rangle dt\\
-    &= \sum_{s=1}^S 2 \left(y_i \cdot \int_0^1 \langle \nabla_w f_{w_s(t))} (x), \nabla_w f_{w_s(0)} (x_i)\rangle dt - f_{i, s} \int_0^1 \langle \nabla_w f_{w_s(t))} (x), \nabla_w f_{w_s(0)} (x_i)\rangle dt \right)\\
-    &= \sum_{s=1}^S 2 \left(y_i \cdot \int_0^1 \langle \nabla_w f_{w_s(t))} (x), \nabla_w f_{w_s(0)} (x_i)\rangle dt -  \int_0^1 \langle \nabla_w f_{w_s(t))} (x), f_{i, s} \nabla_w f_{w_s(0)} (x_i)\rangle dt \right)\\
-    &= \sum_{s=1}^S 2 \left(y_i \cdot \int_0^1 \langle \nabla_w f_{w_s(t))} (x), \nabla_w f_{w_s(0)} (x_i)\rangle dt -  \int_0^1 \langle \nabla_w f_{w_s(t))} (x), \dfrac{1}{2}\nabla_w (f_{w_s(0)} (x_i))^2\rangle dt \right)\\
-\end{align}
-Otherwise, we get the usual 
-\begin{align}
-        &= \sum_{s=1}^S 2(y_i- f_{i, s}) \int_0^1 \langle \nabla_w f_{w_s(t,x))} (x), \nabla_w f_{w_s(t,x)} (x')\rangle dt\\
-\end{align}
-The question is two fold. One, in general theory (i.e. the lower example), can we contrive two pairs $(x_1,x'_1)$ and $(x_2,x'_2)$ that don't necessarily need to be training or test images for which this sum is positive for $1$ and negative for $2$. Second, in the case that we are always comparing against training images, do we get something more predictable since there is greater dependence on $x_i$ and we get the above way of re-writing  using the gradient of the square of $f(x_i)$. 
-
-However, even accounting for this by removing the sign of the loss will still produce a non-symmetric function. This limitation is more difficult to overcome.
+% However, even accounting for this by removing the sign of the loss will still produce a non-symmetric function. This limitation is more difficult to overcome.
 
 \subsection{Multi-Class Case}
 
@@ -202,10 +202,11 @@ Let $L : \mathbb{R}^K \to \mathbb{R}$. We use the chain rule $D (g \circ f) (x) 
 
 Let $f$ be a vector valued function so that $f : \mathbb{R}^D \to \mathbb{R}^K$  satisfying the conditions from [representation theorem above] with $x \in \mathbb{R}^D$ and $y_i \in \mathbb{R}^K$ for every $i$. We note that $\dfrac{\partial f}{\partial t}$ is a column and has shape $Kx1$ and our first chain rule can be done the old fashioned way on each row of that column:
 \begin{align}
-    \dfrac{d f}{d t} &= \sum_{j=1}^M \dfrac{d f(x)}{\partial w_j} \dfrac{d w_j}{d t}\\
-    &= -\varepsilon \sum_{j=1}^M \dfrac{d f(x)}{\partial w_j} \sum_{i=1}^N \dfrac{\partial L(f(x_i), y_i)}{\partial w_j}\\
+    \dfrac{d f}{d t} &= \sum_{j=1}^M \dfrac{\partial f(x)}{\partial w_j} \dfrac{d w_j}{d t}\\
+    &= -\varepsilon \sum_{j=1}^M \dfrac{\partial f(x)}{\partial w_j} \sum_{i=1}^N \dfrac{\partial L(f(x_i), y_i)}{\partial w_j}\\
     &\text{Apply chain rule}\\
-    &= -\varepsilon \sum_{j=1}^M \dfrac{d f(x)}{\partial w_j} \sum_{i=1}^N \dfrac{\partial L(f(x_i), y_i)}{\partial f}\dfrac{d f(x_i)}{\partial w_j}\\
+    &= -\varepsilon \sum_{j=1}^M \dfrac{\partial f(x)}{\partial w_j}
+      \sum_{i=1}^N  L'(f(x_i), y_i) \dfrac{d f(x_i)}{d w_j}\\
     &\text{Let}\\
     A &= \dfrac{d f(x)}{\partial w_j} \in \mathbb{R}^{K \times 1}\\
     B &= \dfrac{d L(f(x_i), y_i)}{d f} \in \mathbb{R}^{1 \times K}\\
@@ -218,11 +219,11 @@ We have a matrix multiplication $ABC$ and we wish to swap the order so somehow w
 \end{align}
 Note: This condition needs to be checked carefully for other formulations so that we can re-order the product as follows:
 \begin{align}
-        &= -\varepsilon \sum_{j=1}^M  \sum_{i=1}^N \left(\dfrac{d L(f(x_i), y_i)}{d f} 
-        \dfrac{d f(x_i)}{\partial w_j} \left(\dfrac{d f(x)}{\partial  w_j}\right)^T\right)^T
+        &= -\varepsilon \sum_{j=1}^M  \sum_{i=1}^N \left(L'(f(x_i), y_i) 
+        \dfrac{d f(x_i)}{d w_j} \left(\dfrac{\partial f(x)}{\partial  w_j}\right)^T\right)^T
         \\
-    &= -\varepsilon \sum_{i=1}^N \left(\dfrac{d L(f(x_i), y_i)}{d f} 
-    \sum_{j=1}^M \dfrac{d f(x_i)}{\partial w_j} \left(\dfrac{d f(x)}{\partial w_j}\right)^T\right)^T\\        
+    &= -\varepsilon \sum_{i=1}^N \left(L'(f(x_i), y_i) 
+    \sum_{j=1}^M \dfrac{d f(x_i)}{\partial w_j} \left(\dfrac{\partial f(x)}{\partial w_j}\right)^T\right)^T\\        
 \end{align}
 Note, now that we are summing over $j$, so we can write this as an inner product on $j$ with the $\nabla$ operator which in this case is computing the jacobian of $f$ along the dimensions of class (index k) and weight (index j). We can define 
 \begin{align}
@@ -251,19 +252,19 @@ This additional dependence of $\varepsilon$ on $s$ and $l$ simply results in an 
 \textbf{Higher Order Schemes:} Luckily these are intractable for for most machine-learning models because they would require introducing dependence of the kernel on input data or require drastic changes. It is an open but intractable problem to derive kernels corresponding to higher order methods. 
 
 
-\subsection{Variance Estimation}
-In order to estimate variance we treat our derived kernel function $K$ as the covariance function for Gaussian process regression. Given training data $X$ and test data $X'$, we can use the Kriging to write the mean prediction and it variance from true $\mu(x)$ as
-\begin{align}
-    \bar \mu(X') &= \left[ K(X', X)\right] \left[ K(X, X) \right]^{-1} \left[ Y \right]\\
-    \text{Var}(\bar \mu(X') - \mu(X')) &= \left[K(X', X') \right] - \left[ K(X', X)\right] \left[ K(X, X) \right]^{-1} \left[ K(X, X') \right]\\
-\end{align}
-Where 
-\begin{align}
-    \left[K(A, B) \right] &= \begin{bmatrix} K(A_1, B_1) & K(A_1, B_2) & \cdots \\
-                                             K(A_2, B_1) & K(A_2, B_2) &  \\
-                                             \vdots &  & \ddots \\ \end{bmatrix}
-\end{align}
-To finish our Gaussian estimation, we note that each $K(A_i, B_i)$ will me a $k$ by $k$ matrix where $k$ is the number of classes. We take $\text{tr}(K(A_i, B_i)$ to determine total variance for each prediction. 
+% \subsection{Variance Estimation}
+% In order to estimate variance we treat our derived kernel function $K$ as the covariance function for Gaussian process regression. Given training data $X$ and test data $X'$, we can use the Kriging to write the mean prediction and it variance from true $\mu(x)$ as
+% \begin{align}
+%     \bar \mu(X') &= \left[ K(X', X)\right] \left[ K(X, X) \right]^{-1} \left[ Y \right]\\
+%     \text{Var}(\bar \mu(X') - \mu(X')) &= \left[K(X', X') \right] - \left[ K(X', X)\right] \left[ K(X, X) \right]^{-1} \left[ K(X, X') \right]\\
+% \end{align}
+% Where 
+% \begin{align}
+%     \left[K(A, B) \right] &= \begin{bmatrix} K(A_1, B_1) & K(A_1, B_2) & \cdots \\
+%                                              K(A_2, B_1) & K(A_2, B_2) &  \\
+%                                              \vdots &  & \ddots \\ \end{bmatrix}
+% \end{align}
+% To finish our Gaussian estimation, we note that each $K(A_i, B_i)$ will me a $k$ by $k$ matrix where $k$ is the number of classes. We take $\text{tr}(K(A_i, B_i)$ to determine total variance for each prediction. 
 
 % \subsection{The Hunt for Uniqueness}
 % @juston Long story summarized. We're going to divide the weights into $w = w_H | w_F$. Our goal was to hold $w_F = 0$ and move $w_H$ around until $\nabla w_F$ satisfied $(1-\nabla w_F) (w_F^T - w_F^0) = 0$ AND $(1-\nabla w_H) (w_H^T - w_H) = 0$. Since we have two minimization constraints we might have just taken the gradient of that (albeit requiring a hessian) and been done. 

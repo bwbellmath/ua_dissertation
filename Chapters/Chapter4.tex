@@ -904,7 +904,8 @@ which is to say that all such models, which are sheaves in the RKBS of
 functions integrated along discrete optimization paths in fact reduce
 to a sheaf in the reproducing kernel Hilbert space (RKHS). 
 \end{restatable}
-See Appendix~\ref{proof:ekmr} for full proof. By combining theorems ~\ref{thm:eker} and ~\ref{thm:ekr}, we can construct an exact kernel machine representation for any arbitrary parameterized model trained by gradient descent which satisfies the additional property of having constant loss across training steps (e.g. any ANN using catagorical cross-entropy loss (CCE) for classification). This representation will produce exactly identical output to the model across  the model's entire domain. This establishes exact kernel-neural equivalence for classification ANNs. Furthermore, Theorem ~\ref{thm:eker} establishes an exact kernel ensemble representation without limitation to models using loss functions with constant derivatives across steps. It remains an open problem to determine other conditions under which this ensemble may be reduced to a single kernel representation.  
+%See Appendix~\ref{proof:ekmr} for full proof.
+By combining theorems ~\ref{thm:eker} and ~\ref{thm:ekr}, we can construct an exact kernel machine representation for any arbitrary parameterized model trained by gradient descent which satisfies the additional property of having constant loss across training steps (e.g. any ANN using catagorical cross-entropy loss (CCE) for classification). This representation will produce exactly identical output to the model across  the model's entire domain. This establishes exact kernel-neural equivalence for classification ANNs. Furthermore, Theorem ~\ref{thm:eker} establishes an exact kernel ensemble representation without limitation to models using loss functions with constant derivatives across steps. It remains an open problem to determine other conditions under which this ensemble may be reduced to a single kernel representation.  
 
 % \begin{tikzpicture}
 % \node[\text{[insert graphic of forward euler with vectors]}
@@ -1002,16 +1003,18 @@ We can see that by changing equation ~\ref{dstep} we can produce an exact repres
 \begin{figure*}[!ht]
     \centering
         \includegraphics[width=0.3\textwidth]{c4_figures/svm1.png}\includegraphics[width=0.3\textwidth]{c4_figures/svm2.png}\includegraphics[width=0.3\textwidth]{c4_figures/svm3.png}
-    \caption{Updated predictions with kernel $a_i$ updated via gradient descent with training data overlaid for classes 1 (left), 2 (middle), and 3 (right). The high prediction confidence in regions far from training points demonstrates that the learned kernel is non-stationary.}
+    \caption{Updated predictions with kernel $a_i$ updated via gradient descent with training data overlaid for classes 1 (left), 2 (middle), and 3 (right). The high prediction confidence in regions far from training points demonstrates that the learned kernel is non-stationary. Axes are the $x$ and $y$ dimensions of a 100 dimensional problem with 3 gaussians whosse means are on this $x-y$ plane.}
     \label{fig:svm}
 \end{figure*}
 \subsection{Ensemble Reduction}
 %\textbf{Remark \remlabel{rem4}} 
-In order to reduce the ensemble representation of Equation ~\eqref{ensemble} to the kernel representation of Equation ~\eqref{exact}, we require that the sum over steps still retain the properties of the kernel (symmetry and positive semi-definiteness). In particular we require that for every subset of the training data ${x_i}$ and arbitrary ${\alpha_i}$ and ${\alpha_j}$, we have
+In order to reduce the ensemble representation of Equation~\eqref{ensemble} to the kernel representation of Equation~\eqref{exact}, we require that the sum over steps still retain the properties of the kernel (symmetry and positive semi-definiteness). In particular we require that for every subset of the training data ${x_i}$ and arbitrary ${\alpha_i}$ and ${\alpha_j}$, we have
 \begin{align}
-    \sum_{i=1}^n\sum_{j=1}^n \sum_{l=1}^M \sum_{s=1}^N \alpha_i \alpha_j a_{l, s}\int_{0}^1 K_{\text{EPK}}(x_i,x_j) dt \geq 0
+    \sum_{i=1}^n\sum_{j=1}^n \sum_{l=1}^M \sum_{s=1}^N \alpha_i \alpha_j a_{l, s}\int_{0}^1 K_{\text{EPK}}(x_i,x_j) dt \geq 0.
 \end{align}
-A sufficient condition for this reduction is that the gradient of the loss function does not change throughout training. This is the case for categorical cross-entropy where labels are in $\{0,1\}$. In fact, in this specific context the gradient of the loss function does not depend on $f(x)$, and are fully determined by the ground truth label, making the gradient of the cross-entropy loss a constant value throughout training (See Appendix section ~\ref{proof:ekmr}). Showing the positive-definiteness of more general loss functions (e.g. mean squared error loss) will likely require additional regularity conditions on the training path, and is left as future work.
+A sufficient condition for this reduction is that the gradient of the loss function does not change throughout training. This is the case for categorical cross-entropy where labels are in $\{0,1\}$. In fact, in this specific context the gradient of the loss function does not depend on $f(x)$, and are fully determined by the ground truth label, making the gradient of the cross-entropy loss a constant value throughout training
+% (See Appendix section ~\ref{proof:ekmr}).
+Showing the positive-definiteness of more general loss functions (e.g. mean squared error) will likely require additional regularity conditions on the training path, and is left as future work.
 % There are other conditions which may be imposed in order to guarantee this reduction, and it remains to be studied whether this is unconditionally true for certain training paths.
 %  We demonstrate that constant sign of the loss gradient is a sufficient but not necessary condition for positive-semi-definiteness of the kernel.
 
@@ -1035,7 +1038,7 @@ Nor is this function necessarily one-to-one since there is a continuous manifold
 For a given training path, we can pick another path of equivalent configurations whose gradients will be separated by some constant $\delta > 0$.
 The resulting kernel evaluation along this alternate path will be exactly equivalent to the first, despite being a unique path. 
 We also note that the linear path $l_2$ interpolation is not the only valid path between two discrete points in weight space.
-Following the changes in model weights along a path defined by Manhattan Distance is equally valid and will produce a kernel machine with equivalent outputs.
+An equally valid approach is following the changes in model weights along a path defined by Manhattan Distance, and will produce a kernel machine with equivalent outputs.
 It remains an open problem to compute paths from two different starting points which both satisfy the constant bias condition from Definition~\eqref{epk} which both converge to the same final parameter configuration and define different kernels.
 
 \section{Experimental Results}
@@ -1064,9 +1067,7 @@ It remains an open problem to compute paths from two different starting points w
     \end{figure}
 
 \subsection{Evaluating The Kernel} \label{subsec:evaluate}
-A small test data set within 100 dimensions is created by generating 1000 random samples with means $(1,4,0,...)$, $(4,1,0,...)$ and $(5,5,0,...)$ and standard deviation $1.0$. These points are labeled according to the mean of the Gaussian used to generate them, providing 1000 points each from 3 classes. A fully connected ReLU network with 1 hidden layer is trained using categorical cross-entropy (CCE) and gradient descent with gradients aggregated across the entire training set for each step. We then compute the EPK for this network, approximating the integral from Equation~\ref{eq2} with 100 steps which replicates the output from the ReLU network within machine precision. The EPK (Kernel) outputs are compared with neural network predictions in Fig.~\ref{fig:toymatch} for class 1. Having established this kernel, and its corresponding kernel machine, one natural extension is to allow the kernel weights $a_i$ to be retrained. We perform this updating of the krenel weights using a SVM and present its predictions for each of three classes in Fig.~\ref{fig:svm}.
-    
-
+A small test data set within 100 dimensions is created by generating 1000 random samples with means $(1,4,0,...)$, $(4,1,0,...)$ and $(5,5,0,...)$ and standard deviation $1.0$. These points are labeled according to the mean of the Gaussian used to generate them, providing 1000 points each from 3 classes. A fully connected ReLU network with 1 hidden layer is trained using categorical cross-entropy (CCE) and gradient descent with gradients aggregated across the entire training set for each step. We then compute the EPK for this network, approximating the integral from Equation~\ref{eq2} with 100 steps which replicates the output from the ReLU network within machine precision. The EPK (Kernel) outputs are compared with neural network predictions in Fig.~\ref{fig:toymatch} for class 1. Having established this kernel, and its corresponding kernel machine, one natural extension is to allow the kernel weights $a_i = L'(f_{w_s(t)}(x_i), y_i)$ to be replaced with kernel weights found through optimization. We perform this updating of the krenel weights using a SVM and present its predictions for each of three classes in Fig.~\ref{fig:svm}.
 
     % \begin{figure}[h]
     %     \centering
@@ -1166,13 +1167,13 @@ A small test data set within 100 dimensions is created by generating 1000 random
 
 
 \subsection{Kernel Analysis}
-Having established the efficacy of this kernel for model representation, the next step is to analyze this kernel to understand how it may inform us about the properties of the corresponding model. In practice, it becomes immediately apparent that this kernel lacks typical properties preferred when humans select kernels. Fig.~\ref{fig:svm} show that the weights of this kernel are non-stationary on our toy problem, with very stable model predictions far away from training data. Next, we use this kernel to estimate uncertainty. Consistent with many other research works on Gaussian processes for classification (e.g. ~\citet{rasmussen2006gaussian}) we use a GP to regress to logits. We then use Monte-Carlo to estimate posteriors with respect to probabilities (post-soft-max) for each prediction across a grid spanning the training points of our toy problem. The result is shown on the right-hand column of Fig.~\ref{fig:cov}. We can see that the kernel values are more confident (lower standard deviation) and more stable (higher kernel values) the farther they get from the training data in most directions. 
+Having established the efficacy of this kernel for model representation, the next step is to analyze this kernel to understand how it may inform us about the properties of the corresponding model. In practice, it becomes immediately apparent that this kernel lacks typical properties preferred when humans select kernels. Fig.~\ref{fig:svm} shows that the weights of this kernel are non-stationary on our toy problem -- the model has very low uncertainty for predictions far away from training data. Next, we use this kernel to estimate uncertainty. Consistent with many other research works on Gaussian processes for classification (e.g. ~\citet{rasmussen2006gaussian}) we use a GP to regress to logits. Starting with sample predictions drawn using our kernel as a covariance matrix, we use Monte-Carlo to estimate posteriors with respect to probabilities (post-soft-max) for each prediction across a grid spanning the training points of our toy problem. The result is shown on the right-hand column of Fig.~\ref{fig:cov}. We can see that the kernel predictions are more confident (lower standard deviation) and stronger (higher kernel values) the farther they get from the training data in most directions. 
 
 % show kernel values or mean prediction with variances from GP
     \begin{figure}[h]
         \centering
         \includegraphics[width=0.24\textwidth]{c4_figures/kers_square.png}\includegraphics[width=0.24\textwidth]{c4_figures/vars_square.png}
-        \caption{(left) Kernel values measured on a grid around the training set for our 2D problem. Bright yellow means high kernel value (right) Monte-Carlo estimated standard deviation based on gram matrices generated using our kernel for the same grid as the kernel values. Yellow means high standard deviation, blue means low standard deviation.}
+        \caption{(left) Kernel predicted probabilities measured on a grid around the training set for our 2D problem. Bright yellow means high kernel value. (right) Monte-Carlo estimated standard deviation based on gram matrices generated using our kernel for the same grid as the kernel values. Yellow means high standard deviation, blue means low standard deviation.}
         \label{fig:cov}
     \end{figure}
 
@@ -1182,7 +1183,7 @@ The most striking property of these kernel point values is the fact that they ar
 This appears to indicate a set of basis vectors relative to each test point learned by the model based on the training data which are used to spatially transform the data in preparation for classification. This may relate to the correspondence between neural networks and maximum margin classifiers discussed in related work ~\citep{chizat2020maxmargin, shah2021input}. 
 % In aggregate, the data are imposing a spatial transform on the test point and this transform is represented in the kernel weights by a smooth variation in the weights orthogonal to the basis function of this transform. 
 % Our toy problem primarily varies in only 2 dimensions so these basis functions correspond with only normal vectors in 2 dimensions. 
-Another more subtle property is that some individual data points, mostly close to decision boundaries are slightly over-weighted compared to the other points in their class. 
+Another more subtle property is that some individual data points, mostly close to decision boundaries, are slightly over-weighted compared to the other points in their class. 
 This latter property points to the fact that during the latter period of training, once the network has already achieved high accuracy, only the few points which continue to receive incorrect predictions, i.e. caught on the wrong side of a decision boundary, will continue contributing to the training gradient and therefore to the kernel value.
 
     \begin{figure*}[ht]
@@ -1219,16 +1220,16 @@ This latter property points to the fact that during the latter period of trainin
 \begin{figure}[!h]
     \centering
     % \vspace{-5mm}
-    \includegraphics[width=0.95\linewidth]{c4_figures/mnist_model_kernel_compare_1_step.pdf}
+    \includegraphics[width=0.55\linewidth]{c4_figures/mnist_model_kernel_compare_1_step.pdf}
     % \vspace{-18mm}
 
     \vspace{-9mm}
     
-    \includegraphics[width=0.95\linewidth]{c4_figures/mnist_model_kernel_compare_10_steps.pdf}
+    \includegraphics[width=0.55\linewidth]{c4_figures/mnist_model_kernel_compare_10_steps.pdf}
     
     \vspace{-9mm}
     
-    \includegraphics[width=0.95\linewidth]{c4_figures/mnist_model_kernel_compare_200_steps.pdf}
+    \includegraphics[width=0.55\linewidth]{c4_figures/mnist_model_kernel_compare_200_steps.pdf}
     \caption{Experiment demonstrating the relationship between model predictions and kernel predictions for varying precision of the integrated path kernel. The top figure shows the integral estimated using only a single step. This is equivalent to the discrete path kernel (DPK) of previous work ~\citep{domingos2020every, chen2021equivalence}. The middle figure shows the kernel evaluated using 10 integral steps. The final figure shows the path kernel evaluated using 200 integral steps.}
     \label{fig:mnist}
 \end{figure}
@@ -1239,19 +1240,19 @@ As stated in previous work by ~\citet{domingos2020}, this representation has str
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=.45\textwidth]{c4_figures/stab-n-201mnist-C32-100-100-10-0.001-0.0001-eval-mod_int_acc-trn.png}
-\caption{This plot shows a linear interpolation $w(t) = w_0 + t(w_{1} - w_0)$ of model parameters $w$ for a convolutional neural network $f_w$ from their starting random state $w_0$ to their ending trained state $w_1$. The hatched purple line shows the dot product of the sum of the  gradient over the training data $X$, $\langle \nabla_w f_{w(t)}(X), (w_1 - w_0)/|w_1 - w_0| \rangle$. The other lines indicate accuracy (blue), total loss (red decreasing), and L2 Regularization (green increasing)}  
+\includegraphics[width=.85\textwidth]{c4_figures/stab-n-201mnist-C32-100-100-10-0.001-0.0001-eval-mod_int_acc-trn.png}
+\caption{This plot shows a linear interpolation $w(t) = w_0 + t(w_{1} - w_0)$ of model parameters $w$ for a convolutional neural network $f_w$ from their starting random state $w_0$ to their ending trained state $w_1$. The hatched purple line shows the dot product of the sum of the  gradient over the training data $X$, $\langle \nabla_w f_{w(t)}(X), (w_1 - w_0)/|w_1 - w_0| \rangle$. The other lines indicate accuracy (blue), L2 Regularization (green increasing), total loss (red decreasing), and cross-entropy loss (orange, covered exactly by total loss showing that cross-entropy dominates the total loss for this regularization weight). Main takeaway is that model training gradients get more aligned with a the vector difference between the start and end point of training as the model trains. Also, that vector is very stable past a certain distance away from the initial training weights.}
 \label{fig:grad}
 \end{figure}
 
 % Perhaps the most significant advantage for gradient trained models of an exact kernel representation is that the combination of kernel and kernel weights provides a spatial representation of the model's understanding relative to the training data. In previous work (~\cite{gillette2022data} ~\cite{yousefzadeh2021deep} it has been shown that image classification can be represented by projection onto the convex hull of training data. This projection is computationally infeasible, but it provides a geometric gold-standard classifier in the native image space. Recent work ~\cite{chizat2020maxmargin} indicates that neural networks are in fact max margin classifiers in a metric space defined by their approximation of the wasserstein metric. Since kernel methods provide a spatial representation of their prediction which can be directly compared to the spatial classifier in image space, it can be used to analyze properties of the spatial transform that converts the computationally intractable convex hull in image space, to the computationally tractable approximated Wasserstein metric space. We can see the consequence of this in Fig.~\ref{fig:points}. 
 
 For kernel methods, our result also represents a new direction. Despite their firm mathematical foundations, kernel methods have lost ground since the early 2000s because the features implicitly learned by deep neural networks yield better accuracy than any known hand-crafted kernels for complex high-dimensional problems ~\citep{NIPS2005_663772ea}. 
-We're hopeful about the scalability of learned kernels based on recent results in scaling kernel methods ~\citep{snelson2005sparse}. 
+We are hopeful about the scalability of learned kernels based on recent results in scaling kernel methods ~\citep{snelson2005sparse}. 
 Exact kernel equivalence could allow the use of neural networks to implicitly construct a kernel. 
 This could allow kernel based classifiers to approach the performance of neural networks on complex data. 
 Kernels built in this way may be used with Gaussian processes to allow meaningful direct uncertainty measurement. 
-This would allow for much more significant analysis for out-of-distribution samples including adversarial attacks ~\citep{szegedy2013intriguing, ilyas2019adversarial}. 
+This would allow for much more significant analysis for out-of-distribution samples, including adversarial attacks ~\citep{szegedy2013intriguing, ilyas2019adversarial}. 
 There is significant work to be done in improving the properties of the kernels learned by neural networks for these tools to be used in practice.
 We are confident that this direct connection between practical neural networks and kernels is a strong first step towards achieving this goal.
 % Although this does not provide a "free lunch" on its own, it may open the door for composite kernels based on neural network representation which can retain performance while gaining desirable properties like stationarity ~\cite{tancik2020fourierfeatures}. 

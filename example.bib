@@ -5144,22 +5144,6 @@ abstract = {Physics-informed neural networks (PINNs) have lately received great 
   biburl       = {https://dblp.org/rec/conf/svm/FumeraR02.bib},
   bibsource    = {dblp computer science bibliography, https://dblp.org}
 }
-@article{he2015,
-  author       = {Kaiming He and
-                  Xiangyu Zhang and
-                  Shaoqing Ren and
-                  Jian Sun},
-  title        = {Deep Residual Learning for Image Recognition},
-  journal      = {CoRR},
-  volume       = {abs/1512.03385},
-  year         = {2015},
-  url          = {http://arxiv.org/abs/1512.03385},
-  eprinttype    = {arXiv},
-  eprint       = {1512.03385},
-  timestamp    = {Wed, 25 Jan 2023 11:01:16 +0100},
-  biburl       = {https://dblp.org/rec/journals/corr/HeZRS15.bib},
-  bibsource    = {dblp computer science bibliography, https://dblp.org}
-}
 
 @article{biggio2014,
   author       = {Battista Biggio and
@@ -5848,4 +5832,75 @@ abstract = {Physics-informed neural networks (PINNs) have lately received great 
   pages={1069--1081},
   year={1997},
   publisher={Elsevier}
+}
+                  
+@inproceedings{djurisic2023,
+  author       = {Andrija Djurisic and
+                  Nebojsa Bozanic and
+                  Arjun Ashok and
+                  Rosanne Liu},
+  title        = {Extremely Simple Activation Shaping for Out-of-Distribution Detection},
+  booktitle    = {The Eleventh International Conference on Learning Representations,
+                  {ICLR} 2023, Kigali, Rwanda, May 1-5, 2023},
+  publisher    = {OpenReview.net},
+  year         = {2023},
+  url          = {https://openreview.net/pdf?id=ndYXTEL6cZz},
+  timestamp    = {Fri, 30 Jun 2023 14:55:53 +0200},
+  biburl       = {https://dblp.org/rec/conf/iclr/DjurisicBAL23.bib},
+  bibsource    = {dblp computer science bibliography, https://dblp.org}
+}
+
+@inproceedings{filos2020,
+  author       = {Angelos Filos and
+                  Panagiotis Tigas and
+                  Rowan McAllister and
+                  Nicholas Rhinehart and
+                  Sergey Levine and
+                  Yarin Gal},
+  title        = {Can Autonomous Vehicles Identify, Recover From, and Adapt to Distribution
+                  Shifts?},
+  booktitle    = {Proceedings of the 37th International Conference on Machine Learning,
+                  {ICML} 2020, 13-18 July 2020, Virtual Event},
+  series       = {Proceedings of Machine Learning Research},
+  volume       = {119},
+  pages        = {3145--3153},
+  publisher    = {{PMLR}},
+  year         = {2020},
+  url          = {http://proceedings.mlr.press/v119/filos20a.html},
+  timestamp    = {Fri, 05 Feb 2021 11:08:07 +0100},
+  biburl       = {https://dblp.org/rec/conf/icml/FilosTMRLG20.bib},
+  bibsource    = {dblp computer science bibliography, https://dblp.org}
+}
+
+@article{he2015,
+  author       = {Kaiming He and
+                  Xiangyu Zhang and
+                  Shaoqing Ren and
+                  Jian Sun},
+  title        = {Deep Residual Learning for Image Recognition},
+  journal      = {CoRR},
+  volume       = {abs/1512.03385},
+  year         = 2015,
+  url          = {http://arxiv.org/abs/1512.03385},
+  eprinttype    = {arXiv},
+  eprint       = {1512.03385},
+  timestamp    = {Wed, 25 Jan 2023 11:01:16 +0100},
+  biburl       = {https://dblp.org/rec/journals/corr/HeZRS15.bib},
+  bibsource    = {dblp computer science bibliography, https://dblp.org}
+}
+
+@InProceedings{pmlr-v202-mohamadi23a,
+  title = 	 {A Fast, Well-Founded Approximation to the Empirical Neural Tangent Kernel},
+  author =       {Mohamadi, Mohamad Amin and Bae, Wonho and Sutherland, Danica J.},
+  booktitle = 	 {Proceedings of the 40th International Conference on Machine Learning},
+  pages = 	 {25061--25081},
+  year = 	 {2023},
+  editor = 	 {Krause, Andreas and Brunskill, Emma and Cho, Kyunghyun and Engelhardt, Barbara and Sabato, Sivan and Scarlett, Jonathan},
+  volume = 	 {202},
+  series = 	 {Proceedings of Machine Learning Research},
+  month = 	 {23--29 Jul},
+  publisher =    {PMLR},
+  pdf = 	 {https://proceedings.mlr.press/v202/mohamadi23a/mohamadi23a.pdf},
+  url = 	 {https://proceedings.mlr.press/v202/mohamadi23a.html},
+  abstract = 	 {Empirical neural tangent kernels (eNTKs) can provide a good understanding of a given network’s representation: they are often far less expensive to compute and applicable more broadly than infinite-width NTKs. For networks with $O$ output units (e.g. an $O$-class classifier), however, the eNTK on $N$ inputs is of size $NO \times NO$, taking $\mathcal O\big( (N O)^2\big)$ memory and up to $\mathcal O\big( (N O)^3 \big)$ computation to use. Most existing applications have therefore used one of a handful of approximations yielding $N \times N$ kernel matrices, saving orders of magnitude of computation, but with limited to no justification. We prove that one such approximation, which we call "sum of logits," converges to the true eNTK at initialization. Our experiments demonstrate the quality of this approximation for various uses across a range of settings.}
 }

@@ -5,28 +5,28 @@
 Throughout this work, I have sought to understand the intrinsic
 structure of machine-learning models and how this gives
 rise to adversarial attacks. I began by studying the construction of
-neural networks in Chapter. ~\ref{Chapter1} and learning in practice by generating adversarial
-attacks in Chapter. ~\ref{Chapter2}. This led naturally to a more careful study of decision
+neural networks in Chapter.~\ref{Chapter1} and learning in practice by generating adversarial
+attacks in Chapter.~\ref{Chapter2}. This led naturally to a more careful study of decision
 boundaries and the development of the Persistence metric in Chapter
 3. ~\ref{Chapter3}. Uncanny drops in persistence while crossing
 decision boundaries toward adversarial attacks indicated that attacks
 may exist in highly curved regions. The field conspicuously lacks
 tools for evaluating curvature, although some progress is being
-made. In the process of lit review for methods that would allow more
+made. In the process of searching related work for methods that would allow more
 direct analysis I discovered deficiencies in nascent literature on
 path kernels starting with the work of ~\citet{domingos2020}. The
 initial work to correct these deficiencies and produce an exact path
 kernel are presented in Chapter ~\ref{Chapter4}. This new exact path kernel
 representation for neural networks has a primary advantage which is to
 decompose model predictions into contributions from each training
-point. This decomposition is in the form of decomposing a prediction
-in a tangent space, where the exact path kernel implicitly maps the
+point. We can use this representation to decompose predictions into
+parameter gradient contributions from each training datum, thus the exact path kernel implicitly maps the
 training data into a given tangent space. This mapping can be done for
-parameter gradients, input space gradients, and several dual tangent
+parameter gradients, input space gradients, and several other
 spaces related to both of these. Two such decompositions are applied
-in Chapter. ~\ref{Chapter4a} to demonstrate that many cutting edge OOD
+in Chapter.~\ref{Chapter4a} to demonstrate that many cutting edge OOD
 detection algorithms implicitly use this decomposition in terms of
-parameter gradients, and that the dual of the input gradients can be
+parameter gradients, and that training input gradients can be
 used to measure signal manifold dimension.
 
 We can summarize the first 3 chapters as posing some fundamental
@@ -72,11 +72,10 @@ the adversarial robustness questions from Chapters 1-3. Second is the
 complete generalization of this new framework including conditions
 under which such representations live in Banach spaces or Hilbert
 spaces and what order of accuracy can be maintained using truncated
-spectral decompositions. Third is the application of this theory more
-broadly to the wide variety of spatial problems that are present in
-machine-learning. 
+singular value decomposition. Third is the application of this theory more
+broadly to connect with Wasserstein metric spaceswhich is a suspected implicit space learned by machine-learning models. 
 
-\subsection{Applications to Adversarial Robustness}
+\section{Applications to Adversarial Robustness}
 
 \begin{figure}[ht!]
     \centering
@@ -89,19 +88,19 @@ machine-learning.
       Interpolation across the decision bundary between a natural
       example (left) and an adversarial example (right). Top Heatmaps
       show the fraction of uniform samples from a sphere which return
-      the same class, middle  heatmaps show the 0.7 level set of these
-      fractions, bottom plot shows incident angles on the decision
+      the same class (E.g. an image along the interpolation for, say $t = 0.5$ is classified by the model as class 4. Then for that column in these plots, we will plot the fraction of samples from gaussians with progressively higher standard deviations which receive class 4.), middle  heatmaps show the 0.7 level set of these
+      fractions, middle images show sample images along the linear interpolation across the decision boundary, and bottom plot shows incident angles on the decision
       boundary of the interpolant (black), the training gradient
       (blue) and the testing gradient (red). }
     \label{fig:dbs}
 \end{figure}
 
 
-In Fig. ~\ref{fig:dbs} we can see that sharp geometric curvature
+We can study persistence as a level-set in a sampling versus interpolation plot. We will design this approach using a Delaunay triangulation to iteratively sample this domain in order to visualize a decision boundary between natural images and between an adversarial image and a natural image. This visualization is shown in Fig.~\ref{fig:dbs}. We can see that sharp geometric curvature
 and shallow angles are observed when interpolating across decision
 boundaries between natural and especially adversarial images. One line
-of research will follow the direct geometric approach by constructing
-test objects (wedges) which replicate the structure observed in the
+of future research will follow the direct geometric approach by constructing
+test objects (e.g. wedges which are intersections of angled hyper-planes forming arbitrarily sharp solids with arbitrarily many dimensions fewer than its ambient space) which replicate the structure observed in the
 practical networks. an example of this is shown in ~\ref{fig:dbs}. The
 second approach is to take advantage of the framework from Chapters
 ~\ref{Chapter4} and ~\ref{Chapter4a} in order to decompose the
@@ -111,7 +110,7 @@ goal of this line of research is to understand these geometric
 constraints and eventually pose both updated training objectives and
 also better definitions for the identification of adversarial examples
 in practice. This line of research may have implications beyond
-robustness, to include uncertainty quantification, generalization,
+robustness, to include uncertainty quantification, ability of models to generalize to data outside their training distribution,
 out-of-distribution detection, and other useful metrics to create
 trustworthy AI.
 
@@ -163,29 +162,20 @@ Now, we can rewrite our original expression:
                                    \varphi_{s,t}(x) ,  \sum_k B_k V^K_k \right \rangle dt
  \end{align}
 More
-generally, we can define spectral components across all training steps
-and perform more general spectral decomposition with further
-efficiency reduction as in ~\citet{tancik2020fourierfeatures}. The path kernel
-formulation allows easy management of numerical error for any of these
-approaches. 
+generally, we can define Fourier features along paths connecting all of the finitely many training steps together using methods like those from ~\citet{tancik2020fourierfeatures}. By combining these Fourier features spectral components across all training steps, it may be possible to perform a single spectral decomposition which provides a basis for the entire discrete path determined by a model during training. 
 
 Regardless of how sophisticated we make this decomposition, all of
-these methods have the advantage of maintaining an exact mapping to
-the tangent space around each input point. This mapping implicitly
+these methods have the advantage of maintaining an exact decomposition of predictions relative to contributions from each training input. This mapping implicitly
 defines natural dimension reduction -- by truncating the chosen
-basis. The tangent space can be thought of as the models implicit
-justifications -- which training influences are affecting its
-decisions on this prediction. These directions are implicitly how we
-can analyze (and potentially penalize) points of high curvature
-e.g. at the decision boundary. This provides a theoretical foundation
+basis. This provides a theoretical foundation
 from which recent work in manifold study and data augmentation
 ~\citep{kaufman_data_2023, liu_linear_2023, sipka_differentiable_2023,
   cha_orthogonality-enforced_2023, marbut_reliable_2023,
   gao_out--domain_2023, oh_provable_2023, chen2023aware}.
 
 
-\subsection{Generalization in the sense of Reproducing Kernel Banach Spaces}
-Given that the representation from Chapters ~\ref{Chapter4} and
+\section{Generalization in the sense of Reproducing Kernel Banach Spaces}
+Given that the representation from Chapter.~\ref{Chapter4} and
 ~\ref{Chapter4a} have a small asymmetry, a general description of
 these representations cannot fit within Hilbert Space. There is a
 convenient approach building on the theory of Reproducing Kernel
@@ -196,34 +186,27 @@ this way. This allows access to tools built for Banach spaces for
 analysis of both accuracy, risk minimization, and other useful
 results. A similar line of work is already being pursued by
 ~\citet{shilton_gradient_2023} with which our work can likely be
-connected. I believe this is the most interesting natural direction
-for continuing work. Although this is less likely to produce practical
+connected. Although this is less likely to produce practical
 payoffs immediately, I believe that this approach will greatly enhance
 the theoretical foundation upon which analysis of neural network
 performance and limitations are based. 
 
-\subsection{Connecting Distributional Learning with Neural Networks}
+\section{Connecting Distributional Learning with Neural Networks}
 
 The neural representations and decompositions proposed in this work
 provide images of the tangent space according to the
-a given model for each point in the data space. The tangent space
-for each datum must be connected within the implicit metric space of
-the neural network, helping us to pose constraints on the geodesics
-connecting data. It has been shown increasingly in recent work
-(e.g. by  ~\citet{lu2020universal}, ~\citet{yang2022capacity}, \citet{altekruger_neural_2023}) that Neural Networks
+a given model for each point in the data space. The decomposed gradients for each input datum must be aligned with the natural geodesics which interpolate data. It has been shown increasingly in recent work
+(e.g. by  ~\citet{lu2020universal}, ~\citet{yang2022capacity}, \citet{altekruger_neural_2023}) shows that Neural Networks
 learn distributions in a sense that approximates the Wasserstein
 metric to some order. Also, work by ~\citet{chizat2020maxmargin} that neural network
 classifiers are approximately max-margin classifiers in some
 implicit space. We cannot necessarily compute this space exactly,
-however by examining the tangent spaces exposed by the kernel type
-decomposition, we can pose questions about this metric space in the
-dual sense. The connection of these three concepts into an
+however, by examining the parameter gradient decompositions exposed by this kernel representation, we can pose questions about this metric space in the
+dual sense. Connecting these concepts into an
 understanding of how Neural Networks embed an approximation of the
-Wasserstein metric into some implicit spaces that is likely
+Wasserstein metric into euclidean space is likely
 euclidean will have significant impact on the machine-learning
-community at large. This method also serves to connect the prior
-work from Chapters 1-3 with this later work, examining how models
-connect data geometrically. 
+community at large. 
 
 
 
