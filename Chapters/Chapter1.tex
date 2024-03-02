@@ -251,8 +251,6 @@ begin to ask hard questions about their limitations and implications.
 
 \subsection{Structure}
 In this subsection we give a mathematical description of artificial neural networks. 
-
-%TODO: change this definition to something very vague and general -- use wikipedia 
 A \emph{neuron} is a nonlinear operator that takes input in $\R^n$ to $\R$, historically designed to emulate the activation characteristics of an organic neuron. A collection of neurons that are connected via a (usually directed) graph structure are known as an \emph{Artificial Neural Network (ANN)}. 
 %\begin{definition}{Artificial Neural Networks (ANNs)} are functions $N:\R^n \to \R^m$ determined by weighted directed graphs whose nodes compose a weighted sum of the input along each incoming edge with the weights for those edges with a nonlinear activation function to generate an output. We can denote an ANN as a function in terms of an input vector $\vec x$ and its parameters $\vec w$: $N(\vec x, \vec w)$.  
 %\end{definition}
@@ -572,7 +570,7 @@ $\dfrac{\partial L}{\partial w^l_{n, i}} = \delta^l_n a^l_i$ where $\delta^l_n$ 
 \delta^l_n = A'^l (a^l_{n}) \sum_{i = 1}^n w^{l+1}_{i, n} \delta^{l+1}_i
 \]
 In matrix form, we have
-\[\bar \delta^l = \bar A'^l(W^l \bar a^l) \odot ((W^{l+1})^T \bar \delta^{l+1}\])
+\[\bar \delta^l = \bar A'^l(W^l \bar a^l) \odot ((W^{l+1})^T \bar \delta^{l+1})\]
 Where $\odot$ signifies element-wise multiplication. 
 
 Then we can compute the gradient with respect to each layer's matrix $W^l$ as an outer product: 

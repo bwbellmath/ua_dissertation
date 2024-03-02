@@ -13,7 +13,7 @@ is to expand this theory and develop it towards applications that can
 be directly useful to the field. In the process of generalizing and
 applying the above method as a decomposition, it became obvious that
 one modern machine-learning technique was implicitly relying on this
-decomposition rather heavily : Out-of-Distribution (OOD)
+decomposition rather heavily: Out-of-Distribution (OOD)
 Detection. The problem of identifying OOD data is orthogonal to the
 adversarial problem. In some sense adversarial problems are difficult
 because there do not exist practical metrics which can determine that
@@ -35,7 +35,7 @@ networks. This was joint work primarily performed by Brian Bell,
 Michael Geyer, where most of the theoretical work and mathematics was
 derived and written by Brian Bell and the experimental work and
 numerical results were produced by Michael Geyer. This particular
-paper includes an extensive lit review (performed by Brian Bell)
+paper includes an extensive literature review (performed by Brian Bell)
 analyzing some methods that have recently come to occupy the
 cutting-edge of OOD detection algorithms. In the context of this
 dissertation, this paper includes two important contributions, one is
@@ -65,7 +65,7 @@ However, the Exact Path Kernel (EPK)~\citep{bell2023} provides not only rigorous
 In addition, this paper provides a connection between tangent kernel methods and dimension estimation. 
 At the core of this technique is the ability to extract individual training point sensitivities on test predictions and use these to map the subspace on which parameter gradients can vary, the \emph{parameter tangent space}.
 This paper demonstrates a generalization (the gEPK) of the EPK from
-\citet{bell2023}. Given a training point $x_{\text{train}}$, this
+\citet{bell2023}. Given a training point $x_{\text{train}}$, the final parameter state $\theta$ of a model $f$, and a test point $x_{\text{test}}$, this
 method can exactly measure the \emph{input gradient} $\nabla_{x_\text{train}}f(x_\text{test}; \theta_\text{trained})$.
 It is shown that this quantity provides all necessary information for measuring the dimension of the \textit{signal manifold} \citep{srinivas2023} around a given test point.
 
@@ -73,7 +73,7 @@ It is shown that this quantity provides all necessary information for measuring 
     \centering
     \includegraphics[width=0.9\textwidth]{c4a_figures/dimensionality_chords.pdf}
     % \includegraphics[width=0.45\textwidth]{c4a_figures/dimensionality_means.pdf}
-    \caption{The gEPK naturally provides a measure of input dimension. This plot shows the cumulative sum of the explained variation of training point sensitivities $\nabla_{x_\text{train}}f(x_\text{test}; \theta_\text{trained})$. Different datasets are color coded to show differences in signal dimension. Decomposing the input space in this way provides a view of the signal dimension around individual test points. For a toy problem (3 Gaussian distributions embedded in 100 dimensional space) the model only observes between 2 and 3 unique variations which contribute to 95\% of the information required for prediction. Meanwhile the dimension of the signal manifold observed by the model around MNIST and CIFAR test points is approximately 94 and 1064 respectively. }
+    \caption{The gEPK naturally provides a measure of input dimension. This plot shows the cumulative sum of the explained variation of training point sensitivities $\nabla_{x_\text{train}}f(x_\text{test}; \theta_\text{trained})$. Different datasets are color coded to show differences in signal dimension.  }
     \label{fig:cdf}
 \end{figure}
  
@@ -171,14 +171,14 @@ The primary difference between the representation we propose and the original EP
 
 \begin{restatable}[Generalized Exact Path Kernel (gEPK)]{theorem}{ekr}
 \label{thm:ekr}
-Suppose $f(\cdot; \theta): \mathbb{R}^d \rightarrow \mathbb{R}^k$ is a differentiable parametric model with parameters $\theta_s \in \mathbb{R}^M$ and $L$ is a loss function. Furthermore, suppose that $f$ has been trained by a series $\{s\}_{s=0}^S$ of discrete steps composed from a sum of loss gradients for the training set $ \sum_{i=1}^N \varepsilon \nabla_\theta L(f(x_i), y_i)$ on $N$ training data $X_T$ starting from $\theta_0$, with learning rate $\varepsilon$; as is the case with traditional gradient descent. Let $t \in [0, 1]$ be an interpolation variable which parameterizes the line connecting any $\theta_s$ to $\theta_{s+1}$ so that $\theta_s(t) = \theta_s + t(\theta_{s+1} - \theta_s)$. Then for an arbitrary test point $x$, the trained model prediction $f(x; \theta_S)$ can be written:
+Suppose $f(\cdot; \theta): \mathbb{R}^d \rightarrow \mathbb{R}^k$ is a differentiable parametric scalar valued model with parameters $\theta_s \in \mathbb{R}^M$ and $L$ is a loss function. Furthermore, suppose that $f$ has been trained by a series $\{s\}_{s=0}^S$ of discrete steps composed from a sum of loss gradients for the training set $ \sum_{i=1}^N \varepsilon \nabla_\theta L(f(x_i; \theta), y_i)$ on $N$ training data $X_T$ starting from $\theta_0$, with learning rate $\varepsilon$; as is the case with traditional gradient descent. Let $t \in [0, 1]$ be an interpolation variable which parameterizes the line connecting any $\theta_s$ to $\theta_{s+1}$ so that $\theta_s(t) = \theta_s + t(\theta_{s+1} - \theta_s)$. Then for an arbitrary test point $x$, the trained model prediction $f(x; \theta_S)$ can be written:
 \begin{equation}
 f(x; \theta_S) = f(x; \theta_0) + \sum_{i=1}^N \sum_{s=0}^S \varepsilon \left(\int_0^1 \varphi_{s,t}(x) dt\right) L'(f(x_i; \theta_s), y_i) \left(\varphi_{s, 0}(x_i)\right)
 \label{exact}
 \end{equation}
 % Where
 \begin{align}
-    L'(a, b) &= \dfrac{dL(a, b)}{d b}\\
+    L'(a, b) &= \dfrac{\partial L(a, b)}{\partial a}\\
     \varphi_{s,t}(x) &\equiv \nabla_\theta f(x; \theta_s(t)), \\
     \theta_s(t) &\equiv \theta_s(0) + t(\theta_{s+1}(0)-\theta_s(0)), \text{ and}\\
     \hat y_{\theta_s(0)} &\equiv f(x; \theta_s(0)).
@@ -241,7 +241,7 @@ This sacrifices symmetry, which disqualifies the resulting formula as a kernel, 
 %\framebox[4.0in]{$\;$}
 % \fbox{\rule[-.5cm]{0cm}{4cm} \rule[-.5cm]{4cm}{0cm}}
 \end{center}
-\caption{OOD detection using difference in training vs. test gradients. As the purpose of this paper is not to develop state of the art OOD detection methods, a comparison with recent benchmarks is not provided. Instead, a proof of concept that the gEPK can perform OOD detection is given. Left histogram shows norms of vectors projected onto the gradient weight space defined by the gEPK on MNIST and FMNIST. Right plot shows the number of components required to explain 95\% variation in weight space across training for a toy problem (three Gaussian distributions embedded in 100 dimensions). }
+\caption{OOD detection using difference in training vs. test gradients. Right plot shows the number of components required to explain 95\% variation in weight space across training for a toy problem (three Gaussian distributions embedded in 100 dimensions). Left histogram shows norms of vectors projected onto the gradient weight space defined by the gEPK on MNIST and FMNIST.}
 \label{fig:ood}
 \end{figure}
 One natural application of the gEPK is the separation of predictions into vectors corresponding with the test gradient $\varphi_{s,t}(x)$ for a given test point $x$ and each training vector  weighted by its loss gradient $L'(\hat y_i, y_i) \varphi_{s, 0}(x_i)$. While the test vector depends on the choice of test point $x$, the subspace of training gradient vectors is fixed. By the linear nature of this inner product, it is clear that no variation in test data which is orthogonal to the training vector space can be reflected in a model's prediction. We can state this as a theorem:
@@ -255,8 +255,9 @@ spans the subspace of test parameter gradients with non-zero learned adjustments
 \begin{proof}
 Suppose for every $s$ and $t$, $\varphi_{s, t}(x) \notin B$. Then for every $i$, $s$, and $t$, $\langle \varphi_{s,t}(x), \varphi_{s, 0}(x_i)\rangle = 0$. Rewriting ~\eqref{eq:prediction} we have:
 \begin{align}
-   y_N &= f(x; \theta_0) - \sum_{s=0}^N \sum_{i = 1}^{N} \varepsilon \int_0^1 L'(f(x_i; \theta_s(0)), y_i) \langle \varphi_{s, t}(x), \varphi_{s,0}(x_i) \rangle dt 
+   y_N &= f(x; \theta_0) - \sum_{s=0}^N \sum_{i = 1}^{N} \varepsilon \int_0^1 L'(f(x_i; \theta_s(0)), y_i) \langle \varphi_{s, t}(x), \varphi_{s,0}(x_i) \rangle dt.
 \end{align}
+Note that for this derivation $f$ and $L$ are scalar valued, allowing commutativity of multiplication that would require more care in the multi-class case. 
 We can immediately see that every term in the learned adjustment summation will be equal to zero. 
 \end{proof}
 We will demonstrate that most cutting-edge OOD methods implicitly analyze the spectra of parts of this subspace in order to discriminate in practice. 
@@ -267,7 +268,7 @@ We will demonstrate that most cutting-edge OOD methods implicitly analyze the sp
 
 % \subsection{GradNorm}
 \textbf{GradNorm}
-The first well-known method to apply gradient information for OOD is  ODIN: Out-of-DIstribution detector for Neural Networks  \citet{liang2018}. This method, inspired by adversarial attacks, perturbs inputs by applying perturbations calculated from input gradients. The method then relies on the difference in these perturbations for in-distribution versus out-of-distribution examples to separate these in practice. This method directly inspired~\citet{huang2021} to create GradNorm. This method which occupied the cutting edge in 2021 computes the gradient of Kullback–Leibler divergence with respect to model parameters so that:
+The first well-known method to apply gradient information for OOD is  ODIN: Out-of-DIstribution detector for Neural Networks  \citet{liang2018}. This method, inspired by adversarial attacks, perturbs inputs by applying perturbations calculated from input gradients. The method then relies on the difference in these perturbations for in-distribution versus out-of-distribution examples to separate these in practice. This method directly inspired~\citet{huang2021} to create GradNorm. This method which occupied the cutting edge in 2021 computes the gradient of Kullback–Leibler divergence with respect to model parameters so that we have a matrix of size number of classes by number of parameters.:
 % \begin{align}
 %     \dfrac{\partial D_{KL}(u||\text{softmax}(f(x)))}{d\theta} &= \dfrac{1}{C} \sum_i^C \dfrac{\partial L_{CE}(f(x), i)}{d\theta}
 %     \end{align}
@@ -275,7 +276,7 @@ The first well-known method to apply gradient information for OOD is  ODIN: Out-
 \begin{align}
     \dfrac{1}{C} \sum_i^C \dfrac{\partial L_{CE}(f(x; \theta), i)}{\partial\hat y}\nabla_\theta f(x; \theta)
 \end{align}
-This looks like the left side of the inner product from the gEPK, however the scaling factor, $\dfrac{\partial L_{CE}(f(x; \theta), i)}{d\hat y}$, does not match. In fact, this approach is averaging across the parameter gradients of this test point with respect to each of its class outputs, which we can see is only a related subset of the full basis used by the model for predictions. This explains improvements made in later methods that are using a more full basis. Another similar method, ExGrad~\citep{igoe2022}, has been proposed which experiments with different similar decompositions and raises some questions about what is special about gradients in OOD -- we hope our result sheds some light on these questions. Another comparable method proposed by~\citet{sun2022deep} may also be equivalent through the connection we establish below in Section~\ref{sec:input} between this decomposition and input gradients which may relate with mapping data manifolds in the Voronoi/Delaunay~\citep{gillette2022data} sense. 
+This looks like the left side of the inner product from the gEPK, however the scaling factor, $\dfrac{\partial L_{CE}(f(x; \theta), i)}{\partial \hat y}$, does not match. In fact, this approach is averaging across the parameter gradients of this test point with respect to each of its class outputs, which we can see is only a related subset of the full basis used by the model for predictions. This explains improvements made in later methods that are using a more full basis. Another similar method, ExGrad~\citep{igoe2022}, has been proposed which experiments with different similar decompositions and raises some questions about what is special about gradients in OOD -- we hope our result sheds some light on these questions. Another comparable method proposed by~\citet{sun2022deep} may also be equivalent through the connection we establish below in Section~\ref{sec:input} between this decomposition and input gradients which may relate with mapping data manifolds in the Voronoi/Delaunay~\citep{gillette2022data} sense. 
 
 \textbf{ReAct, DICE, ASH, and VRA}
 Along with other recent work~\citep{sun2021, sun2022, xu2023vra}, some of the cutting edge for OOD as of early 2023 involves activation truncation techniques like that neatly described by~\citet{djurisic2023extremely}. 
@@ -289,7 +290,7 @@ training data. However by chain rule, high activations will correspond with high
 Meaning this truncation is picking a representation for which
 \begin{align}
   \left\langle \nabla_\theta f(x; \theta_{\text{represent}}),
-  \dfrac{dL(\hat y(x_i), y_i)}{d\hat y} \nabla_\theta f(x_i;
+  \dfrac{\partial L(\hat y(x_i), y_i)}{\partial \hat y} \nabla_\theta f(x_i;
   \theta_{\text{represent}}) \right\rangle
 \end{align}
 is high for many training points, $x_i$. We note that the
@@ -309,7 +310,7 @@ This may explain some part of the performance advantage of these methods.
 
 \textbf{GradOrth}~\citet{behpour2023} explicitly create a reference basis from parameter gradients on training data for comparison. They do this for only the last layer of a network with mean squared error (MSE) loss, allowing a nicely abbreviated expression for the gradient:
 \begin{align}
-    \nabla_\theta L(x, y) &= (\theta x - y)x^T = \Omega x^T.
+    \nabla_\theta L(f(x; \theta), y) &= (\theta x - y)x^T = \Omega x^T.
 \end{align}
 Treating $\Omega$ as an error vector, they prove that all variation of the output must be within the span of the $x^T$ over the training set. They then pick a small subset of the training data and record its activations $R^L_{ID} = [x_1, x_2, ..., x_n]$ over which they compute the SVD, $U^L_{ID} \Sigma^L_{ID} (V^L_{ID})^T = R^L_{ID}$. This representation is then truncated to $k$ principal components according to a threshold $\epsilon_{\text{th}}$ such that 
 \begin{align}
@@ -320,7 +321,7 @@ space onto which test points' final layer gradients can be
 projected. They define a numerical score to distinguish OOD examples
 as follows: 
 \begin{align}
-    O(x) = (\nabla_{\theta_L} \mathcal{L}(f(x; \theta_L), y))S^L(S^L)^T
+    O(x) = (\nabla_{\theta} L(f(x; \theta_L), y))S^L(S^L)^T
 \end{align}
 We note that this formulation requires a label $y$ for each of the data being tested for inclusion in the data distribution. 
 Despite this drawback, the performance presented by \citet{behpour2023} is impressive.
@@ -328,7 +329,8 @@ Despite this drawback, the performance presented by \citet{behpour2023} is impre
 % While this is true, it may greatly underestimate the true rank of the data and also may not necessarily map the correct magnitude of variations along each of the basis directions. 
 
 \subsection{gEPK for OOD}
-Theorem \ref{thm:oodspan} provides a more general spanning result immediately. In fact, as we have illustrated in Figure ~\ref{fig:ood}, we can pick a much reduced basis \emph{based only on the final training step} which will span most of the variation in models' learned adjustments. Theorem ~\ref{thm:oodspan} and the definition of SVD provide the following:
+Theorem \ref{thm:oodspan} provides a more general spanning result immediately. In fact, as we have illustrated in Figure ~\ref{fig:ood}, we can pick a much reduced basis \emph{based only on the final training step} which will span most of the variation in models' learned adjustments.
+Theorem ~\ref{thm:oodspan} and the definition of SVD provide the following:
 \begin{corollary}
     Let $A$ be a matrix stacking the elements of $B$ as rows. Then let $U \Sigma V^T = A$ as in SVD. Then $\text{Span}(B) = \text{Span}(\text{Rows}(V))$. 
 \end{corollary} 
@@ -350,7 +352,8 @@ basis $V$. These should be mostly caught by the truncated basis
 $V$. We test the usefulness of $V'$ to perform OOD detection by
 projection onto its span using a sum over the class outputs weighted
 by the loss gradients $L'(f(x_i; \theta_S), y_i)$ in
-Fig.~\ref{fig:ood}. We note that this scalling has only been extracted
+Fig.~\ref{fig:ood}. As the purpose of this paper is not to develop state of the art OOD detection methods, a comparison with recent benchmarks is not provided. Instead, a proof of concept that the gEPK can perform OOD detection is given. 
+We note that this scalling has only been extracted
 from the final training step, however this assumption is supported by
 the convergence of this scaling over training. The gEPK helps explain the high performance of gradient based methods due to the implicit inclusion of the training parameter space in model predictions. This serves to illuminate the otherwise confusing discrepancy raised by~\citet{igoe2022}. 
 
@@ -380,7 +383,7 @@ the convergence of this scaling over training. The gEPK helps explain the high p
 %\framebox[4.0in]{$\;$}
 % \fbox{\rule[-.5cm]{0cm}{4cm} \rule[-.5cm]{4cm}{0cm}}
 \end{center}
-\caption{Left: Visualization of training point input gradients on test points compared between two models. Positive contribution (black) and negative contribution (red) of each training datum to the prediction for each test point. Elements in the grid are $\dfrac{\partial f(x; \theta_{\text{trained}})}{\partial x_{\text{i}}}$ for a fixed test point $x$ and several distinct training points $x_i$. Right: By taking these individual gradient contributions for a test point and computing the SVD across the training, the significant modes of variation in the input space can be measured (sigma squared). Top is log scale of the full spectrum, bottom shows the first 10 components. Note that this decomposition selects similar, but not identical, modes of variation across test points and even across different models. Components in SVD plots are sorted using Test Point A on Model A.}
+\caption{Left: Visualization of training point input gradients on test points compared between two models. Positive contribution (black) and negative contribution (red) of each training datum to the prediction for each test point. Elements in the grid are $\dfrac{\partial f(x; \theta_{\text{trained}})}{\partial x_{\text{i}}}$ for a fixed test point $x$ and several distinct training points $x_i$. Right: explained variation of other principal components by a selected principal component across 2 models and 2 test points. Top is log scale of the full spectrum, bottom shows the first 10 components.}
 \label{fig:trans}
 \end{figure}
 
@@ -432,7 +435,8 @@ And $\theta_s(t)$ are the parameters of $f$ for training step $s$ and time $t$ s
 \begin{align}
     \dfrac{\partial f(x; \theta_\text{trained})}{\partial x_j} &= \dfrac{\partial f(x; \theta_0(0))}{\partial x_j} + \sum_i \sum_s \int_0^1 \dfrac{\partial\left(\varphi_{s,t}(x) L'(f(x_i; \theta_s(0)), y_i) \varphi_{s, 0}(x_i)\right)}{\partial x_j} dt\\
     % &= 0 + \sum_i \sum_s \int_0^1 \varphi_{s,t}(x) \dfrac{d\left(L'(f(x_i; \theta_s(0)), y_i) \varphi_{s, 0}(x_i)\right)}{dx_j} dt \\
-    &= \sum_i \sum_s \int_0^1 \varphi_{s,t}(x)dt \left(\dfrac{\partial L'(f(x, \theta_s(0)), y_i)}{\partial x_j} \varphi_{s, 0}(x_i) + L'(f(x_i; \theta_s(0)), y_i) \dfrac{d\varphi_{s, 0}(x_i)}{dx_j}\right) 
+                                                               &= \sum_i \sum_s \int_0^1 \varphi_{s,t}(x)dt (\dfrac{\partial L'(f(x, \theta_s(0)), y_i)}{\partial x_j} \varphi_{s, 0}(x_i) \\
+                                                               &+ L'(f(x_i; \theta_s(0)), y_i) \dfrac{d\varphi_{s, 0}(x_i)}{dx_j}) 
 \end{align}
 We can see that these gradients will be zero except when $i = j$, thus we may summarize these gradients as a matrix, $G$, with 
 \begin{align}
@@ -446,18 +450,16 @@ The rank of $G$ represents the dimension of the subspace on which the model perc
 On MNIST, $G(x)$ creates a matrix which is of size $60000 \times 784 \times 10$ (training points $\times$ input dimension $\times$ class count).
 This matrix represents the exact measure of each training points contribution towards a given test prediction.
 In order to simplify computation, we reduce this term to $60000 \times 784$ by summing across the class dimension.
-This reduction is justified by the same theory as the psudo-NTK presented by~\citet{pmlr-v202-mohamadi23a}.
-Of note is that in practice this matrix is full rank on the input space as seen in Figure \ref{fig:trans}.
+This reduction is justified by the same theory as the pseudo-NTK presented by~\citet{pmlr-v202-mohamadi23a}.
+Of note is that in practice this matrix is full rank on the input space as seen in Figure \ref{fig:trans}. Note that this decomposition selects similar, but not identical, modes of variation across test points and even across different models. Components in SVD plots are sorted using Test Point A on Model A. By taking these individual gradient contributions for a test point and computing the SVD across the training, the significant modes of variation in the input space can be measured (sigma squared). 
 This is despite MNIST having significantly less degrees of variation than its total input size (many pixels in input space are always 0).
-Figure \ref{fig:cdf} demonstrates that accounting for 95\% of the variation requires only 94 (12\%) of the 784 components on average.
-Similarly, on CIFAR accounting for 95\% of explained variation requires 1064 (34\%) of the 3096 components.
-It is likely that different training techniques will provide significantly different signal manifolds and consequently different numbers of components.
+Figure \ref{fig:cdf} demonstrates decomposing the input space in this way and provides a view of the signal dimension around individual test points. For a toy problem (3 Gaussian distributions embedded in 100 dimensional space) the model only observes between 2 and 3 unique variations which contribute to 95\% of the information required for prediction. Meanwhile the dimension of the signal manifold observed by the model around MNIST and CIFAR test points is approximately 94 (12\% of the data dimension 784) and 1064 (34\% of the data dimension 3096) respectively. It is likely that different training techniques will provide significantly different signal manifolds and consequently different numbers of components.
 % Examining these effects may lead to deeper understanding of optimization techniques.
 \begin{figure}[t]
     \centering
     \includegraphics[width=.45\textwidth]{c4a_figures/dimension_change_weightspace.pdf}
     \includegraphics[width=.45\textwidth]{c4a_figures/dimension_change.pdf}
-    \caption{Differences between observing gradients in input space vs. weight space. Left: cumulative sum of explained variation parameter space. Right: cumulative sum of explained variation input space. Red solid line indicates a model at random initialization while the blue solid line represents the fully trained state. From random initialization, the number of principal components required to achieve 95\% explained variation decreases in both cases. Note that at random initialization, the weight space gradients already have only a few directions accounting for significant variation. Disentangling the data dimension using weight space gradients is less effective than doing so in input space \citep{shamir2021dimpled}.}
+    \caption{Differences between observing gradients in input space vs. weight space. Left: cumulative sum of explained variation parameter space. Right: cumulative sum of explained variation input space. Red solid line indicates a model at random initialization while the blue solid line represents the fully trained state.}
     \label{fig:compare}
 \end{figure}
 % Exploring the dimension of data using 
@@ -472,7 +474,7 @@ We can also ask for a decomposition in terms of training input gradients for pre
     \dfrac{df(x_j; \theta_\text{trained})}{dx_j} &= \dfrac{df(x_j; \theta_0(0))}{dx_j} + \sum_i \sum_s \int_0^1 \dfrac{\partial\left(\varphi_{s,t}(x_j) L'(f(x_i; \theta_s(0)), y_i) \varphi_{s, 0}(x_i)\right)}{\partial x_j} dt
 \end{align}
 The left hand side is computable without path-decomposition and so can be computed for each training datum to create a gradient matrix, $H_{\theta_\text{trained}}$. Another term, $\dfrac{df(x_j; \theta_0(0))}{dx_j}$ is also easily computable, yielding another matrix $H_{\theta_0}$. By comparing the rank and span of $H_{\theta_\text{trained}}$ and $H_{\theta_0}$ we can understand to what extent the model's spatial representation of the data is due to the initial parameter selection and how much is due to the training path. Also, $H_{\theta_\text{trained}}$ provides sample of gradients across all training data, which in some sense must be spanned by the model's implicit subspace basis. Despite missing the granular subspace information, the rank of this gradient matrix and its explained variation computed using SVD should be related to the model's implicit subspace rank. 
-It should be noted that while there is a direct relationship between a models variations in input space and weight space, Figure \ref{fig:compare} shows that this mapping changes greatly from the beginning to end of training and that this spectrum starts out wide (high dimensional) for $\theta_0$ and much more focused (low dimensional) for $\theta_T$. 
+It should be noted that while there is a direct relationship between a models variations in input space and weight space, Figure \ref{fig:compare} shows that this mapping changes greatly from the beginning to end of training. From random initialization, the number of principal components required to achieve 95\% explained variation decreases in both cases shown. Note that at random initialization, the weight space gradients already have only a few directions accounting for significant variation. Disentangling the data dimension using weight space gradients is less effective than doing so in input space \citep{shamir2021dimpled}. Overall this spectrum starts out wide (high dimensional) for $\theta_0$ and much more focused (low dimensional) for $\theta_T$. 
 
 
 %

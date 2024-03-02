@@ -114,7 +114,7 @@ penalizes the generated adversary for being too far from its starting
 point. This loss function is combined with an optimization algorithm
 in order to produce an attack technique. 
 
-\subsection{L-BFGS minimizing distortion}\label{lbfgs}
+\subsection{L-BFGS Minimizing Distortion}\label{lbfgs}
 
 The original attack used by ~\citet{szegedy2013} set up a
 box-constrained optimization problem whose approximated solution
@@ -318,8 +318,9 @@ data and $L$ denote a set of labels that distinguish the different
 classes. We are now ready to define adversarial examples.
 
 \begin{definition} \label{def:advers}
-Let $d$ be a metric on $X$, let $x\in X$ have label $\ell\in L$, and let $\CC:X\to L$ be a classifier.  We say that $x$ admits an \emph{$(\e,d)$--adversarial example} to $\CC$ if there exists $\hat x \in X$ such that $d(x,\hat x) < \e$ and $\CC(\hat x) \neq \ell$.
-We say that $x$ admits an \emph{$(\e,d)-$adversarial example} on $\CC$ if there exists a point $\hat x$ such that $d(x,\hat x) < \e$ and $\CC(\hat x) \neq \ell$. 
+Let $d$ be a metric on $X$, let $x\in X$ have label $\ell\in L$, and
+let $\CC:X\to L$ be a classifier.
+We say that $x$ admits an \emph{$(\e,d)$--adversarial example} to $\CC$ if there exists $\hat x \in X$ such that $d(x,\hat x) < \e$ and $\CC(\hat x) \neq \ell$.
 \end{definition}
 
 One typically considers Definition \ref{def:advers} in the context of small $\e$. 

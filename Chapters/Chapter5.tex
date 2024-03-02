@@ -5,10 +5,9 @@
 Throughout this work, I have sought to understand the intrinsic
 structure of machine-learning models and how this gives
 rise to adversarial attacks. I began by studying the construction of
-neural networks in Chapter.~\ref{Chapter1} and learning in practice by generating adversarial
-attacks in Chapter.~\ref{Chapter2}. This led naturally to a more careful study of decision
-boundaries and the development of the Persistence metric in Chapter
-3. ~\ref{Chapter3}. Uncanny drops in persistence while crossing
+neural networks in Chapter~\ref{Chapter1} and learning in practice by generating adversarial
+attacks in Chapter~\ref{Chapter2}. This led naturally to a more careful study of decision
+boundaries and the development of the Persistence metric in Chapter~\ref{Chapter3}. Uncanny drops in persistence while crossing
 decision boundaries toward adversarial attacks indicated that attacks
 may exist in highly curved regions. The field conspicuously lacks
 tools for evaluating curvature, although some progress is being
@@ -24,21 +23,21 @@ parameter gradient contributions from each training datum, thus the exact path k
 training data into a given tangent space. This mapping can be done for
 parameter gradients, input space gradients, and several other
 spaces related to both of these. Two such decompositions are applied
-in Chapter.~\ref{Chapter4a} to demonstrate that many cutting edge OOD
+in Chapter~\ref{Chapter4a} to demonstrate that many cutting edge OOD
 detection algorithms implicitly use this decomposition in terms of
 parameter gradients, and that training input gradients can be
 used to measure signal manifold dimension.
 
-We can summarize the first 3 chapters as posing some fundamental
+We can summarize the first 3 Chapters as posing some fundamental
 geometric questions related to machine-learning robustness. 
 Chapters 4 and 5 as propose a new framework for analyzing geometric
 properties and demonstrating that this framework can be applied very
 generally. As usual in mathematics, trying to solve a specific problem
 about geometric causes for adversarial examples has led to a very
-general result in a totally different field. Although chapters 4 and 5
+general result in a totally different field. Although Chapters 4 and 5
 represent significant progress in understanding ANNs mathematically,
 they do not directly address the core question that arose within the
-first three chapters: Is relative dimension and curvature a primary
+first three Chapters: Is relative dimension and curvature a primary
 cause of adversarial vulnerability. 
 
 Based on this work, we can now make some supportable conjectures:
@@ -48,24 +47,24 @@ Based on this work, we can now make some supportable conjectures:
     that are askew from many interpolations among training and testing
     data.
   \item Non-orthogonal decision boundary crossings indicate that
-    ``sharp'' corners in the decision space learned by ANN models lead
+    sharp corners in the decision space learned by ANN models lead
     to adversarial examples.
   \item Bilinear map based representations allow decomposition of
     predictions based on training inputs. These show that models
     implicitly use a lower dimensional implicit representation of data
     to make predictions.
-  \item Combining these notions, we have a clear path forward:
+\end{enumerate}
+
+Combining these notions, we have a clear path forward:
     Decompose adversarial attacks using a bilinear map
     representation and then compare these signatures of variation with
     typical modes of variation within training data.
-  \item Likely this will show that adversarial attacks are arising
+Likely this will show that adversarial attacks are arising
     from sharp corners in decision space, some of which can be
     mitigated by making models more aware of the properties of the
     decision space they have learned, some of which cannot be
     mitigated because training data are insufficient to fully
     constrain decision surfaces. 
-\end{enumerate}
-
 From here, there are several important directions for
 future research. First is the application of these methods directly to
 the adversarial robustness questions from Chapters 1-3. Second is the
@@ -83,44 +82,22 @@ broadly to connect with Wasserstein metric spaceswhich is a suspected implicit s
 %\includegraphics[width=0.9\textwidth]{c5_figures/wedge-mnist-C32-50-50-10-0.001-eval-1e-06-pgd-1-7-db_interp-stability-0.png}
 
     % \includegraphics[width=0.45\textwidth]{c4a_figures/dimensionality_means.pdf}
-    \caption{Left: Interpolation across the decision boundary between
-      two natural images from the test data for MNIST. Right :
-      Interpolation across the decision bundary between a natural
-      example (left) and an adversarial example (right). Top Heatmaps
-      show the fraction of uniform samples from a sphere which return
-      the same class (E.g. an image along the interpolation for, say $t = 0.5$ is classified by the model as class 4. Then for that column in these plots, we will plot the fraction of samples from gaussians with progressively higher standard deviations which receive class 4.), middle  heatmaps show the 0.7 level set of these
-      fractions, middle images show sample images along the linear interpolation across the decision boundary, and bottom plot shows incident angles on the decision
-      boundary of the interpolant (black), the training gradient
-      (blue) and the testing gradient (red). }
+    \caption{Heatmaps (top) and decision boundary angle plots bottom) showing stability fractions for an interpolation from a natural 4 to a natural 6 (left) and from a natural 4 to an adversarial 6 (right). }
     \label{fig:dbs}
 \end{figure}
 
 
-We can study persistence as a level-set in a sampling versus interpolation plot. We will design this approach using a Delaunay triangulation to iteratively sample this domain in order to visualize a decision boundary between natural images and between an adversarial image and a natural image. This visualization is shown in Fig.~\ref{fig:dbs}. We can see that sharp geometric curvature
-and shallow angles are observed when interpolating across decision
-boundaries between natural and especially adversarial images. One line
-of future research will follow the direct geometric approach by constructing
-test objects (e.g. wedges which are intersections of angled hyper-planes forming arbitrarily sharp solids with arbitrarily many dimensions fewer than its ambient space) which replicate the structure observed in the
-practical networks. an example of this is shown in ~\ref{fig:dbs}. The
-second approach is to take advantage of the framework from Chapters
-~\ref{Chapter4} and ~\ref{Chapter4a} in order to decompose the
-training gradients at points on the decision boundary to understand
-neural networks' learned degrees of freedom at these locations. The
-goal of this line of research is to understand these geometric
-constraints and eventually pose both updated training objectives and
-also better definitions for the identification of adversarial examples
-in practice. This line of research may have implications beyond
-robustness, to include uncertainty quantification, ability of models to generalize to data outside their training distribution,
-out-of-distribution detection, and other useful metrics to create
-trustworthy AI.
+We can study persistence as a level-set in a sampling versus interpolation plot. We will design this approach using a Delaunay triangulation to iteratively sample this domain in order to visualize a decision boundary between natural images and between an adversarial image and a natural image. We will design heatmaps to show the fraction of uniform samples from a sphere which return the same class (E.g. an image along the interpolation for, say $t = 0.5$ is classified by the model as class 4. Then we will plot a column in the heatmap showing fraction of samples from Gaussians with progressively higher standard deviations which receive class 4.) This visualization is shown in Fig.~\ref{fig:dbs} where the middle  heatmaps show the 0.7 level set of these fractions, middle images show sample images along the linear interpolation across the decision boundary, and bottom plot shows incident angles on the decision boundary of the interpolant (black), the training gradient (blue) and the testing gradient (red). We can see that sharp geometric curvature and shallow angles are observed when interpolating across decision boundaries between natural and especially adversarial images. One line of future research will follow the direct geometric approach by constructing test objects (e.g. wedges which are intersections of angled hyper-planes forming arbitrarily sharp solids with arbitrarily many dimensions fewer than its ambient space) which replicate the structure observed in the practical networks. An example of this is shown in ~\ref{fig:dbs}.
 
-In particular, we can decompose adversarial gradients into an
+      The second approach is to take advantage of the framework from Chapters ~\ref{Chapter4} and ~\ref{Chapter4a} in order to decompose the training gradients at points on the decision boundary to understand neural networks' learned degrees of freedom at these locations. The goal of this line of research is to understand these geometric constraints and eventually pose both updated training objectives and also better definitions for the identification of adversarial examples in practice. This line of research may have implications beyond robustness, to include uncertainty quantification, ability of models to generalize to data outside their training distribution, 
+out-of-distribution detection, and other useful metrics to create
+trustworthy AI. In particular, we can decompose adversarial gradients into an
 initial gradient plus a component from each training input,
 \begin{align}
   f(x, \theta_F) &= f(x, \theta_0) + \sum_i \sum_s \int_0^1 \langle
   \nabla_\theta f(x, \theta_s(t)), f(x_i, \theta_s(t))\rangle dt \\
-  \dfrac{d f(x, \theta_F)}{dx} &= \dfrac{d f(x, \theta_0)}{dx} + \sum_i \sum_s \int_0^1 \langle
-  \nabla_\theta \dfrac{d f(x, \theta_s(t))}{dx}, f(x_i,
+  \dfrac{\partial f(x, \theta_F)}{\partial x} &= \dfrac{\partial f(x, \theta_0)}{\partial x} + \sum_i \sum_s \int_0^1 \langle
+  \nabla_\theta \dfrac{\partial f(x, \theta_s(t))}{\partial x}, f(x_i,
                                  \theta_s(t))\rangle dt.
 \end{align}
 From this decomposition, we can also replace the individual training
@@ -143,26 +120,25 @@ $diag($L'(x_i, y_i))$ (size is $[N, N]$), and each row $A_i
 A$ ($U$ of size $[N, P]$, $\sigma$ of size $[N, N]$, and $V^T$ of size $[P, P]$. Let's first try projecting each $A_i$ onto the row space of $V$ so that 
 \begin{align}
     A_i &= \sum_k A_i V_k^T V_k \\
-    \sum_i L_i A_i &= \sum_i \sum_k L_i A_i V_k^T V_k\\
+    \sum_i \left(L'(x_i, y_i) \varphi_{s, 0}(x_i)\right) = \sum_i L_i A_i &= \sum_i \sum_k L_i A_i V_k^T V_k\\
     \sum_i L_i A_i &= \sum_k \left(\sum_i L_i A_i V_k^T\right) V_k\\
-    \sum_i L_i A_i &= \sum_k \left((\vec 1 L A V^T)_k\right) V_k\\
+    \sum_i L_i A_i &= \sum_k \left((\vec 1^T L A V^T)_k\right) V_k\\
 \end{align}
-
-If we truncate  $V$ down to $K$ dimensions, then we have $B = \vec 1 L A (V^K)^T$ with sizes $[1,N], [N,N][N,P],[P,K]$ and I can rewrite the truncated representation:
+where the subscripts all indicate rows. 
+If we truncate  $V$ down to $K$ dimensions, then we have $B = \vec 1^T L A (V^K)^T$ with the matrices having sizes $[1,N], [N,N], [N,P], [P,K]$ (in order) and we can rewrite the truncated representation:
 
 \begin{align}
-    \sum_i L_i A_i &= \sum_k \left((\vec 1 L A (V^K)^T)_k\right) V^K_k\\
-    &= \sum_k B_k V^K_k\\
+    \sum_i L_i A_i &= \sum_k \left((\vec 1^T L A (V^K)^T)_k\right) V^K_k\\
+    &= \sum_k B_k V^K_k.\\
 \end{align}
 
 Now, we can rewrite our original expression:
 \begin{align}
      f(x, \theta_\text{tr}) &= f(x, \theta_0(0)) +  \sum_s
 \int_0^1                                  \left\langle 
-                                   \varphi_{s,t}(x) ,  \sum_k B_k V^K_k \right \rangle dt
+                                   \varphi_{s,t}(x) ,  \sum_k B_k V^K_k \right \rangle dt.
  \end{align}
-More
-generally, we can define Fourier features along paths connecting all of the finitely many training steps together using methods like those from ~\citet{tancik2020fourierfeatures}. By combining these Fourier features spectral components across all training steps, it may be possible to perform a single spectral decomposition which provides a basis for the entire discrete path determined by a model during training. 
+More generally, we may define Fourier features along paths connecting all of the finitely many training steps together using methods like those from ~\citet{tancik2020fourierfeatures}. By combining these Fourier features spectral components across all training steps, it may be possible to perform a single spectral decomposition which provides a basis for the entire discrete path determined by a model during training. 
 
 Regardless of how sophisticated we make this decomposition, all of
 these methods have the advantage of maintaining an exact decomposition of predictions relative to contributions from each training input. This mapping implicitly
@@ -175,7 +151,7 @@ from which recent work in manifold study and data augmentation
 
 
 \section{Generalization in the sense of Reproducing Kernel Banach Spaces}
-Given that the representation from Chapter.~\ref{Chapter4} and
+Given that the representation from Chapter~\ref{Chapter4} and
 ~\ref{Chapter4a} have a small asymmetry, a general description of
 these representations cannot fit within Hilbert Space. There is a
 convenient approach building on the theory of Reproducing Kernel

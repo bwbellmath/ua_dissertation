@@ -166,7 +166,7 @@ The Bracketing Algorithm is a way to determine persistance of an image with resp
 % \end{algorithm}
 
 
-\section{Convolutional neural networks used} \label{appendix:CNNs}
+\section{Convolutional Neural Networks Used} \label{appendix:CNNs}
 In Table \ref{table1} we reported results on varying complexity convolutional neural networks. These networks consist of a composition of convolutional layers followed by a maxpool and fully connected layers. 
 The details of the network layers are described in Table \ref{tab:CNN} where Ch is the number of channels in the convolutional components. %\todo{[DG]: We need to simplify to the tables without the truncation}
 
@@ -201,7 +201,7 @@ In this section we provide additional figures to demonstrate some of the experim
 %\subsection{Figures interpolating between natural and adversarial examples}
 %In this section we further investigate what happens on the straight line from a natural example to an adversarial example.
 
-\subsection{Additional figures from MNIST}
+\subsection{Additional Figures from MNIST}
 In Figure \ref{fig:mnistadv} we begin with an image of a \texttt{1} and generate adversarial examples to the networks described in Section \ref{sec:mnist} via IGSM targeted at each class \texttt{2} through \texttt{9}; plotted are the counts of output classifications by the DNN from samples from Gaussian distributions with increasing standard deviation; this complements Figure \ref{fgsmo} in the main text. Note that the prevalence of the adversarial class falls off quickly in all cases, though the rate is different for different choices of target class.
 \begin{figure}[!htb]
     \centering
